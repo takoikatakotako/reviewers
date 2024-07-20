@@ -21,7 +21,7 @@ struct PostView: View {
                                     .foregroundStyle(Color(.appMainText))
                                 
                                 if viewState.text.isEmpty {
-                                    CommonText(text: "レビューを入力", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                    CommonText(text: "レビューを入力してください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                         .foregroundStyle(Color(.appSubText))
                                 } else {
                                     CommonText(text: viewState.text, font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
@@ -41,14 +41,20 @@ struct PostView: View {
                     
                     // バーコード
                     Button {
-                        
+                        viewState.barcodeTapped()
                     } label: {
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 12) {
                                 CommonText(text: "バーコード", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "4971633002005", font: .mPlus2Regular(size: 16), lineHeight: 20)
-                                    .foregroundStyle(Color(.appMainText))
+                                
+                                if viewState.barcode.isEmpty {
+                                    CommonText(text: "バーコードを読み込んでください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                        .foregroundStyle(Color(.appSubText))
+                                } else {
+                                    CommonText(text: viewState.barcode, font: .mPlus2Regular(size: 16), lineHeight: 20)
+                                        .foregroundStyle(Color(.appMainText))
+                                }
                             }
                             
                             Spacer()
@@ -65,6 +71,77 @@ struct PostView: View {
                     }
                     
                     Divider()
+                    
+                    
+                    
+                    // レビュー
+                    VStack(alignment: .leading, spacing: 12) {
+                        CommonText(text: "レビュー", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
+                            .foregroundStyle(Color(.appMainText))
+                        
+                        HStack(spacing: 8) {
+                            
+                            
+                            Button {
+                                viewState.updateRate(rate: 1)
+                            } label: {
+                                Image(systemName: viewState.rate >= 1 ? "star.fill" : "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundStyle(Color(.appMain))
+                            }
+                            
+                            Button {
+                                viewState.updateRate(rate: 2)
+                            } label: {
+                                Image(systemName: viewState.rate >= 2 ? "star.fill" : "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundStyle(Color(.appMain))
+                            }
+                            
+                            Button {
+                                viewState.updateRate(rate: 3)
+                            } label: {
+                                Image(systemName: viewState.rate >= 3 ? "star.fill" : "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundStyle(Color(.appMain))
+                            }
+                            
+                            Button {
+                                viewState.updateRate(rate: 4)
+                            } label: {
+                                Image(systemName: viewState.rate >= 4 ? "star.fill" : "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundStyle(Color(.appMain))
+                            }
+                            
+                            Button {
+                                viewState.updateRate(rate: 5)
+                            } label: {
+                                Image(systemName: viewState.rate >= 5 ? "star.fill" : "star")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 44, height: 44)
+                                    .foregroundStyle(Color(.appMain))
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                    .padding(.top, 12)
+                    .padding(.horizontal, 12)
+                    .padding(.bottom, 12)
+                    
+                    Divider()
+                    
+                    
                     
                     // 写真
                     VStack(alignment: .leading, spacing: 12) {
@@ -107,7 +184,7 @@ struct PostView: View {
                             
                             
                             Button {
-                                
+                                viewState.addImage()
                             } label: {
                                 VStack(spacing: 0) {
                                     Image(systemName: "photo")
@@ -129,79 +206,6 @@ struct PostView: View {
                     .padding(.bottom, 12)
                     
                     Divider()
-
-                    
-                    
-                    
-                    // レビュー
-                    VStack(alignment: .leading, spacing: 12) {
-                        CommonText(text: "レビュー", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
-                            .foregroundStyle(Color(.appMainText))
-                        
-                        HStack(spacing: 8) {
-                            
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundStyle(Color(.appMain))
-                            }
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundStyle(Color(.appMain))
-                            }
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundStyle(Color(.appMain))
-                            }
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "star.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundStyle(Color(.appMain))
-                            }
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "star")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                                    .foregroundStyle(Color(.appMain))
-                            }
-                            
-                            Spacer()
-                        }
-                    }
-                    .padding(.top, 12)
-                    .padding(.horizontal, 12)
-                    .padding(.bottom, 12)
-                    
-                    Divider()
-                    
-                    
-                    
 
                 }
             }
