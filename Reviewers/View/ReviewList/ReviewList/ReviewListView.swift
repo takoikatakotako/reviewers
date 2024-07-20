@@ -10,7 +10,7 @@ struct ReviewListView: View {
                     Button {
                         viewState.tapped()
                     } label: {
-                        ReviewListViewRow()
+                        ReviewListRow()
                     }
                     .listRowInsets(EdgeInsets())
                 }
@@ -41,7 +41,7 @@ struct ReviewListView: View {
                 case let .study(title, questions):
                     StudyView(viewState: StudyViewState(title: title, questions: questions, results: []))
                 case .reviewDetail(title: let title):
-                    StudyCategoryDetailView(viewState: StudyCategoryDetailViewState())
+                    ReviewDetailView(viewState: ReviewDetailViewState())
                 }
             }            
             .scrollIndicators(.hidden)

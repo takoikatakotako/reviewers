@@ -1,6 +1,6 @@
 import SwiftUI
 
-class StudyCategoryDetailViewState: ObservableObject {
+class ReviewDetailViewState: ObservableObject {
 //    let category: TertiaryCategory
 
 //    var title: String {

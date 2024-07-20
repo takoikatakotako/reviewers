@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ReviewListViewRow: View {
+struct ReviewListRow: View {
 //    let title: String
     var body: some View {
         VStack(spacing: 0) {
