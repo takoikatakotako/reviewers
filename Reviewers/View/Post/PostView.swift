@@ -144,60 +144,42 @@ struct PostView: View {
                     
                     
                     // 写真
-                    VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 8) {
                         CommonText(text: "写真", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                             .foregroundStyle(Color(.appMainText))
                         
                         HStack(spacing: 8) {
                             
-                            Button {
-                                
-                            } label: {
-                                Image(.samplePockey)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 84, height: 56)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            ForEach(viewState.images, id: \.self) { image in
+                                Button {
+                                    viewState.imageTapped(image: image)
+                                } label: {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 80, height: 56)
+                                        .clipped()
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
                             }
 
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(.samplePockey)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 84, height: 56)
+                            if viewState.images.count < 4 {
+                                Button {
+                                    viewState.addImage()
+                                } label: {
+                                    VStack(spacing: 0) {
+                                        Image(systemName: "photo")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 36, height: 36)
+                                            .foregroundStyle(Color.white)
+                                    }
+                                    .frame(width: 80, height: 56)
+                                    .background(Color(.appGreenBackground))
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            
-                            
-                            Button {
-                                
-                            } label: {
-                                Image(.samplePockey)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 84, height: 56)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            
-                            
-                            Button {
-                                viewState.addImage()
-                            } label: {
-                                VStack(spacing: 0) {
-                                    Image(systemName: "photo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 36, height: 36)
-                                        .foregroundStyle(Color.white)
                                 }
-                                .frame(width: 84, height: 56)
-                                .background(Color(.appGreenBackground))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
-                            
+
                             Spacer()
                         }
                     }
@@ -212,6 +194,16 @@ struct PostView: View {
             .navigationDestination(isPresented: $destinationTextInputView) {
                 PostInputTextView(text: $viewState.text)
             }
+            .sheet(item: $viewState.sheet, onDismiss: {
+                
+            }, content: { item in
+                switch item {
+                case .showImagePickerSheet:
+                    PostImagePicker(images: $viewState.images)
+                case .showImageViewerSheet(let image):
+                    PostImageViewer(image: image, images: $viewState.images)
+                }
+            })
             .onAppear {
                 // viewState.onAppear()
             }
