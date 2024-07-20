@@ -1,6 +1,6 @@
 import Foundation
 
-struct Repository {
+struct Repository {    
     func fetchCategory() async throws -> PrimaryCategory {
         let url = URL(string: "https://rikako-question-sandbox.s3-ap-northeast-1.amazonaws.com/category/1.json")!
         let (data, _) = try await URLSession.shared.data(from: url)
