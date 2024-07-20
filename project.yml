@@ -57,7 +57,7 @@ targets:
     platform: iOS
     sources:
       - path: Reviewers
-      # - path: Config/Develop
+      - path: Config/Develop
     settings:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Develop
@@ -83,10 +83,10 @@ targets:
         product: RswiftLibrary
       - package: LicenseList
         product: LicenseList
-      # - package: Firebase
-      #   product: FirebaseAnalytics
-      # - package: Firebase
-      #   product: FirebaseAuth
+      - package: Firebase
+        product: FirebaseAnalytics
+      - package: Firebase
+        product: FirebaseAuth
       # - package: Firebase
       #   product: FirebaseCrashlytics
       # - package: Firebase

@@ -33,42 +33,18 @@ class RootViewState: ObservableObject {
                 
                 
                 // アカウントは存在するかチェック
-                
-                
-//                //        let isMaintenance = try await apiRepository.fetchMaintenance()
-//                
-//                
-//                // アップデートが必要か確認
-//                //        let requireVersion = try await apiRepository.fetchRequireVersion()
-//                //        if requireVersion > appUseCase.appVersion {
-//                //            withAnimation(.linear(duration: 1)) {
-//                //                type = .updateRequire
-//                //            }
-//                //            return
-//                //        }
-//                
-//                
-//                try await Task.sleep(nanoseconds: UInt64(3 * 1_000_000_000))
-//                
-//                // ログインチェック
-                
-                
-                withAnimation(.linear(duration: 1)) {
-                    type = .main
+                let xxx = AuthRepository()
+                if let user = xxx.getUserID() {
+                    // ログインしている
+                    withAnimation(.linear(duration: 1)) {
+                        type = .main
+                    }
                 }
                 
-                
-                
-                // ログイン画面を起動させる
-                
-                
-                
-                
-                // UserDefaults に初期値を入れる
-                // userDefaultsRepository.registerDefaults()
-                
-                //
-                
+               // 未ログイン
+                withAnimation(.linear(duration: 1)) {
+                    type = .tutorial
+                }
             } catch {
                 withAnimation(.linear(duration: 1)) {
                     type = .error
