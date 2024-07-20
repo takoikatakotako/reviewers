@@ -33,8 +33,8 @@ class RootViewState: ObservableObject {
                 
                 
                 // アカウントは存在するかチェック
-                let xxx = AuthRepository()
-                if let user = xxx.getUserID() {
+                let authRepo = AuthRepository()
+                if let user = authRepo.getUserID() {
                     // ログインしている
                     withAnimation(.linear(duration: 1)) {
                         type = .main
@@ -51,6 +51,24 @@ class RootViewState: ObservableObject {
                 }
             }
             
+        }
+    }
+    
+    
+    
+    
+    func doneTutorial() {
+        // アカウントは存在するかチェック
+        let authRepo = AuthRepository()
+        if let user = authRepo.getUserID() {
+            // ログインしている
+            withAnimation(.linear(duration: 1)) {
+                type = .main
+            }
+        } else {
+            withAnimation(.linear(duration: 1)) {
+                type = .error
+            }
         }
     }
 }

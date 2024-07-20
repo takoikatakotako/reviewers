@@ -30,6 +30,8 @@
 	<dict>
 		<key>UIColorName</key>
 		<string>app-background-color</string>
+		<key>UIImageName</key>
+		<string>logo</string>
 	</dict>
 	<key>UIRequiresFullScreen</key>
 	<true/>

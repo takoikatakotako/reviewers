@@ -12,7 +12,7 @@ struct RootView: View {
             } else if viewState.type == .updateRequire {
                 UpdateRequiredView()
             } else if viewState.type == .tutorial {
-                TutorialView()
+                TutorialView(viewState: TutorialViewState())
             } else if viewState.type == .main {
                 MainView()
             } else if viewState.type == .error {
@@ -21,6 +21,9 @@ struct RootView: View {
         }
         .onAppear {
             viewState.onAppear()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.doneTutorial)) { _ in
+            viewState.doneTutorial()
         }
     }
 }
