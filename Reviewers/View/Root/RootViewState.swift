@@ -11,28 +11,46 @@ class RootViewState: ObservableObject {
                     return
                 }
                 
+                // アプリ情報取得
+                let s3Repository = S3Repository()
+                let appInfo = try await s3Repository.fetchAppInfo()
+                
                 // メンテナンス中か確認
-                //        let isMaintenance = try await apiRepository.fetchMaintenance()
-                //        if isMaintenance {
-                //            withAnimation(.linear(duration: 1)) {
-                //                type = .maintenance
-                //            }
-                //            return
-                //        }
+                if appInfo.isMaintenance {
+                    withAnimation(.linear(duration: 1)) {
+                        type = .maintenance
+                    }
+                    return
+                }
                 
-                // アップデートが必要か確認
-                //        let requireVersion = try await apiRepository.fetchRequireVersion()
-                //        if requireVersion > appUseCase.appVersion {
-                //            withAnimation(.linear(duration: 1)) {
-                //                type = .updateRequire
-                //            }
-                //            return
-                //        }
+                // アップグレードが必要か確認
+                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+                   appVersion < appInfo.requiredVersion {
+                    withAnimation(.linear(duration: 1)) {
+                        type = .updateRequire
+                    }
+                }
                 
                 
-                try await Task.sleep(nanoseconds: UInt64(3 * 1_000_000_000))
-
-                // ログインチェック
+                // アカウントは存在するかチェック
+                
+                
+//                //        let isMaintenance = try await apiRepository.fetchMaintenance()
+//                
+//                
+//                // アップデートが必要か確認
+//                //        let requireVersion = try await apiRepository.fetchRequireVersion()
+//                //        if requireVersion > appUseCase.appVersion {
+//                //            withAnimation(.linear(duration: 1)) {
+//                //                type = .updateRequire
+//                //            }
+//                //            return
+//                //        }
+//                
+//                
+//                try await Task.sleep(nanoseconds: UInt64(3 * 1_000_000_000))
+//                
+//                // ログインチェック
                 
                 
                 withAnimation(.linear(duration: 1)) {
