@@ -5,13 +5,31 @@ struct AccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("問題設定") {
-                    NavigationLink {
-                        Text("SDF")
+                Section("") {
+                    Button {
+                        
                     } label: {
-                        Text("問題カテゴリー")
-                            .foregroundStyle(Color(.appMainText))
+                        HStack(spacing: 12) {
+                            Image(.icon)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                
+                            VStack(alignment: .leading, spacing: 4) {
+                                CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                    .foregroundStyle(Color(.appMainText))
+                                CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                                    .foregroundStyle(Color(.appMainText))
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.top, 8)
+                        .padding(.horizontal, 8)
+                        .padding(.bottom, 8)
                     }
+                    .listRowInsets(EdgeInsets())
                 }
 
                 Section("ユーザー情報") {

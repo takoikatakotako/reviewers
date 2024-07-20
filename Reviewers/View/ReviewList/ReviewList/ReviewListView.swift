@@ -17,7 +17,7 @@ struct ReviewListView: View {
                 .listStyle(.inset)
                 
                 Button {
-                    viewState.tapped()
+                    viewState.xxxx()
                 } label: {
                     VStack {
                         Image(systemName: "plus")
@@ -43,7 +43,12 @@ struct ReviewListView: View {
                 case .reviewDetail(title: let title):
                     ReviewDetailView(viewState: ReviewDetailViewState())
                 }
-            }            
+            }
+            .fullScreenCover(isPresented: $viewState.showingPostCover, onDismiss: {
+                print("ss")
+            }) {
+                PostView(viewState: PostViewState())
+            }
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

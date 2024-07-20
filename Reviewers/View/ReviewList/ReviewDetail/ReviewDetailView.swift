@@ -273,7 +273,6 @@ struct ReviewDetailView: View {
                         .padding(.vertical, 8)
                         .padding(.trailing, 8)
                 }
-                
             }
             //
             //            ToolbarItem(placement: .principal) {

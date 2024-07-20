@@ -6,7 +6,7 @@ class ReviewListViewState: ObservableObject {
     
     @Published var primariCategory: PrimaryCategory?
     
-    @Published var showingCover = false
+    @Published var showingPostCover = false
     
     var title: String {
         if let primariCategory = primariCategory {
@@ -34,18 +34,23 @@ class ReviewListViewState: ObservableObject {
         path.append(.reviewDetail(title: "ssss"))
     }
     
+    
+    func xxxx() {
+        showingPostCover = true
+    }
+    
 
     func matigaeta() {
-        showingCover = true
+        showingPostCover = true
     }
 
     func check() {
-        showingCover = true
+        showingPostCover = true
 
     }
 
     func random() {
-        showingCover = true
+        showingPostCover = true
 
         guard let primariCategory = primariCategory else {
             return
@@ -73,7 +78,7 @@ class ReviewListViewState: ObservableObject {
                 print(error)
             }
 
-            showingCover = false
+            showingPostCover = false
         }
     }
 }
