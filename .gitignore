@@ -113,3 +113,6 @@ iOSInjectionProject/
 
 # Xcode Project
 Reviewers.xcodeproj/*
+
+GoogleService-Info.plist
+
