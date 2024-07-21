@@ -6,13 +6,12 @@ struct SignUpView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Spacer()
-                
+            ZStack {
                 VStack(alignment: .leading, spacing: 0) {
                     VStack(alignment: .leading, spacing: 12) {
                         CommonText(text: "メールアドレス", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                             .foregroundStyle(Color(.appMainText))
+                            .disabled(viewState.inprogress)
                         
                         TextField("", text: $viewState.mail)
                             .textFieldStyle(.roundedBorder)
@@ -22,6 +21,7 @@ struct SignUpView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         CommonText(text: "パスワード", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                             .foregroundStyle(Color(.appMainText))
+                            .disabled(viewState.inprogress)
                         
                         TextField("", text: $viewState.password)
                             .textFieldStyle(.roundedBorder)
@@ -45,6 +45,7 @@ struct SignUpView: View {
                         .background(Color(.appGreenBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
+                    .disabled(viewState.inprogress)
                     .padding(.top, 24)
                     
                     
@@ -76,11 +77,21 @@ struct SignUpView: View {
                         .background(Color(.appGreenBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
+                    .disabled(viewState.inprogress)
                     .padding(.top, 12)
                 }
                 .padding(16)
                 
-                Spacer()
+                
+                if viewState.inprogress {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .padding()
+                        .tint(Color.white)
+                        .background(Color.gray)
+                        .cornerRadius(8)
+                        .scaleEffect(1.2)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
