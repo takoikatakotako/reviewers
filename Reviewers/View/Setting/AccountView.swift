@@ -85,6 +85,15 @@ struct AccountView: View {
                         Text("ライセンス")
                     }
                 }
+                
+                Section("") {
+                    Button {
+                        viewState.signOut()
+                    } label: {
+                        Text("サインアウト")
+                    }
+
+                }
 
                 Section("Debug") {
                     NavigationLink {

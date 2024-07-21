@@ -28,13 +28,26 @@ class ReviewListViewState: ObservableObject {
         guard let user = authRepository.getUser() else {
             return
         }
-        if user.isAnonymous {
-            // 匿名ユーザーではあれです
-            showingSignInAlert = true
+        
+        // 認証済みユーザーの場合、投稿画面を表示
+        if user.isAnonymous == false {
+            showingPostCover = true
             return
         }
         
-        showingPostCover = true
+        // メール認証が終わっていない場合
+        guard user.isEmailVerified == false else {
+            // 登録されたメールアドレスに送りました。届かない場合は
+            return
+        }
+        
+        print(user.uid)
+        
+  
+        showingSignInAlert = true
+
+        
+        //showingPostCover = true
     }
     
     

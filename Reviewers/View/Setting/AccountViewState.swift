@@ -13,4 +13,9 @@ class AccountViewState: ObservableObject {
         
         self.user = user
     }
+    
+    
+    func signOut() {
+        
+    }
 }

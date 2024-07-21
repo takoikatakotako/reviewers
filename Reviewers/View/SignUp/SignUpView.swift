@@ -23,7 +23,7 @@ struct SignUpView: View {
                             .foregroundStyle(Color(.appMainText))
                             .disabled(viewState.inprogress)
                         
-                        TextField("", text: $viewState.password)
+                        SecureField("", text: $viewState.password)
                             .textFieldStyle(.roundedBorder)
                             .font(.mPlus2Regular(size: 16))
                     }
@@ -32,7 +32,7 @@ struct SignUpView: View {
                     
                     
                     Button {
-                        
+                        viewState.signUp()
                     } label: {
                         HStack {
                             Spacer()

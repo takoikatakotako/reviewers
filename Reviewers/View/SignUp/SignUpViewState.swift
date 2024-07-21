@@ -13,9 +13,28 @@ class SignUpViewState: ObservableObject {
         inprogress = true
         Task { @MainActor in
             do {
-                try await authRepository.createUser(email: mail, password: password)
+                try await authRepository.linkEmailProvider(email: mail, password: password)
+                
+                guard let user = authRepository.getUser() else {
+                    throw ReviewersError.temp
+                }
+                
+                if user.isEmailVerified == true {
+                    // すでに登録されているユーザー
+                    return
+                }
+                            
+                
+                // 
+                try await authRepository.sendEmailVerification()
+                
+                
+                
+                
+                
                 inprogress = false
             } catch {
+                print(error)
                 inprogress = false
             }
         }
