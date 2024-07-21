@@ -17,7 +17,7 @@ struct ReviewListView: View {
                 .listStyle(.inset)
                 
                 Button {
-                    viewState.xxxx()
+                    viewState.postButtonTapped()
                 } label: {
                     VStack {
                         Image(systemName: "plus")
@@ -49,13 +49,25 @@ struct ReviewListView: View {
             }) {
                 PostView(viewState: PostViewState())
             }
+            .alert("", isPresented: $viewState.showingSignInAlert, actions: {
+                Button("とじる") {}
+                Button("ログイン") {
+                    viewState.signInTapped()
+                }
+            }, message: {
+                Text("レビューを投稿するにはログイン、アカウント作成が必要です。")
+            })
+            .fullScreenCover(isPresented: $viewState.showingSignUpFullScreen) {
+                SignUpView(viewState: SignUpViewState())
+            }
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(viewState.title)
-                        .font(.system(size: 16).bold())
-                        .foregroundStyle(Color.white)
+                    Image(.listTitleLogo)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 28)
                 }
             }
             .toolbarBackground(Color(.appMain), for: .navigationBar)

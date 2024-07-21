@@ -2,6 +2,8 @@ import SwiftUI
 import LicenseList
 
 struct AccountView: View {
+    @StateObject var viewState: AccountViewState
+
     var body: some View {
         NavigationStack {
             List {
@@ -19,7 +21,7 @@ struct AccountView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                                CommonText(text: "ID: \(viewState.user?.uid ?? "")", font: .mPlus2Regular(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                             }
                             
@@ -92,6 +94,9 @@ struct AccountView: View {
                     }
                 }
             }
+            .onAppear {
+                viewState.onAppear()
+            }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
@@ -109,5 +114,5 @@ struct AccountView: View {
 }
 
 #Preview {
-    AccountView()
+    AccountView(viewState: AccountViewState())
 }

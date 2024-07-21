@@ -45,10 +45,10 @@ class TutorialViewState: ObservableObject {
         guard index < 2 else {
             Task { @MainActor in
                 do {
-                    // try await authRepository.signInAnonymously()
+                    try await authRepository.signInAnonymously()
                     NotificationCenter.default.post(name: NSNotification.doneTutorial, object: self, userInfo: nil)
                 } catch {
-                    
+                    // TODO: エラーハンドリング
                 }
             }
             

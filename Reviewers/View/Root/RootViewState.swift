@@ -34,11 +34,12 @@ class RootViewState: ObservableObject {
                 
                 // アカウントは存在するかチェック
                 let authRepo = AuthRepository()
-                if let user = authRepo.getUserID() {
+                if let user = authRepo.getUser() {
                     // ログインしている
                     withAnimation(.linear(duration: 1)) {
                         type = .main
                     }
+                    return
                 }
                 
                // 未ログイン
@@ -60,7 +61,7 @@ class RootViewState: ObservableObject {
     func doneTutorial() {
         // アカウントは存在するかチェック
         let authRepo = AuthRepository()
-        if let user = authRepo.getUserID() {
+        if let user = authRepo.getUser() {
             // ログインしている
             withAnimation(.linear(duration: 1)) {
                 type = .main

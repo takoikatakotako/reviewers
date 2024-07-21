@@ -63,7 +63,7 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Develop
         # CODE_SIGN_ENTITLEMENTS: Config/Develop/ReviewersDevelop.entitlements
         DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
-        PRODUCT_BUNDLE_IDENTIFIER: com.swiswiswift.it-development
+        PRODUCT_BUNDLE_IDENTIFIER: com.swiswiswift.reviewers-development
     info:
       path: Reviewers/Info/Info-Develop.plist
       properties:

@@ -3,7 +3,7 @@ import FirebaseAuth
 
 struct AuthRepository {
     
-    func getUserID() -> User? {
+    func getUser() -> User? {
         return  Auth.auth().currentUser
     }
     

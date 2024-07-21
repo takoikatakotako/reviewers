@@ -15,7 +15,7 @@ struct MainView: View {
                 }
                 .tag(2)
 
-            AccountView()
+            AccountView(viewState: AccountViewState())
                 .tabItem {
                     Label("アカウント", systemImage: "person.crop.circle")
                 }
