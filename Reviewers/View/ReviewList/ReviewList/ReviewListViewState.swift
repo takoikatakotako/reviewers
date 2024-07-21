@@ -3,13 +3,13 @@ import Foundation
 class ReviewListViewState: ObservableObject {
     @Published var favoriteColor = 0
     @Published var path: [ReviewListViewPath] = []
-        
+    
     @Published var showingPostCover = false
     
     
     @Published var showingSignInAlert = false
     @Published var showingSignUpFullScreen = false
-
+    
     
     private let authRepository = AuthRepository()
     
@@ -29,25 +29,42 @@ class ReviewListViewState: ObservableObject {
             return
         }
         
-        // 認証済みユーザーの場合、投稿画面を表示
-        if user.isAnonymous == false {
+        // 匿名ユーザーの場合SignIn画面を表示
+        if user.isAnonymous {
+            showingSignInAlert = true
+            return
+        }
+        
+        // メール認証を確認する
+        if user.isEmailVerified {
+            // メール認証が終わっているため投稿画面を表示
             showingPostCover = true
             return
         }
         
+        
+        
         // メール認証が終わっていない場合
-        guard user.isEmailVerified == false else {
-            // 登録されたメールアドレスに送りました。届かない場合は
-            return
+        Task { @MainActor in
+            do {
+                try await authRepository.reloadUser()
+                guard let user = authRepository.getUser() else {
+                    throw ReviewersError.temp
+                }
+                if user.isEmailVerified {
+                    // メール認証が終わっているため投稿画面を表示
+                    showingPostCover = true
+                    return
+                }
+                
+                // 確認メールを送る
+                try await authRepository.sendEmailVerification()
+            } catch {
+                print(error)
+            }
+            
+            
         }
-        
-        print(user.uid)
-        
-  
-        showingSignInAlert = true
-
-        
-        //showingPostCover = true
     }
     
     
@@ -57,13 +74,13 @@ class ReviewListViewState: ObservableObject {
     
     
     
-
+    
     func matigaeta() {
         showingPostCover = true
     }
-
+    
     func check() {
         showingPostCover = true
-
+        
     }
 }

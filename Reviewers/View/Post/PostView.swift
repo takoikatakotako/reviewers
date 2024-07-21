@@ -11,34 +11,7 @@ struct PostView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    // テキスト
-                    Button {
-                        destinationTextInputView = true
-                    } label: {
-                        HStack(spacing: 0) {
-                            VStack(alignment: .leading, spacing: 12) {
-                                CommonText(text: "テキスト", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                                
-                                if viewState.text.isEmpty {
-                                    CommonText(text: "レビューを入力してください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
-                                        .foregroundStyle(Color(.appSubText))
-                                } else {
-                                    CommonText(text: viewState.text, font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
-                                        .foregroundStyle(Color(.appMainText))
-                                }
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding(.top, 12)
-                        .padding(.horizontal, 12)
-                        .padding(.bottom, 12)
-                    }
-                    
-                    Divider()
-                    
-                    
+
                     // バーコード
                     Button {
                         viewState.barcodeTapped()
@@ -65,7 +38,7 @@ struct PostView: View {
                                 .frame(width: 24, height: 24)
                                 .foregroundStyle(Color(.appSubText))
                         }
-                        .padding(.top, 12)
+                        .padding(.top, 16)
                         .padding(.horizontal, 12)
                         .padding(.bottom, 12)
                     }
@@ -143,6 +116,34 @@ struct PostView: View {
                     
                     
                     
+                    // テキスト
+                    Button {
+                        destinationTextInputView = true
+                    } label: {
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                CommonText(text: "コメント", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
+                                    .foregroundStyle(Color(.appMainText))
+                                
+                                if viewState.text.isEmpty {
+                                    CommonText(text: "コメントを入力してください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                        .foregroundStyle(Color(.appSubText))
+                                } else {
+                                    CommonText(text: viewState.text, font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                        .foregroundStyle(Color(.appMainText))
+                                }
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.top, 12)
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 12)
+                    }
+                    
+                    Divider()
+                    
+                    
                     // 写真
                     VStack(alignment: .leading, spacing: 8) {
                         CommonText(text: "写真", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
@@ -188,7 +189,6 @@ struct PostView: View {
                     .padding(.bottom, 12)
                     
                     Divider()
-
                 }
             }
             .navigationDestination(isPresented: $destinationTextInputView) {

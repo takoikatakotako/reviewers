@@ -25,6 +25,13 @@ struct AuthRepository {
         return  Auth.auth().currentUser
     }
     
+    func reloadUser() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw ReviewersError.clientError
+        }
+        try await user.reload()
+    }
+    
     func signInAnonymously() async throws {
         try await Auth.auth().signInAnonymously()
     }
