@@ -8,7 +8,7 @@ extension Font {
     static func mPlus2SemiBold(size: CGFloat) -> Font {
         return Font.custom("M PLUS 2", size: size).weight(.semibold)
     }
-    
+
     static func mPlus2Medium(size: CGFloat) -> Font {
         return Font.custom("M PLUS 2", size: size).weight(.medium)
     }

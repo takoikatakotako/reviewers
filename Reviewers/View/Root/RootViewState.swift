@@ -2,7 +2,7 @@ import SwiftUI
 
 class RootViewState: ObservableObject {
     @Published var type: RootViewType = .loading
-    
+
     func onAppear() {
         Task { @MainActor in
             do {
@@ -10,11 +10,11 @@ class RootViewState: ObservableObject {
                 guard type == .loading else {
                     return
                 }
-                
+
                 // アプリ情報取得
                 let s3Repository = S3Repository()
                 let appInfo = try await s3Repository.fetchAppInfo()
-                
+
                 // メンテナンス中か確認
                 if appInfo.isMaintenance {
                     withAnimation(.linear(duration: 1)) {
@@ -22,7 +22,7 @@ class RootViewState: ObservableObject {
                     }
                     return
                 }
-                
+
                 // アップグレードが必要か確認
                 if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                    appVersion < appInfo.requiredVersion {
@@ -30,8 +30,7 @@ class RootViewState: ObservableObject {
                         type = .updateRequire
                     }
                 }
-                
-                
+
                 // アカウントは存在するかチェック
                 let authRepo = AuthRepository()
                 if let user = authRepo.getUser() {
@@ -41,7 +40,7 @@ class RootViewState: ObservableObject {
                     }
                     return
                 }
-                
+
                // 未ログイン
                 withAnimation(.linear(duration: 1)) {
                     type = .tutorial
@@ -51,13 +50,10 @@ class RootViewState: ObservableObject {
                     type = .error
                 }
             }
-            
+
         }
     }
-    
-    
-    
-    
+
     func doneTutorial() {
         // アカウントは存在するかチェック
         let authRepo = AuthRepository()

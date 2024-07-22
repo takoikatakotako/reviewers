@@ -3,40 +3,39 @@ import SwiftUI
 struct SignInView: View {
     @StateObject var viewState: SignInViewState
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         VStack {
             Spacer()
-            
+
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: 12) {
                     CommonText(text: "メールアドレス", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                         .foregroundStyle(Color(.appMainText))
-                    
+
                     TextField("", text: $viewState.mail)
                         .textFieldStyle(.roundedBorder)
                         .font(.mPlus2Regular(size: 16))
                 }
-                
+
                 VStack(alignment: .leading, spacing: 12) {
                     CommonText(text: "パスワード", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                         .foregroundStyle(Color(.appMainText))
-                    
+
                     TextField("", text: $viewState.password)
                         .textFieldStyle(.roundedBorder)
                         .font(.mPlus2Regular(size: 16))
                 }
                 .padding(.top, 12)
-                
-                
+
                 Button {
-                    
+
                 } label: {
                     HStack {
                         Spacer()
                         CommonText(text: "ログイン", font: .mPlus2Bold(size: 14), lineHeight: 20)
                             .foregroundStyle(Color(.white))
-                        
+
                         Spacer()
                     }
                     .frame(height: 48)
@@ -47,7 +46,7 @@ struct SignInView: View {
 
             }
             .padding(16)
-            
+
             Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -63,8 +62,7 @@ struct SignInView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
-            
+
             ToolbarItem(placement: .principal) {
                 CommonText(text: "ログイン", font: .mPlus2Bold(size: 14), lineHeight: 20)
                     .foregroundStyle(Color(.white))

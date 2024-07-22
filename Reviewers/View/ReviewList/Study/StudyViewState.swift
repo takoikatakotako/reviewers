@@ -7,11 +7,11 @@ class StudyViewState: ObservableObject {
     @Published var finish = false
     @Published var choiceIndex: Int?
     @Published var cover: StudyViewCover?
-    
+
     private let initialTitle: String
     private let questions: [Question]
     private var results: [QuestionResult]
-    
+
     var title: String {
         return "\(initialTitle)(\(results.count+1)/\(questions.count))"
     }
@@ -36,7 +36,7 @@ class StudyViewState: ObservableObject {
 
     func choiceTapped(choiceIndex: Int) {
         self.choiceIndex = choiceIndex
-        
+
         let answer: Int
         switch question {
         case .questionSimple(let questionSimple):
@@ -44,13 +44,13 @@ class StudyViewState: ObservableObject {
         case .questionSimpleNoChoices(let questionSimpleNoChoices):
             answer = questionSimpleNoChoices.answer
         }
-        
+
         if choiceIndex == answer {
             status = .answerCorrect
         } else {
             status = .answerIncorrect
         }
-        
+
         Task { @MainActor in
             do {
                 try await Task.sleep(nanoseconds: UInt64(0.7 * Double(NSEC_PER_SEC)))
@@ -60,20 +60,20 @@ class StudyViewState: ObservableObject {
             }
         }
     }
-    
+
     func next() {
-        
+
         // 結果を追加
         if let choiceIndex = self.choiceIndex {
             results.append(QuestionResult(question: question, answered: choiceIndex))
         }
-        
+
         // 最後の問題
         if results.count == questions.count {
             finish = true
             return
         }
-        
+
         status = .toiteru
     }
 }

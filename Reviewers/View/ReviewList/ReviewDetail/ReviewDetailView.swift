@@ -3,7 +3,7 @@ import SwiftUI
 struct ReviewDetailView: View {
     @Environment(\.dismiss) var dismiss
     @State var viewState: ReviewDetailViewState
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
@@ -14,41 +14,41 @@ struct ReviewDetailView: View {
                             .scaledToFill()
                             .frame(width: 40, height: 40)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
-                        
+
                         VStack(alignment: .leading, spacing: 4) {
                             CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                             CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                         }
-                        
+
                         Spacer()
-                        
+
                         HStack(spacing: 4) {
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: "star")
                                 .resizable()
                                 .scaledToFit()
@@ -56,7 +56,7 @@ struct ReviewDetailView: View {
                                 .foregroundColor(.appMain)
                         }
                     }
-                    
+
                     CommonText(
                         text: "ポッキーは私のお気に入りのお菓子です！そのサクサクとした食感と、程よい甘さのチョコレートコーティングが絶妙です。パッケージも手軽で持ち運びやすく、友達とシェアするのにもぴったり。特にミルクチョコレート味が大好きで、食べ始めると止まらなくなります。いろんなフレーバーがあるので、気分によって選べるのも良いですね。ポッキーがあれば、どんな時でも幸せな気分になれます！",
                         font: .mPlus2Regular(size: 14),
@@ -66,7 +66,7 @@ struct ReviewDetailView: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .foregroundStyle(Color(.appMainText))
                     .padding(.top, 12)
-                    
+
                     Image(.samplePockey)
                         .resizable()
                         .scaledToFill()
@@ -74,14 +74,14 @@ struct ReviewDetailView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .clipped()
                         .padding(.top, 12)
-                    
+
                     // XXX
                     HStack(spacing: 0) {
                         Spacer()
-                        
+
                         HStack(spacing: 8) {
                             Button {
-                                
+
                             } label: {
                                 Image(systemName: "bookmark")
                                     .resizable()
@@ -90,9 +90,9 @@ struct ReviewDetailView: View {
                                     .foregroundStyle(Color(.appMainText))
                                     .padding(8)
                             }
-                            
+
                             Button {
-                                
+
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .resizable()
@@ -104,12 +104,12 @@ struct ReviewDetailView: View {
                         }
                     }
                     .padding(.top, 12)
-                    
+
                     // アフリアエイト
                     HStack(spacing: 8) {
                         // Amazon
                         Button {
-                            
+
                         } label: {
                             VStack(spacing: 0) {
                                 CommonText(text: "Amazon", font: .mPlus2Medium(size: 18), lineHeight: 20)
@@ -128,10 +128,10 @@ struct ReviewDetailView: View {
                                 RoundedRectangle(cornerRadius: 8)
                             }
                         }
-                        
+
                         // 楽天市場
                         Button {
-                            
+
                         } label: {
                             VStack(spacing: 0) {
                                 CommonText(text: "楽天市場", font: .mPlus2Medium(size: 18), lineHeight: 20)
@@ -152,11 +152,10 @@ struct ReviewDetailView: View {
                         }
                     }
                     .padding(.top, 12)
-                    
+
                     Divider()
                         .padding(.top, 12)
-                    
-                    
+
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 12) {
                             Image(.icon)
@@ -164,18 +163,18 @@ struct ReviewDetailView: View {
                                 .scaledToFill()
                                 .frame(width: 40, height: 40)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            
+
                             VStack(alignment: .leading, spacing: 4) {
                                 CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                                 CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                             }
-                            
+
                             Spacer()
-                            
+
                             Button {
-                                
+
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .resizable()
@@ -186,7 +185,7 @@ struct ReviewDetailView: View {
                             }
                         }
                         .padding(.top, 12)
-                        
+
                         CommonText(
                             text: "抹茶味が好きですカビ！\nノーマルタイプも美味しいですカビ！！\nノーマルタイプも美味しいですカビ！！",
                             font: .mPlus2Regular(size: 14),
@@ -195,26 +194,18 @@ struct ReviewDetailView: View {
                         )
                         .foregroundStyle(Color(.appMainText))
                         .padding(.top, 12)
-                        
+
                         Divider()
                             .padding(.top, 12)
                     }
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                 }
                 .padding(.top, 12)
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
                 .padding(.bottom, 12)
             }
-            
+
             //            VStack(spacing: 8) {
             //                HStack(spacing: 8) {
             //                    Button {
@@ -264,7 +255,7 @@ struct ReviewDetailView: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                
+
                 Button {
                     dismiss()
                 } label: {
@@ -280,13 +271,13 @@ struct ReviewDetailView: View {
             //                    .font(.system(size: 16).bold())
             //                    .foregroundStyle(Color.white)
             //            }
-            
+
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }
 }
 
-//#Preview {
+// #Preview {
 //    StudyCategoryDetailView(viewState: StudyCategoryDetailViewState(category: TertiaryCategory(title: "Title", questions: [])))
-//}
+// }

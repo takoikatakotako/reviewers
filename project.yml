@@ -71,9 +71,10 @@ targets:
         CFBundleDisplayName: Reviewers
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleShortVersionString: $(MARKETING_VERSION)
+        NSCameraUsageDescription: バーコードの読み取りのためカメラを使用します。
         UILaunchScreen:
-          UIImageName: logo
-          UIColorName: app-background-color
+          UIImageName: splash-logo
+          UIColorName: app-splash-background-color
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIRequiresFullScreen: YES
         UIAppFonts:

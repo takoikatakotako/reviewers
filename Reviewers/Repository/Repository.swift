@@ -6,7 +6,7 @@ struct Repository {
         let (data, _) = try await URLSession.shared.data(from: url)
         return try JSONDecoder().decode(PrimaryCategory.self, from: data)
     }
-    
+
     func fetchQuestionList() async throws -> QuestionList {
         let url = URL(string: "https://rikako-question-sandbox.s3-ap-northeast-1.amazonaws.com/question/list.json")!
         let (data, _) = try await URLSession.shared.data(from: url)

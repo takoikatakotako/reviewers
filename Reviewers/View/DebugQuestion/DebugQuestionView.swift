@@ -3,7 +3,7 @@ import SwiftUI
 struct DebugQuestionView: View {
     @StateObject var viewState: DebugQuestionViewState
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         ScrollView {
             VStack {
@@ -13,24 +13,24 @@ struct DebugQuestionView: View {
                         QuestionSimpleView(question: questionSimple, disabled: false) { imageName in
                             print(imageName)
                         }
-                        
+
                         // 正解
                         DebugQuestionAnswerView(text: questionSimple.answer.katakana)
                             .padding(.top, 16)
-                        
+
                         // 解説
                         DebugQuestionExplanationView(text: questionSimple.explanation)
                             .padding(.top, 16)
-                        
+
                     case .questionSimpleNoChoices(let questionSimpleNoChoices):
                         QuestionSimpleNoChoicesView(question: questionSimpleNoChoices, disabled: false) { imageName in
                             print(imageName)
                         }
-                        
+
                         // 正解
                         DebugQuestionAnswerView(text: questionSimpleNoChoices.answer.katakana)
                             .padding(.top, 16)
-                        
+
                         // 解説
                         DebugQuestionExplanationView(text: questionSimpleNoChoices.explanation)
                             .padding(.top, 16)
@@ -38,7 +38,7 @@ struct DebugQuestionView: View {
                 } else {
                     Text("Loading")
                 }
-                
+
                 Spacer()
             }
             .padding(.top, 16)
@@ -61,7 +61,7 @@ struct DebugQuestionView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 CommonText(text: "No: \(viewState.questionId)", font: .mPlus2Bold(size: 16), lineHeight: 16)
                     .font(.system(size: 16).bold())

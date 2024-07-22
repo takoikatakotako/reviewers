@@ -2,10 +2,10 @@ import SwiftUI
 
 struct PostImageViewer: View {
     @Environment(\.dismiss) var dismiss
-    
+
     let image: UIImage
     @Binding var images: [UIImage]
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -30,12 +30,12 @@ struct PostImageViewer: View {
                             .padding(.bottom, 8)
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         if let index = images.firstIndex(of: image) {
                             images.remove(at: index)
-                        }                        
+                        }
                         dismiss()
                     } label: {
                         CommonText(text: "削除", font: .mPlus2SemiBold(size: 16), lineHeight: 20)
@@ -49,11 +49,11 @@ struct PostImageViewer: View {
             }
             .toolbarBackground(Color(.appMain), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            
+
         }
     }
 }
 
-//#Preview {
+// #Preview {
 //    PostImageViewer()
-//}
+// }

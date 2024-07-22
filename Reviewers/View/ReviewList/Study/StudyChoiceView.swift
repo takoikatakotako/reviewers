@@ -9,7 +9,7 @@ enum StudyChoiceViewStatus {
 struct StudyChoiceView: View {
     let text: String
     let status: StudyChoiceViewStatus
-    
+
     var backgroundColor: Color {
         switch status {
         case .normal:
@@ -20,7 +20,7 @@ struct StudyChoiceView: View {
             return Color(.appBlueBackground)
         }
     }
-    
+
     var body: some View {
         CommonText(text: text, font: .mPlus2Medium(size: 18), lineHeight: 18)
             .foregroundStyle(Color.white)

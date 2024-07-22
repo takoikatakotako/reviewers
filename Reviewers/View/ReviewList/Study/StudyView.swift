@@ -3,7 +3,7 @@ import SwiftUI
 struct StudyView: View {
     @StateObject var viewState: StudyViewState
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
@@ -18,7 +18,7 @@ struct StudyView: View {
                             viewState.imageTapped(imageName: imageName)
                         }
                     }
-                    
+
                     if viewState.status == .kaisetu {
                         // なんとか
                         HStack {
@@ -29,39 +29,37 @@ struct StudyView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             CommonText(text: "イ", font: .mPlus2Regular(size: 14), lineHeight: 28)
                                 .foregroundStyle(Color(.appMainText))
-                            
+
                             Spacer()
                         }
                         .padding(.top, 16)
-                        
+
                         VStack(alignment: .leading, spacing: 8) {
                             CommonText(text: "解説", font: .mPlus2Regular(size: 14), lineHeight: 28)
                                 .foregroundStyle(Color.white)
                                 .frame(width: 52, height: 32)
                                 .background(Color(.appGreenBackground))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            
+
                             CommonText(text: "イまずは表の情報から、コーディング所要工数を求める。プログラムの本数にそれぞれの所要工数をかけて足し合わせると\n20 x 74 + 23 + 34\nより、コーディングに95人日かかることがわかる。\nそしてなんとかかんとか感とか。\nアはなんとかのかんとかの説明をしているため不正解。\nイは。。。", font: .mPlus2Regular(size: 14), lineHeight: 28, alignment: .leading)
                                 .foregroundStyle(Color(.appMainText))
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         }
                         .padding(.top, 16)
                     }
-                    
-                    
+
                 }
                 .padding(.top, 16)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 100)
             }
-            
-            
+
             // 解いてる, 正解時、不正解時
             if [.toiteru, .answerCorrect, .answerIncorrect].contains(where: { $0 == viewState.status }) {
                 // 選択肢
                 HStack(spacing: 12) {
                     Button {
-                        
+
                     } label: {
                         HStack {
                             Image(systemName: "pencil.line")
@@ -74,7 +72,7 @@ struct StudyView: View {
                         .background(Color(.appGreenBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                    
+
                     switch viewState.question {
                     case .questionSimple(let question):
                         ForEach(0 ..< question.choices.count, id: \.self) {index in
@@ -101,22 +99,16 @@ struct StudyView: View {
                             }
                             .disabled(viewState.showingResult)
                         }
-                    case .questionSimpleNoChoices(_):
+                    case .questionSimpleNoChoices:
                         Text("questionSimpleNoChoices")
                     }
                 }
                 // else viewState.status ==
-                
+
                 //
-                
-                
-                
+
             }
-            
-            
-            
-            
-            
+
             // 正解
             if viewState.status == .answerCorrect {
                 VStack {
@@ -131,12 +123,12 @@ struct StudyView: View {
                     Spacer()
                 }
             }
-            
+
             // 不正解
             if viewState.status == .answerIncorrect {
                 VStack {
                     Spacer()
-                    
+
                     Image(systemName: "multiply")
                         .resizable()
                         .foregroundColor(.appBlueBackground)
@@ -145,8 +137,7 @@ struct StudyView: View {
                     Spacer()
                 }
             }
-            
-            
+
             // 次へ
             if viewState.status == .kaisetu {
                 Button {
@@ -154,11 +145,11 @@ struct StudyView: View {
                 } label: {
                     HStack {
                         Spacer()
-                        
+
                         CommonText(text: "次へ", font: .mPlus2Medium(size: 18), lineHeight: 18)
                             .foregroundStyle(Color.white)
                             .frame(height: 48)
-                        
+
                         Spacer()
                     }
                     .background(Color(.appGreenBackground))
@@ -166,7 +157,7 @@ struct StudyView: View {
                 }
                 .padding(.horizontal, 16)
             }
-            
+
         }
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
@@ -183,16 +174,16 @@ struct StudyView: View {
                 }
                 .disabled(viewState.showingResult)
             }
-            
+
             ToolbarItem(placement: .principal) {
                 CommonText(text: viewState.title, font: .mPlus2Bold(size: 16), lineHeight: 16)
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    
+
                 } label: {
                     CommonText(text: "答え", font: .mPlus2Medium(size: 16), lineHeight: 16)
                         .foregroundStyle(Color.white)
@@ -208,7 +199,7 @@ struct StudyView: View {
         .fullScreenCover(isPresented: $viewState.showingImageCover) {
             StudyImageViewer()
         }
-        .fullScreenCover(item: $viewState.cover){ item in
+        .fullScreenCover(item: $viewState.cover) { item in
             switch item {
             case .image(let imageName):
                 ImageView(imageName: imageName)

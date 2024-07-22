@@ -2,9 +2,9 @@ import SwiftUI
 
 class TutorialViewState: ObservableObject {
     @Published var index = 0
-    
+
     private let authRepository = AuthRepository()
-    
+
     var title: String {
         if index == 0 {
             return "レビューを読む"
@@ -16,7 +16,7 @@ class TutorialViewState: ObservableObject {
             return "error"
         }
     }
-    
+
     var description: String {
         if index == 0 {
             return "たくさんのレビューを読んで、\n自分にぴったりの食べ物を見つけよう！"
@@ -28,7 +28,7 @@ class TutorialViewState: ObservableObject {
             return "error"
         }
     }
-    
+
     var buttonTitle: String {
         if index == 0 {
             return "つぎへ"
@@ -40,7 +40,7 @@ class TutorialViewState: ObservableObject {
             return "error"
         }
     }
-    
+
     func tapped() {
         guard index < 2 else {
             Task { @MainActor in
@@ -51,14 +51,10 @@ class TutorialViewState: ObservableObject {
                     // TODO: エラーハンドリング
                 }
             }
-            
-            
-            
-            
-            
+
             return
         }
-        
+
         withAnimation(.linear(duration: 0.3)) {
             index += 1
         }

@@ -3,7 +3,7 @@ import SwiftUI
 struct DebugView: View {
     @StateObject var viewState: DebugViewState
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         List(viewState.questions, id: \.self) { questionId in
             NavigationLink {
@@ -29,13 +29,13 @@ struct DebugView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 CommonText(text: "デバッグ", font: .mPlus2Bold(size: 16), lineHeight: 16)
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     URLCache.shared.removeAllCachedResponses()

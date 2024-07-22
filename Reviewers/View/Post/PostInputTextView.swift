@@ -4,8 +4,7 @@ struct PostInputTextView: View {
     @Environment(\.dismiss) var dismiss
 
     @Binding var text: String
-    
-    
+
     @FocusState private var keyboardFocused: Bool
 
     var body: some View {
@@ -16,7 +15,7 @@ struct PostInputTextView: View {
                 .foregroundStyle(Color(.appMainText))
                 .padding(.top, 16)
                 .padding(.horizontal, 12)
-            
+
             Spacer()
         }
         .onAppear {
@@ -39,7 +38,7 @@ struct PostInputTextView: View {
                         .padding(.bottom, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     dismiss()

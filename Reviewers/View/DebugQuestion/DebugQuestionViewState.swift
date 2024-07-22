@@ -2,11 +2,10 @@ import SwiftUI
 
 class DebugQuestionViewState: ObservableObject {
     @Published var question: Question?
-    
-    
+
     let questionId: Int
     private let repository: Repository = Repository()
-    
+
     init(questionId: Int) {
         self.questionId = questionId
     }

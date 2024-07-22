@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ReviewListView: View {
     @StateObject var viewState: ReviewListViewState
-    
+
     var body: some View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
@@ -15,7 +15,7 @@ struct ReviewListView: View {
                     .listRowInsets(EdgeInsets())
                 }
                 .listStyle(.inset)
-                
+
                 Button {
                     viewState.postButtonTapped()
                 } label: {
@@ -79,13 +79,6 @@ struct ReviewListView: View {
 #Preview {
     ReviewListView(viewState: ReviewListViewState())
 }
-
-
-
-
-
-
-
 
 //            ZStack(alignment: .bottom) {
 //                ScrollView {
@@ -178,7 +171,3 @@ struct ReviewListView: View {
 //                            .ignoresSafeArea(.all)
 //                    )
 //                }
-
-
-
-

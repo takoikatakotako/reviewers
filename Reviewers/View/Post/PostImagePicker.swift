@@ -4,11 +4,11 @@ import PhotosUI
 struct PostImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var images: [UIImage]
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
     func makeUIViewController(context: UIViewControllerRepresentableContext<PostImagePicker>) -> PHPickerViewController {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -17,16 +17,16 @@ struct PostImagePicker: UIViewControllerRepresentable {
         picker.delegate = context.coordinator
         return picker
     }
-    
+
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: UIViewControllerRepresentableContext<PostImagePicker>) {}
-    
+
     class Coordinator: NSObject, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
         let parent: PostImagePicker
-        
+
         init(_ parent: PostImagePicker) {
             self.parent = parent
         }
-        
+
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             parent.presentationMode.wrappedValue.dismiss()
 

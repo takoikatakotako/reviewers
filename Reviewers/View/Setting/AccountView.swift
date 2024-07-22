@@ -9,7 +9,7 @@ struct AccountView: View {
             List {
                 Section("") {
                     Button {
-                        
+
                     } label: {
                         HStack(spacing: 12) {
                             Image(.icon)
@@ -17,14 +17,14 @@ struct AccountView: View {
                                 .scaledToFill()
                                 .frame(width: 60, height: 60)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                
+
                             VStack(alignment: .leading, spacing: 4) {
                                 CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                                 CommonText(text: "ID: \(viewState.user?.uid ?? "")", font: .mPlus2Regular(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                             }
-                            
+
                             Spacer()
                         }
                         .padding(.top, 8)
@@ -85,7 +85,7 @@ struct AccountView: View {
                         Text("ライセンス")
                     }
                 }
-                
+
                 Section("") {
                     Button {
                         viewState.signOut()

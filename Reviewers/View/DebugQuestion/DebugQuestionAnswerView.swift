@@ -11,12 +11,12 @@ struct DebugQuestionAnswerView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             CommonText(text: text, font: .mPlus2Regular(size: 14), lineHeight: 28)
                 .foregroundStyle(Color(.appMainText))
-            
+
             Spacer()
         }
     }
 }
 
-//#Preview {
+// #Preview {
 //    DebugQuestionAnswerView()
-//}
+// }
