@@ -14,6 +14,7 @@ class SignUpViewState: ObservableObject {
         Task { @MainActor in
             do {
                 try await authRepository.linkEmailProvider(email: mail, password: password)
+                try await authRepository.signIn(email: mail, password: password)
 
                 guard let user = authRepository.getUser() else {
                     throw ReviewersError.temp

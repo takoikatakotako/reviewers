@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReviewListRow: View {
 //    let title: String
+   // let post: Post
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {

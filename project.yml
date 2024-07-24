@@ -91,12 +91,12 @@ targets:
         product: FirebaseAuth
       # - package: Firebase
       #   product: FirebaseCrashlytics
-      # - package: Firebase
-      #   product: FirebaseStorage
+      - package: Firebase
+        product: FirebaseStorage
       # - package: Firebase
       #   product: FirebaseMessaging
-      # - package: Firebase
-      #   product: FirebaseFirestore
+      - package: Firebase
+        product: FirebaseFirestore
       - package: Markdown
         product: Markdown
     buildToolPlugins:

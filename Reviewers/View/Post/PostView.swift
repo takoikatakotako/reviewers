@@ -22,7 +22,7 @@ struct PostView: View {
                                     .foregroundStyle(Color(.appMainText))
 
                                 if viewState.code.isEmpty {
-                                    CommonText(text: "バーコードを読み込んでください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                    CommonText(text: "バーコードをスキャンしてください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                         .foregroundStyle(Color(.appSubText))
                                 } else {
                                     CommonText(text: viewState.code, font: .mPlus2Regular(size: 16), lineHeight: 20)
@@ -200,6 +200,18 @@ struct PostView: View {
                     PostBarcodeScannerView(code: $viewState.code)
                 }
             })
+            .alert("", isPresented: $viewState.showingMessageAlert, actions: {
+                Button("とじる", action: {})
+            }, message: {
+                Text(viewState.alertMessage)
+            })
+            .alert("", isPresented: $viewState.showingPostCompleteAlert, actions: {
+                Button("とじる", action: {
+                    dismiss()
+                })
+            }, message: {
+                Text("投稿完了！")
+            })
             .onAppear {
                 // viewState.onAppear()
             }
@@ -220,7 +232,7 @@ struct PostView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        viewState.post()
                     } label: {
                         CommonText(text: "ポスト", font: .mPlus2SemiBold(size: 16), lineHeight: 20)
                             .foregroundStyle(Color.white)

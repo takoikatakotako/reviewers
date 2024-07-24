@@ -4,6 +4,8 @@ class ReviewListViewState: ObservableObject {
     @Published var favoriteColor = 0
     @Published var path: [ReviewListViewPath] = []
 
+    @Published var posts: [Review] = []
+
     @Published var showingPostCover = false
 
     @Published var showingSignInAlert = false
@@ -12,8 +14,18 @@ class ReviewListViewState: ObservableObject {
     private let authRepository = AuthRepository()
 
     private let repository = Repository()
+    private let firestoreRepository = FirestoreRepository()
 
-    func onAppear() { }
+    func onAppear() {
+        Task { @MainActor in
+            do {
+                let post = try await firestoreRepository.fetchPosts()
+                self.posts.append(contentsOf: post)
+            } catch {
+                print(error)
+            }
+        }
+    }
 
     func tapped() {
         path.append(.reviewDetail(title: "ssss"))

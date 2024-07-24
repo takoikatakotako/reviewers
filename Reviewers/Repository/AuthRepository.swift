@@ -45,6 +45,10 @@ struct AuthRepository {
         try await user.link(with: credential)
     }
 
+    func signIn(email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
+
     func sendEmailVerification() async throws {
         guard let user = Auth.auth().currentUser else {
             throw ReviewersError.clientError
@@ -53,8 +57,6 @@ struct AuthRepository {
     }
 
     func signOut() async throws {
-        guard let user = Auth.auth().currentUser else {
-            throw ReviewersError.clientError
-        }
+        try Auth.auth().signOut()
     }
 }

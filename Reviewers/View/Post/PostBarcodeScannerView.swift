@@ -5,11 +5,36 @@ struct PostBarcodeScannerView: View {
     @Binding var code: String
 
     var body: some View {
-        VStack {
-            BarcodeScannerView { code in
-                self.code = code
-                dismiss()
+        NavigationStack {
+            VStack {
+                VStack {
+                    BarcodeScannerView { code in
+                        self.code = code
+                        dismiss()
+                    }
+                }
             }
+            .ignoresSafeArea(.all)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "multiply")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(Color.white)
+                            .padding(.top, 8)
+                            .padding(.leading, 4)
+                            .padding(.trailing, 8)
+                            .padding(.bottom, 8)
+                    }
+                }
+            }
+            .toolbarBackground(Color(.appMain), for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 }

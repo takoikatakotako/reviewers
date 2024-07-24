@@ -6,7 +6,7 @@ struct ReviewListView: View {
     var body: some View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
-                List {
+                List(viewState.posts) {_ in
                     Button {
                         viewState.tapped()
                     } label: {
