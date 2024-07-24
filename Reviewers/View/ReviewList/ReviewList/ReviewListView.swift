@@ -6,11 +6,11 @@ struct ReviewListView: View {
     var body: some View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
-                List(viewState.posts) {_ in
+                List(viewState.reviews) {review in
                     Button {
                         viewState.tapped()
                     } label: {
-                        ReviewListRow()
+                        ReviewListRow(review: review)
                     }
                     .listRowInsets(EdgeInsets())
                 }
@@ -45,7 +45,7 @@ struct ReviewListView: View {
                 }
             }
             .fullScreenCover(isPresented: $viewState.showingPostCover, onDismiss: {
-                print("ss")
+                viewState.onDismissPostSheet()
             }) {
                 PostView(viewState: PostViewState())
             }

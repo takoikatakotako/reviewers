@@ -4,7 +4,7 @@ class ReviewListViewState: ObservableObject {
     @Published var favoriteColor = 0
     @Published var path: [ReviewListViewPath] = []
 
-    @Published var posts: [Review] = []
+    @Published var reviews: [Review] = []
 
     @Published var showingPostCover = false
 
@@ -19,14 +19,23 @@ class ReviewListViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
-                let post = try await firestoreRepository.fetchPosts()
-                self.posts.append(contentsOf: post)
+                try await updatePosts()
             } catch {
                 print(error)
             }
         }
     }
 
+    func onDismissPostSheet() {
+        Task { @MainActor in
+            do {
+                try await updatePosts()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     func tapped() {
         path.append(.reviewDetail(title: "ssss"))
     }
@@ -81,6 +90,15 @@ class ReviewListViewState: ObservableObject {
 
     func check() {
         showingPostCover = true
-
     }
+    
+    
+    @MainActor
+    private func updatePosts() async throws {
+        let newReviews: [Review] = try await firestoreRepository.fetchReviews()
+        let margedReviews: [Review] = newReviews + self.reviews
+        let uniqueReviews = Set(margedReviews)
+        self.reviews = Array(uniqueReviews)
+    }
+
 }

@@ -13,18 +13,20 @@ struct FirestoreRepository {
         )
     }
 
-    func fetchPosts() async throws -> [Review] {
+    func fetchReviews() async throws -> [Review] {
         let db = Firestore.firestore()
-        let querySnapshot = try await db.collection(FirestoreReview.collectionName).getDocuments()
+        let querySnapshot = try await db.collection(FirestoreReview.collectionName).limit(to: 30).getDocuments()
 
         var reviews: [Review] = []
         for document in querySnapshot.documents {
-            let firestorePost = try FirestoreReview(document: document)
+            let firestoreReview = try FirestoreReview(document: document)
             let post = Review(
-                id: firestorePost.id,
-                userName: firestorePost.uid,
-                rate: firestorePost.rate,
-                comment: firestorePost.comment
+                id: firestoreReview.id,
+                userName: firestoreReview.uid, 
+                code: firestoreReview.code,
+                rate: firestoreReview.rate,
+                comment: firestoreReview.comment, 
+                images: firestoreReview.images
             )
             reviews.append(post)
         }

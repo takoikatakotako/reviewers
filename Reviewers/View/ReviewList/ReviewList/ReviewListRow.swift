@@ -2,9 +2,10 @@ import SwiftUI
 
 struct ReviewListRow: View {
 //    let title: String
-   // let post: Post
+    
+    let review: Review
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {
                 Image(.icon)
                     .resizable()
@@ -28,49 +29,61 @@ struct ReviewListRow: View {
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
 
-                    Image(systemName: "star.fill")
+                    Image(systemName: review.rate > 1 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
 
-                    Image(systemName: "star.fill")
+                    Image(systemName: review.rate > 2 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
 
-                    Image(systemName: "star.fill")
+                    Image(systemName: review.rate > 3 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
 
-                    Image(systemName: "star")
+                    Image(systemName: review.rate > 4 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
                 }
             }
-
+            
+            if review.comment.isNotEmpty {
+                CommonText(
+                    text: review.comment,
+                    font: .mPlus2Regular(size: 14),
+                    lineHeight: 20,
+                    alignment: .leading
+                )
+                .foregroundStyle(Color(.appMainText))
+                .padding(.top, 12)
+            }
+            
+            ForEach(review.images, id: \.self) { image in
+                Image(.samplePockey)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipped()
+                    .padding(.top, 12)
+            }
+            
             CommonText(
-                text: "ポッキーは私のお気に入りのお菓子です！そのサクサクとした食感と、程よい甘さのチョコレートコーティングが絶妙です。パッケージも手軽で持ち運びやすく、友達とシェアするのにもぴったり。特にミルクチョコレート味が大好きで、食べ始めると止まらなくなります。いろんなフレーバーがあるので、気分によって選べるのも良いですね。ポッキーがあれば、どんな時でも幸せな気分になれます！",
+                text:"JANコード: \(review.code)",
                 font: .mPlus2Regular(size: 14),
                 lineHeight: 20,
                 alignment: .leading
             )
-            .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundStyle(Color(.appMainText))
             .padding(.top, 12)
-
-            Image(.samplePockey)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 200)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .clipped()
-                .padding(.top, 12)
         }
         .padding(.top, 12)
         .padding(.leading, 12)
