@@ -9,7 +9,7 @@ struct AccountView: View {
             List {
                 Section("") {
                     Button {
-
+                        viewState.xx = true
                     } label: {
                         HStack(spacing: 12) {
                             Image(.icon)
@@ -105,6 +105,9 @@ struct AccountView: View {
             }
             .onAppear {
                 viewState.onAppear()
+            }
+            .navigationDestination(item: $viewState.xx) { s in
+                Text(s.description)
             }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)

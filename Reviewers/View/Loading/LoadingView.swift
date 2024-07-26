@@ -6,6 +6,7 @@ struct LoadingView: View {
             Image(.logo)
                 .resizable()
                 .scaledToFit()
+                .frame(width: 300)
         }
     }
 }
