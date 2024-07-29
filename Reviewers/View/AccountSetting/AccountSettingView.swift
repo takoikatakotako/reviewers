@@ -1,11 +1,10 @@
 import SwiftUI
-import LicenseList
 
-struct AccountView: View {
-    @StateObject var viewState: AccountViewState
+struct AccountSettingView: View {
+    @StateObject var viewState: AccountSettingViewState
 
     var body: some View {
-        NavigationStack {
+        ZStack {
             List {
                 Section("") {
                     Button {
@@ -36,7 +35,7 @@ struct AccountView: View {
 
                 Section("ユーザー情報") {
                     NavigationLink {
-                        AccountSettingView(viewState: AccountSettingViewState())
+                        // AccountSettingView
                     } label: {
                         Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
@@ -80,7 +79,7 @@ struct AccountView: View {
                         Text("1.0.0(3)")
                     }
                     NavigationLink {
-                        LicenseListView()
+                        //LicenseListView()
                     } label: {
                         Text("ライセンス")
                     }
@@ -126,5 +125,5 @@ struct AccountView: View {
 }
 
 #Preview {
-    AccountView(viewState: AccountViewState())
+    AccountSettingView(viewState: AccountSettingViewState())
 }
