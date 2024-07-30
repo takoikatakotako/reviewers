@@ -8,7 +8,7 @@ struct ReviewListView: View {
             ZStack(alignment: .bottomTrailing) {
                 List(viewState.reviews) {review in
                     Button {
-                        viewState.tapped()
+                        viewState.tapped(review: review)
                     } label: {
                         ReviewListRow(review: review)
                     }
@@ -40,8 +40,8 @@ struct ReviewListView: View {
                 switch pathValue {
                 case let .study(title, questions):
                     StudyView(viewState: StudyViewState(title: title, questions: questions, results: []))
-                case .reviewDetail(title: let title):
-                    ReviewDetailView(viewState: ReviewDetailViewState())
+                case .reviewDetail(review: let review):
+                    ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 }
             }
             .fullScreenCover(isPresented: $viewState.showingPostCover, onDismiss: {

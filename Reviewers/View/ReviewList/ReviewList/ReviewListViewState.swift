@@ -35,9 +35,9 @@ class ReviewListViewState: ObservableObject {
             }
         }
     }
-    
-    func tapped() {
-        path.append(.reviewDetail(title: "ssss"))
+
+    func tapped(review: Review) {
+        path.append(.reviewDetail(review: review))
     }
 
     func postButtonTapped() {
@@ -91,8 +91,7 @@ class ReviewListViewState: ObservableObject {
     func check() {
         showingPostCover = true
     }
-    
-    
+
     @MainActor
     private func updatePosts() async throws {
         let newReviews: [Review] = try await firestoreRepository.fetchReviews()

@@ -1,13 +1,14 @@
 import SwiftUI
 
 class ReviewDetailViewState: ObservableObject {
-//    let category: TertiaryCategory
+    let review: Review
+    @Published var comment = ""
 
-//    var title: String {
-//        return category.title
-//    }
+    init(review: Review) {
+        self.review = review
+    }
 
-//    init(category: TertiaryCategory) {
-//        self.category = category
-//    }
+    func postComment() {
+
+    }
 }

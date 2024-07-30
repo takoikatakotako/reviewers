@@ -3,11 +3,12 @@ import SwiftUI
 struct ReviewDetailView: View {
     @Environment(\.dismiss) var dismiss
     @State var viewState: ReviewDetailViewState
+    @FocusState var keyboardFocused: Bool
 
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
-                VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
                         Image(.icon)
                             .resizable()
@@ -58,12 +59,11 @@ struct ReviewDetailView: View {
                     }
 
                     CommonText(
-                        text: "ポッキーは私のお気に入りのお菓子です！そのサクサクとした食感と、程よい甘さのチョコレートコーティングが絶妙です。パッケージも手軽で持ち運びやすく、友達とシェアするのにもぴったり。特にミルクチョコレート味が大好きで、食べ始めると止まらなくなります。いろんなフレーバーがあるので、気分によって選べるのも良いですね。ポッキーがあれば、どんな時でも幸せな気分になれます！",
+                        text: viewState.review.comment,
                         font: .mPlus2Regular(size: 14),
                         lineHeight: 20,
                         alignment: .leading
                     )
-                    .frame(minWidth: 0, maxWidth: .infinity)
                     .foregroundStyle(Color(.appMainText))
                     .padding(.top, 12)
 
@@ -174,7 +174,7 @@ struct ReviewDetailView: View {
                             Spacer()
 
                             Button {
-
+                                viewState.postComment()
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .resizable()
@@ -203,7 +203,7 @@ struct ReviewDetailView: View {
                 .padding(.top, 12)
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
-                .padding(.bottom, 12)
+                .padding(.bottom, 72)
             }
 
             //            VStack(spacing: 8) {
@@ -249,6 +249,45 @@ struct ReviewDetailView: View {
             //                }
             //            }
             //            .clipped()
+
+            if keyboardFocused {
+                Button {
+                    withAnimation {
+                        keyboardFocused = false
+                    }
+                } label: {
+                    VStack {
+                        Rectangle()
+                            .foregroundStyle(Color.clear)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                        Spacer()
+                    }
+                }
+            }
+
+            VStack(alignment: .trailing, spacing: 12) {
+                TextField("投稿にコメント", text: $viewState.comment, axis: .vertical)
+                    .focused($keyboardFocused)
+                    .textFieldStyle(.roundedBorder)
+
+                if keyboardFocused {
+                    Button {
+                        print("xxx")
+                    } label: {
+                        CommonText(text: "コメント", font: .mPlus2SemiBold(size: 16), lineHeight: 20)
+                            .foregroundStyle(Color.white)
+                            .frame(width: 80, height: 36)
+                            .background(Color(.appGreenBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                    }
+                }
+
+            }
+            .padding(.top, 12)
+            .padding(.horizontal, 12)
+            .padding(.bottom, 12)
+            .background(Color.white)
         }
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
@@ -279,5 +318,7 @@ struct ReviewDetailView: View {
 }
 
 // #Preview {
-//    StudyCategoryDetailView(viewState: StudyCategoryDetailViewState(category: TertiaryCategory(title: "Title", questions: [])))
+//    NavigationStack {
+//        ReviewDetailView(viewState: ReviewDetailViewState(review: Review))
+//    }
 // }

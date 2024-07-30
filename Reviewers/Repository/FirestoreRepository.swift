@@ -15,11 +15,11 @@ struct FirestoreRepository {
         ]
         )
     }
-    
+
     func fetchReviews() async throws -> [Review] {
         let db = Firestore.firestore()
         let querySnapshot = try await db.collection(FirestoreReview.collectionName).limit(to: 30).getDocuments()
-        
+
         var reviews: [Review] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)

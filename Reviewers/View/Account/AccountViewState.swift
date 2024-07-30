@@ -5,7 +5,7 @@ class AccountViewState: ObservableObject {
     private let authRepository = AuthRepository()
 
     @Published var user: User?
-    
+
     @Published var xx: Bool?
 
     func onAppear() {

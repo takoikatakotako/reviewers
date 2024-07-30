@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ReviewListRow: View {
 //    let title: String
-    
+
     let review: Review
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -54,7 +54,7 @@ struct ReviewListRow: View {
                         .foregroundColor(.appMain)
                 }
             }
-            
+
             if review.comment.isNotEmpty {
                 CommonText(
                     text: review.comment,
@@ -65,8 +65,8 @@ struct ReviewListRow: View {
                 .foregroundStyle(Color(.appMainText))
                 .padding(.top, 12)
             }
-            
-            ForEach(review.images, id: \.self) { image in
+
+            ForEach(review.images, id: \.self) { _ in
                 Image(.samplePockey)
                     .resizable()
                     .scaledToFill()
@@ -75,9 +75,9 @@ struct ReviewListRow: View {
                     .clipped()
                     .padding(.top, 12)
             }
-            
+
             CommonText(
-                text:"JANコード: \(review.code)",
+                text: "JANコード: \(review.code)",
                 font: .mPlus2Regular(size: 14),
                 lineHeight: 20,
                 alignment: .leading

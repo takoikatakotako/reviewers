@@ -19,8 +19,6 @@ struct FirestoreReview: Hashable {
             let images = data["images"] as? [String] else {
             throw ReviewersError.temp
         }
-        
-        
 
 //        
 //        guard

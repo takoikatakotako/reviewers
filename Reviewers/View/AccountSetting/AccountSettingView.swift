@@ -1,104 +1,59 @@
 import SwiftUI
 
 struct AccountSettingView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewState: AccountSettingViewState
 
     var body: some View {
         ZStack {
             List {
-                Section("") {
-                    Button {
-                        viewState.xx = true
+                Section("アカウントID") {
+                    Text("ユーザー情報変更")
+                        .foregroundStyle(Color(.appMainText))
+                }
+
+                Section("アカウント名") {
+                    NavigationLink {
+                        Text("XXX")
                     } label: {
-                        HStack(spacing: 12) {
-                            Image(.icon)
+                        Text("カビゴン小野")
+                            .foregroundStyle(Color(.appMainText))
+                    }
+                }
+
+                Section("プロフィール画像") {
+                    NavigationLink {
+                        Text("XXX")
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(Color(.appBlueBackground))
+                                .frame(width: 64, height: 64)
+
+                            Image(systemName: "person.fill")
                                 .resizable()
-                                .scaledToFill()
-                                .frame(width: 60, height: 60)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "ID: \(viewState.user?.uid ?? "")", font: .mPlus2Regular(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                            }
-
-                            Spacer()
+                                .foregroundStyle(Color.white)
+                                .frame(width: 52, height: 52)
                         }
-                        .padding(.top, 8)
-                        .padding(.horizontal, 8)
-                        .padding(.bottom, 8)
-                    }
-                    .listRowInsets(EdgeInsets())
-                }
-
-                Section("ユーザー情報") {
-                    NavigationLink {
-                        // AccountSettingView
-                    } label: {
-                        Text("ユーザー情報変更")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    NavigationLink {
-
-                    } label: {
-                        Text("プレミアムプランについて")
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
 
-                Section("お問い合わせ") {
+                Section("メールアドレス") {
                     NavigationLink {
 
                     } label: {
-                        Text("お問い合わせ")
-                    }
-                }
-
-                Section("開発者情報") {
-                    Button {
-
-                    } label: {
-                        Text("公式Discord")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    Button {
-
-                    } label: {
-                        Text("開発者のXアカウント")
+                        Text("カビゴン小野")
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
 
-                Section("アプリケーション情報") {
-                    HStack {
-                        Text("バージョン情報")
-                        Spacer()
-                        Text("1.0.0(3)")
-                    }
+                Section("パスワード") {
                     NavigationLink {
-                        //LicenseListView()
-                    } label: {
-                        Text("ライセンス")
-                    }
-                }
 
-                Section("") {
-                    Button {
-                        viewState.signOut()
                     } label: {
-                        Text("サインアウト")
-                    }
-
-                }
-
-                Section("Debug") {
-                    NavigationLink {
-                        DebugView(viewState: DebugViewState())
-                    } label: {
-                        Text("Debug")
+                        Text("**********")
+                            .foregroundStyle(Color(.appMainText))
                     }
                 }
             }
@@ -111,9 +66,21 @@ struct AccountSettingView: View {
             .listStyle(.grouped)
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(Color.white)
+                            .padding(.vertical, 8)
+                            .padding(.trailing, 8)
+                    }
+                }
                 ToolbarItem(placement: .principal) {
-                    Text("設定")
+                    Text("ユーザー情報変更")
                         .font(.system(size: 16).bold())
                         .foregroundStyle(Color.white)
                 }
@@ -125,5 +92,7 @@ struct AccountSettingView: View {
 }
 
 #Preview {
-    AccountSettingView(viewState: AccountSettingViewState())
+    NavigationStack {
+        AccountSettingView(viewState: AccountSettingViewState())
+    }
 }
