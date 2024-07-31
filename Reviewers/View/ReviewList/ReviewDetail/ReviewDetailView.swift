@@ -174,7 +174,7 @@ struct ReviewDetailView: View {
                             Spacer()
 
                             Button {
-                                viewState.postComment()
+
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .resizable()
@@ -272,7 +272,7 @@ struct ReviewDetailView: View {
 
                 if keyboardFocused {
                     Button {
-                        print("xxx")
+                        viewState.postComment()
                     } label: {
                         CommonText(text: "コメント", font: .mPlus2SemiBold(size: 16), lineHeight: 20)
                             .foregroundStyle(Color.white)
