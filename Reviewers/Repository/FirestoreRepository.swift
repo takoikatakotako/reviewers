@@ -15,6 +15,21 @@ struct FirestoreRepository {
         ]
         )
     }
+    
+    func addReviewComments(reviewId: String, uid: String, comment: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreReview.collectionName)
+            .document(reviewId).collection("comments")
+            .addDocument(
+                data: [
+                    "uid": uid,
+                    "comment": comment,
+                    "createdAt": FieldValue.serverTimestamp(),
+                    "updatedAt": FieldValue.serverTimestamp()
+                ]
+            )
+    }
 
     func fetchReviews() async throws -> [Review] {
         let db = Firestore.firestore()

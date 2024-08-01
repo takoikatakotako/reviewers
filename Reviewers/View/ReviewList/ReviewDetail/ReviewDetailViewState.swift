@@ -1,10 +1,13 @@
 import SwiftUI
+import FirebaseAuth
 import FirebaseFirestore
 
 class ReviewDetailViewState: ObservableObject {
     let review: Review
     @Published var comment = ""
 
+    private let repository = FirestoreRepository()
+    
     init(review: Review) {
         self.review = review
     }
@@ -12,8 +15,10 @@ class ReviewDetailViewState: ObservableObject {
     func postComment() {
         Task { @MainActor in
             do {
-                let db = Firestore.firestore()
-                try await db.collection(FirestoreReview.collectionName).document(review.id).collection("comments").addDocument(data: ["text": "hello"])
+                guard let uid = Auth.auth().currentUser?.uid else {
+                    throw ReviewersError.temp
+                }
+                try await repository.addReviewComments(reviewId: review.id, uid: uid, comment: comment)
             } catch {
                 print(error)
             }
