@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ReviewDetailView: View {
     @Environment(\.dismiss) var dismiss
-    @State var viewState: ReviewDetailViewState
+    @StateObject var viewState: ReviewDetailViewState
     @FocusState var keyboardFocused: Bool
 
     var body: some View {
@@ -156,47 +156,50 @@ struct ReviewDetailView: View {
                     Divider()
                         .padding(.top, 12)
 
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack(spacing: 12) {
-                            Image(.icon)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 40, height: 40)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                    ForEach(viewState.comments) { comment in
 
-                            VStack(alignment: .leading, spacing: 4) {
-                                CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                            }
-
-                            Spacer()
-
-                            Button {
-
-                            } label: {
-                                Image(systemName: "ellipsis")
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack(spacing: 12) {
+                                Image(.icon)
                                     .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundStyle(Color(.appMainText))
-                                    .padding(8)
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    CommonText(text: comment.uid, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                        .foregroundStyle(Color(.appMainText))
+                                    CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                                        .foregroundStyle(Color(.appMainText))
+                                }
+
+                                Spacer()
+
+                                Button {
+
+                                } label: {
+                                    Image(systemName: "ellipsis")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundStyle(Color(.appMainText))
+                                        .padding(8)
+                                }
                             }
-                        }
-                        .padding(.top, 12)
-
-                        CommonText(
-                            text: "抹茶味が好きですカビ！\nノーマルタイプも美味しいですカビ！！\nノーマルタイプも美味しいですカビ！！",
-                            font: .mPlus2Regular(size: 14),
-                            lineHeight: 20,
-                            alignment: .leading
-                        )
-                        .foregroundStyle(Color(.appMainText))
-                        .padding(.top, 12)
-
-                        Divider()
                             .padding(.top, 12)
+
+                            CommonText(
+                                text: comment.comment,
+                                font: .mPlus2Regular(size: 14),
+                                lineHeight: 20,
+                                alignment: .leading
+                            )
+                            .foregroundStyle(Color(.appMainText))
+                            .padding(.top, 12)
+
+                            Divider()
+                                .padding(.top, 12)
+                        }
                     }
 
                 }
@@ -288,6 +291,9 @@ struct ReviewDetailView: View {
             .padding(.horizontal, 12)
             .padding(.bottom, 12)
             .background(Color.white)
+        }
+        .onAppear {
+            viewState.onAppear()
         }
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)

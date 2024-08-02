@@ -8,34 +8,43 @@ struct AccountSettingView: View {
         ZStack {
             List {
                 Section("アカウントID") {
-                    Text("ユーザー情報変更")
+                    Text(viewState.accoundID)
                         .foregroundStyle(Color(.appMainText))
                 }
 
-                Section("アカウント名") {
-                    NavigationLink {
-                        Text("XXX")
+                Section("ニックネーム") {
+                    Button {
+                        viewState.nicknameAlert = true
+
                     } label: {
-                        Text("カビゴン小野")
+                        Text(viewState.nickname)
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
 
                 Section("プロフィール画像") {
-                    NavigationLink {
-                        Text("XXX")
+                    Button {
+                        viewState.updateProfileImage()
                     } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundStyle(Color(.appBlueBackground))
-                                .frame(width: 64, height: 64)
-
-                            Image(systemName: "person.fill")
+                        if let image = viewState.profileImage {
+                            Image(uiImage: image)
                                 .resizable()
-                                .foregroundStyle(Color.white)
-                                .frame(width: 52, height: 52)
+                                .scaledToFill()
+                                .frame(width: 64, height: 64)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } else {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundStyle(Color(.appBlueBackground))
+                                    .frame(width: 64, height: 64)
+
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .foregroundStyle(Color.white)
+                                    .frame(width: 52, height: 52)
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
 
@@ -43,7 +52,7 @@ struct AccountSettingView: View {
                     NavigationLink {
 
                     } label: {
-                        Text("カビゴン小野")
+                        Text(viewState.email)
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
@@ -62,6 +71,25 @@ struct AccountSettingView: View {
             }
             .navigationDestination(item: $viewState.xx) { s in
                 Text(s.description)
+            }
+            .alert("アラート", isPresented: $viewState.nicknameAlert) {
+                TextField("テキストフィールド", text: $viewState.nickname)
+
+                Button {
+                } label: {
+                    Text("とじる")
+                }
+
+                Button {
+                    viewState.updateNickname()
+                } label: {
+                    Text("更新")
+                }
+            }
+            .sheet(isPresented: $viewState.imagePickerSheet) {
+                viewState.selectProfileImageComplete()
+            } content: {
+                ImagePicker(image: $viewState.profileImage)
             }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)
