@@ -44,12 +44,15 @@ struct FirestoreRepository {
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
             let post = Review(
-                id: firestoreReview.id,
+                id: firestoreReview.id, 
+                uid: firestoreReview.uid,
                 userName: firestoreReview.uid,
                 code: firestoreReview.code,
                 rate: firestoreReview.rate,
                 comment: firestoreReview.comment,
-                images: firestoreReview.images
+                images: firestoreReview.images,
+                createdAt: firestoreReview.createdAt,
+                updatedAt: firestoreReview.updatedAt
             )
             reviews.append(post)
         }

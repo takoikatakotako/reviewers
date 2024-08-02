@@ -2,6 +2,7 @@ import FirebaseStorage
 import SwiftUI
 
 struct StorageRepository {
+    // MARK: - Image
 
     func uploadImage(uid: String, image: UIImage, fileName: String) async throws {
         // リサイズ
@@ -12,6 +13,16 @@ struct StorageRepository {
         let storageRef = storage.reference()
         let imageRef = storageRef.child("image/user/\(uid)/\(fileName)")
         _ = try await imageRef.putDataAsync(resizedImageData)
+    }
+    
+    func fetchImage(uid: String, fileName: String) async throws -> UIImage? {
+        // アップロード
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child("image/user/\(uid)/\(fileName)")
+        let url = try await imageRef.downloadURL()
+        let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
+        return UIImage(data: data)
     }
 
     // MARK: - Profile Image

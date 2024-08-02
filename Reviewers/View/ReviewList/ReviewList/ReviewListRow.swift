@@ -16,7 +16,7 @@ struct ReviewListRow: View {
                 VStack(alignment: .leading, spacing: 4) {
                     CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                         .foregroundStyle(Color(.appMainText))
-                    CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                    CommonText(text: review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                         .foregroundStyle(Color(.appMainText))
                 }
 
@@ -65,16 +65,111 @@ struct ReviewListRow: View {
                 .foregroundStyle(Color(.appMainText))
                 .padding(.top, 12)
             }
-
-            ForEach(review.images, id: \.self) { _ in
-                Image(.samplePockey)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 200)
+            
+            
+            if review.images.count == 4 {
+                VStack(spacing: 8) {
+                    HStack(spacing: 8) {
+                        FirestorageImage(uid: review.uid, fileName: review.images[0])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                        
+                        FirestorageImage(uid: review.uid, fileName: review.images[1])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+                    
+                    HStack(spacing: 8) {
+                        FirestorageImage(uid: review.uid, fileName: review.images[2])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                        
+                        FirestorageImage(uid: review.uid, fileName: review.images[3])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+                }
+                .padding(.top, 12)
+            } else if review.images.count == 3 {
+                HStack(spacing: 8) {
+                    FirestorageImage(uid: review.uid, fileName: review.images[0])
+                        .frame(height: 208)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipped()
+                    
+                    VStack(spacing: 8) {
+                        FirestorageImage(uid: review.uid, fileName: review.images[1])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                        
+                        FirestorageImage(uid: review.uid, fileName: review.images[2])
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+                }
+                .padding(.top, 12)
+            } else if review.images.count == 2 {
+                HStack(spacing: 8) {
+                    FirestorageImage(uid: review.uid, fileName: review.images[0])
+                        .frame(height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipped()
+                    
+                    FirestorageImage(uid: review.uid, fileName: review.images[1])
+                        .frame(height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipped()
+                }
+                .padding(.top, 12)
+            } else if review.images.count == 1 {
+                FirestorageImage(uid: review.uid, fileName: review.images[0])
+                    .frame(height: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .clipped()
                     .padding(.top, 12)
             }
+
+                
+                
+                
+                
+//                VStack(spacing: 8) {
+//                    HStack(spacing: 8) {
+//                        FirestorageImage(uid: review.uid, fileName: review.images[0])
+//                            .frame(height: 100)
+//                            .clipShape(RoundedRectangle(cornerRadius: 8))
+//                            .clipped()
+//                        
+//                        FirestorageImage(uid: review.uid, fileName: review.images[1])
+//                            .frame(height: 100)
+//                            .clipShape(RoundedRectangle(cornerRadius: 8))
+//                            .clipped()
+//                    }
+//                    
+//                    HStack(spacing: 8) {
+//                        FirestorageImage(uid: review.uid, fileName: review.images[2])
+//                            .frame(height: 100)
+//                            .clipShape(RoundedRectangle(cornerRadius: 8))
+//                            .clipped()
+//                        
+//                        FirestorageImage(uid: review.uid, fileName: review.images[3])
+//                            .frame(height: 100)
+//                            .clipShape(RoundedRectangle(cornerRadius: 8))
+//                            .clipped()
+//                    }
+//                }
+//                .padding(.top, 12)
+                
+                
+//            ForEach(review.images, id: \.self) { image in
+//
+//            }
 
             CommonText(
                 text: "JANコード: \(review.code)",

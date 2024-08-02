@@ -97,7 +97,8 @@ class ReviewListViewState: ObservableObject {
         let newReviews: [Review] = try await firestoreRepository.fetchReviews()
         let margedReviews: [Review] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
-        self.reviews = Array(uniqueReviews)
+        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
+        self.reviews = sortedReviews
     }
 
 }
