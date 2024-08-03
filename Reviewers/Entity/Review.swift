@@ -13,7 +13,8 @@ struct Review: Identifiable, Hashable {
     
     var createdAtString: String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .full
+        formatter.dateStyle = .short
+        formatter.timeStyle = .medium
         return formatter.string(from: createdAt)
     }
 }

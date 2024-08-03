@@ -44,9 +44,9 @@ packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
     from: 10.24.0
-  Markdown:
-    url: https://github.com/apple/swift-markdown
-    from: 0.3.0
+  SDWebImageSwiftUI:
+    url: https://github.com/SDWebImage/SDWebImageSwiftUI.git
+    from: 3.1.1
   # SwiftLint:
   #   url: https://github.com/realm/SwiftLint
   #   from: 0.54.0
@@ -97,8 +97,8 @@ targets:
       #   product: FirebaseMessaging
       - package: Firebase
         product: FirebaseFirestore
-      - package: Markdown
-        product: Markdown
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
     buildToolPlugins:
       - plugin: RswiftGenerateInternalResources
         package: Rswift

@@ -261,7 +261,7 @@ struct ReviewDetailView: View {
                 } label: {
                     VStack {
                         Rectangle()
-                            .foregroundStyle(Color.clear)
+                            .foregroundStyle(Color.black.opacity(0.2))
                             .frame(minWidth: 0, maxWidth: .infinity)
                         Spacer()
                     }
