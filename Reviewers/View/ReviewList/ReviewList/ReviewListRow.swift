@@ -67,82 +67,126 @@ struct ReviewListRow: View {
                 .padding(.top, 12)
             }
             
-            
+            // 画像
             if review.images.count == 4 {
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[0])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
+                        Button {
+                            print("xxx")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
+
                         
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[1])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
+                        Button {
+                            print("yyy")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
                     }
                     
                     HStack(spacing: 4) {
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[2])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
-                        
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[3])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
+                        Button {
+                            print("zzz")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[2])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
+
+                        Button {
+                            print("xyz")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[3])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
                     }
                 }
                 .padding(.top, 12)
             } else if review.images.count == 3 {
                 HStack(spacing: 4) {
-                    ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[0])")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 204)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .clipped()
+                    
+                    Button {
+                        print("xxx")
+                    } label: {
+                        ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 204)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+
                     
                     VStack(spacing: 4) {
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[1])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
-                        
-                        ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[2])")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .clipped()
+                        Button {
+                            print("yyy")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
+
+                        Button {
+                            print("zzz")
+                        } label: {
+                            ReviewListRowImage(urlString: review.imageUrlStrings[2])
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipped()
+                        }
                     }
                 }
                 .padding(.top, 12)
             } else if review.images.count == 2 {
                 HStack(spacing: 4) {
-                    ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[0])")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .clipped()
+                    Button {
+                        print("zzz")
+                    } label: {
+                        ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+
                     
-                    ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[1])")
+                    Button {
+                        print("xyz")
+                    } label: {
+                        ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipped()
+                    }
+                }
+                .padding(.top, 12)
+            } else if review.images.count == 1 {
+                Button {
+                    print("xyz")
+                } label: {
+                    ReviewListRowImage(urlString: review.imageUrlStrings[0])
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .clipped()
                 }
-                .padding(.top, 12)
-            } else if review.images.count == 1 {
-                ReviewListRowImage(urlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/\(review.images[0])")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .clipped()
                 .padding(.top, 12)
             }
             

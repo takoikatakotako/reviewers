@@ -17,4 +17,8 @@ struct Review: Identifiable, Hashable {
         formatter.timeStyle = .medium
         return formatter.string(from: createdAt)
     }
+    
+    var imageUrlStrings: [String] {
+        return images.map { "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/\($0)" }
+    }
 }
