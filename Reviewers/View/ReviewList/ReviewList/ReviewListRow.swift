@@ -2,25 +2,35 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ReviewListRow: View {
-    //    let title: String
-    
     let review: Review
+    let accountTapAction: (_ uid: String) -> Void
+    let imageTapAction: (_ imageUrlString: String) -> Void
+    let menuTapAction: (_ review: Review) -> Void
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {
-                WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/profile.png")) { image in
-                    image.resizable()
-                } placeholder: {
-                    Rectangle().foregroundColor(Color(.appBackground))
+                Button {
+                    accountTapAction(review.uid)
+                } label: {
+                    WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/profile.png")) { image in
+                        image.resizable()
+                    } placeholder: {
+                        Rectangle().foregroundColor(Color(.appBackground))
+                    }
+                    .transition(.fade(duration: 0.5))
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .transition(.fade(duration: 0.5))
-                .scaledToFill()
-                .frame(width: 40, height: 40)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-
+                
                 VStack(alignment: .leading, spacing: 4) {
-                    CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
-                        .foregroundStyle(Color(.appMainText))
+                    Button(action: {
+                            accountTapAction(review.uid)
+                        }, label: {
+                            CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                .foregroundStyle(Color(.appMainText))
+                        })
                     CommonText(text: review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                         .foregroundStyle(Color(.appMainText))
                 }
@@ -84,7 +94,7 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-
+                        
                         
                         Button {
                             print("yyy")
@@ -107,7 +117,7 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-
+                        
                         Button {
                             print("xyz")
                         } label: {
@@ -132,7 +142,7 @@ struct ReviewListRow: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .clipped()
                     }
-
+                    
                     
                     VStack(spacing: 4) {
                         Button {
@@ -144,7 +154,7 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-
+                        
                         Button {
                             print("zzz")
                         } label: {
@@ -168,7 +178,7 @@ struct ReviewListRow: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .clipped()
                     }
-
+                    
                     
                     Button {
                         print("xyz")
@@ -242,7 +252,7 @@ struct ReviewListRow: View {
             HStack(spacing: 0) {
                 Spacer()
                 Button {
-                    print("ellipsis")
+                    menuTapAction(review)
                 } label: {
                     Image(systemName: "ellipsis")
                         .resizable()
@@ -252,7 +262,7 @@ struct ReviewListRow: View {
                 }
             }
             .padding(.top, 12)
-
+            
         }
         .padding(.top, 12)
         .padding(.leading, 12)

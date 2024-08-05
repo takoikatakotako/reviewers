@@ -37,25 +37,25 @@ struct ReviewDetailView: View {
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
 
-                            Image(systemName: "star.fill")
+                            Image(systemName: viewState.review.rate > 1 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-
-                            Image(systemName: "star.fill")
+                            
+                            Image(systemName: viewState.review.rate > 2 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-
-                            Image(systemName: "star.fill")
+                            
+                            Image(systemName: viewState.review.rate > 3 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-
-                            Image(systemName: "star")
+                            
+                            Image(systemName: viewState.review.rate > 4 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)

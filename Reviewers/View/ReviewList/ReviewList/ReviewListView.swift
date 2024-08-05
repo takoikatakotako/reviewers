@@ -10,7 +10,13 @@ struct ReviewListView: View {
                     Button {
                         viewState.tapped(review: review)
                     } label: {
-                        ReviewListRow(review: review)
+                        ReviewListRow(review: review, accountTapAction: {uid in 
+                            print(uid)
+                        }, imageTapAction: {imageUrlString in
+                            print(imageUrlString)
+                        }, menuTapAction: { review in 
+                            print(review)
+                        })
                     }
                     .listRowInsets(EdgeInsets())
                 }
