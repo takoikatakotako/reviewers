@@ -1,4 +1,5 @@
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ReviewDetailView: View {
     @Environment(\.dismiss) var dismiss
@@ -10,16 +11,20 @@ struct ReviewDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
-                        Image(.icon)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(viewState.review.uid)/profile.png")) { image in
+                            image.resizable()
+                        } placeholder: {
+                            Rectangle().foregroundColor(Color(.appBackground))
+                        }
+                        .transition(.fade(duration: 0.5))
+                        .scaledToFill()
+                        .frame(width: 40, height: 40)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
 
                         VStack(alignment: .leading, spacing: 4) {
                             CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
-                            CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                            CommonText(text: viewState.review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                         }
 

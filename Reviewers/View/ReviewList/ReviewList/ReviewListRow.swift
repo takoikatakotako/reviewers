@@ -8,12 +8,16 @@ struct ReviewListRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {
-                Image(.icon)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                
+                WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/profile.png")) { image in
+                    image.resizable()
+                } placeholder: {
+                    Rectangle().foregroundColor(Color(.appBackground))
+                }
+                .transition(.fade(duration: 0.5))
+                .scaledToFill()
+                .frame(width: 40, height: 40)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
                 VStack(alignment: .leading, spacing: 4) {
                     CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
                         .foregroundStyle(Color(.appMainText))
@@ -234,6 +238,21 @@ struct ReviewListRow: View {
             )
             .foregroundStyle(Color(.appMainText))
             .padding(.top, 12)
+            
+            HStack(spacing: 0) {
+                Spacer()
+                Button {
+                    print("ellipsis")
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color(.appSubText))
+                }
+            }
+            .padding(.top, 12)
+
         }
         .padding(.top, 12)
         .padding(.leading, 12)
