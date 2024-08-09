@@ -37,6 +37,8 @@ struct FirestoreRepository {
         let db = Firestore.firestore()
         let querySnapshot = try await db
             .collection(FirestoreReview.collectionName)
+            .whereField("deleted", isEqualTo: false)
+            .order(by: "createdAt")
             .limit(to: 30)
             .getDocuments()
 
@@ -44,7 +46,7 @@ struct FirestoreRepository {
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
             let post = Review(
-                id: firestoreReview.id, 
+                id: firestoreReview.id,
                 uid: firestoreReview.uid,
                 userName: firestoreReview.uid,
                 code: firestoreReview.code,
@@ -79,6 +81,17 @@ struct FirestoreRepository {
             comments.append(comment)
         }
         return comments
+    }
+
+    func deleteReview(reviewId: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreReview.collectionName)
+            .document(reviewId)
+            .setData([
+                "deleted": true,
+                "updatedAt": FieldValue.serverTimestamp()
+            ], merge: true)
     }
 
     // MARK: - Profile Collection

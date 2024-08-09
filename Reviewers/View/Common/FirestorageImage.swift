@@ -3,12 +3,11 @@ import SwiftUI
 struct FirestorageImage: View {
     let uid: String
     let fileName: String
-    
-    @State private var image: UIImage? = nil
-    
+
+    @State private var image: UIImage?
+
     private let storageRepository = StorageRepository()
 
-    
     var body: some View {
         ZStack {
             if let image = image {

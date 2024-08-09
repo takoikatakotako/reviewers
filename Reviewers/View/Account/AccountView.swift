@@ -1,4 +1,5 @@
 import SwiftUI
+import SDWebImageSwiftUI
 import LicenseList
 
 struct AccountView: View {
@@ -12,14 +13,18 @@ struct AccountView: View {
                         viewState.xx = true
                     } label: {
                         HStack(spacing: 12) {
-                            Image(.icon)
-                                .resizable()
-                                .scaledToFill()
+                            WebImage(url: viewState.profileImageUrl) { image in
+                                image.resizable()
+                            } placeholder: {
+                                CommonAccountImageHolder()
+                            }
+                            .transition(.fade(duration: 0.5))
+                            .scaledToFill()
                                 .frame(width: 60, height: 60)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
                             VStack(alignment: .leading, spacing: 4) {
-                                CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                CommonText(text: viewState.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                                 CommonText(text: "ID: \(viewState.user?.uid ?? "")", font: .mPlus2Regular(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
@@ -97,7 +102,7 @@ struct AccountView: View {
 
                 Section("Debug") {
                     NavigationLink {
-                        DebugView(viewState: DebugViewState())
+                        // DebugView(viewState: DebugViewState())
                     } label: {
                         Text("Debug")
                     }

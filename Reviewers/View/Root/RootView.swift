@@ -25,6 +25,9 @@ struct RootView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.doneTutorial)) { _ in
             viewState.doneTutorial()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.signOut)) { _ in
+            viewState.signOut()
+        }
     }
 }
 

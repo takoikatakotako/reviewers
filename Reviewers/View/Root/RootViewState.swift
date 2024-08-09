@@ -50,7 +50,6 @@ class RootViewState: ObservableObject {
                     type = .error
                 }
             }
-
         }
     }
 
@@ -67,5 +66,12 @@ class RootViewState: ObservableObject {
                 type = .error
             }
         }
+    }
+
+    func signOut() {
+        // 未ログイン
+         withAnimation(.linear(duration: 1)) {
+             type = .tutorial
+         }
     }
 }

@@ -6,14 +6,14 @@ struct ReviewListRow: View {
     let accountTapAction: (_ uid: String) -> Void
     let imageTapAction: (_ imageUrlString: String) -> Void
     let menuTapAction: (_ review: Review) -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {
                 Button {
                     accountTapAction(review.uid)
                 } label: {
-                    WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(review.uid)/profile.png")) { image in
+                    WebImage(url: URL(string: review.profileImageUrlString)) { image in
                         image.resizable()
                     } placeholder: {
                         Rectangle().foregroundColor(Color(.appBackground))
@@ -23,7 +23,7 @@ struct ReviewListRow: View {
                     .frame(width: 40, height: 40)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                
+
                 VStack(alignment: .leading, spacing: 4) {
                     Button(action: {
                             accountTapAction(review.uid)
@@ -34,34 +34,34 @@ struct ReviewListRow: View {
                     CommonText(text: review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                         .foregroundStyle(Color(.appMainText))
                 }
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 4) {
                     Image(systemName: "star.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
-                    
+
                     Image(systemName: review.rate > 1 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
-                    
+
                     Image(systemName: review.rate > 2 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
-                    
+
                     Image(systemName: review.rate > 3 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.appMain)
-                    
+
                     Image(systemName: review.rate > 4 ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
@@ -69,7 +69,7 @@ struct ReviewListRow: View {
                         .foregroundColor(.appMain)
                 }
             }
-            
+
             if review.comment.isNotEmpty {
                 CommonText(
                     text: review.comment,
@@ -80,13 +80,13 @@ struct ReviewListRow: View {
                 .foregroundStyle(Color(.appMainText))
                 .padding(.top, 12)
             }
-            
+
             // 画像
             if review.images.count == 4 {
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
                         Button {
-                            print("xxx")
+                            imageTapAction(review.imageUrlStrings[0])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[0])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -94,10 +94,9 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-                        
-                        
+
                         Button {
-                            print("yyy")
+                            imageTapAction(review.imageUrlStrings[1])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[1])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -106,10 +105,10 @@ struct ReviewListRow: View {
                                 .clipped()
                         }
                     }
-                    
+
                     HStack(spacing: 4) {
                         Button {
-                            print("zzz")
+                            imageTapAction(review.imageUrlStrings[2])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[2])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -117,9 +116,9 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-                        
+
                         Button {
-                            print("xyz")
+                            imageTapAction(review.imageUrlStrings[3])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[3])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -132,9 +131,8 @@ struct ReviewListRow: View {
                 .padding(.top, 12)
             } else if review.images.count == 3 {
                 HStack(spacing: 4) {
-                    
                     Button {
-                        print("xxx")
+                        imageTapAction(review.imageUrlStrings[0])
                     } label: {
                         ReviewListRowImage(urlString: review.imageUrlStrings[0])
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -142,11 +140,10 @@ struct ReviewListRow: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .clipped()
                     }
-                    
-                    
+
                     VStack(spacing: 4) {
                         Button {
-                            print("yyy")
+                            imageTapAction(review.imageUrlStrings[1])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[1])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -154,9 +151,9 @@ struct ReviewListRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .clipped()
                         }
-                        
+
                         Button {
-                            print("zzz")
+                            imageTapAction(review.imageUrlStrings[2])
                         } label: {
                             ReviewListRowImage(urlString: review.imageUrlStrings[2])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -170,7 +167,7 @@ struct ReviewListRow: View {
             } else if review.images.count == 2 {
                 HStack(spacing: 4) {
                     Button {
-                        print("zzz")
+                        imageTapAction(review.imageUrlStrings[0])
                     } label: {
                         ReviewListRowImage(urlString: review.imageUrlStrings[0])
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -178,10 +175,9 @@ struct ReviewListRow: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .clipped()
                     }
-                    
-                    
+
                     Button {
-                        print("xyz")
+                        imageTapAction(review.imageUrlStrings[1])
                     } label: {
                         ReviewListRowImage(urlString: review.imageUrlStrings[1])
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -193,7 +189,7 @@ struct ReviewListRow: View {
                 .padding(.top, 12)
             } else if review.images.count == 1 {
                 Button {
-                    print("xyz")
+                    imageTapAction(review.imageUrlStrings[0])
                 } label: {
                     ReviewListRowImage(urlString: review.imageUrlStrings[0])
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -203,11 +199,7 @@ struct ReviewListRow: View {
                 }
                 .padding(.top, 12)
             }
-            
-            
-            
-            
-            
+
             //                VStack(spacing: 8) {
             //                    HStack(spacing: 8) {
             //                        FirestorageImage(uid: review.uid, fileName: review.images[0])
@@ -234,12 +226,11 @@ struct ReviewListRow: View {
             //                    }
             //                }
             //                .padding(.top, 12)
-            
-            
+
             //            ForEach(review.images, id: \.self) { image in
             //
             //            }
-            
+
             CommonText(
                 text: "JANコード: \(review.code)",
                 font: .mPlus2Regular(size: 14),
@@ -248,7 +239,7 @@ struct ReviewListRow: View {
             )
             .foregroundStyle(Color(.appMainText))
             .padding(.top, 12)
-            
+
             HStack(spacing: 0) {
                 Spacer()
                 Button {
@@ -262,7 +253,7 @@ struct ReviewListRow: View {
                 }
             }
             .padding(.top, 12)
-            
+
         }
         .padding(.top, 12)
         .padding(.leading, 12)

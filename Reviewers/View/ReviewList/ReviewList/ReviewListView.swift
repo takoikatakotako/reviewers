@@ -10,15 +10,18 @@ struct ReviewListView: View {
                     Button {
                         viewState.tapped(review: review)
                     } label: {
-                        ReviewListRow(review: review, accountTapAction: {uid in 
+                        ReviewListRow(review: review, accountTapAction: {uid in
                             print(uid)
                         }, imageTapAction: {imageUrlString in
-                            print(imageUrlString)
-                        }, menuTapAction: { review in 
-                            print(review)
+                            viewState.fullScreenCover = .image(urlString: imageUrlString)
+                        }, menuTapAction: { review in
+                            viewState.menuTapped(review: review)
                         })
                     }
                     .listRowInsets(EdgeInsets())
+                }
+                .refreshable {
+                    await viewState.pullToRefresh()
                 }
                 .listStyle(.inset)
 
@@ -50,11 +53,18 @@ struct ReviewListView: View {
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 }
             }
-            .fullScreenCover(isPresented: $viewState.showingPostCover, onDismiss: {
+            .fullScreenCover(item: $viewState.fullScreenCover, onDismiss: {
                 viewState.onDismissPostSheet()
-            }) {
-                PostView(viewState: PostViewState())
-            }
+            }, content: { item in
+                switch item {
+                case .newPost:
+                    PostView(viewState: PostViewState())
+                case .image(urlString: let urlString):
+                    CommonImageViewer(urlString: urlString)
+                case .signUp:
+                    SignUpView(viewState: SignUpViewState())
+                }
+            })
             .alert("", isPresented: $viewState.showingSignInAlert, actions: {
                 Button("とじる") {}
                 Button("ログイン") {
@@ -63,9 +73,25 @@ struct ReviewListView: View {
             }, message: {
                 Text("レビューを投稿するにはログイン、アカウント作成が必要です。")
             })
-            .fullScreenCover(isPresented: $viewState.showingSignUpFullScreen) {
-                SignUpView(viewState: SignUpViewState())
-            }
+            .alert("", isPresented: $viewState.showingReviewAlert, presenting: viewState.showingReviewAlertPresenting, actions: { presenting in
+                if presenting.isMyReview {
+                    Button("投稿を削除", role: .destructive) {
+                        viewState.deleteReviewTapped(review: presenting.review)
+                    }
+                }
+                Button("投稿を報告") {}
+                Button("とじる", role: .cancel) {}
+            }, message: { presenting in
+                Text("\(presenting.review.comment)")
+            })
+            .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { review in
+                Button("投稿を削除", role: .destructive) {
+                    viewState.deleteReview(review: review)
+                }
+                Button("キャンセル", role: .cancel) {}
+            }, message: { review in
+                Text("投稿「\(review.comment)」を削除してもよろしいですか？")
+            })
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

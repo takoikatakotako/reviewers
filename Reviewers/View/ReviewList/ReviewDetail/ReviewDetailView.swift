@@ -42,19 +42,19 @@ struct ReviewDetailView: View {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: viewState.review.rate > 2 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: viewState.review.rate > 3 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.appMain)
-                            
+
                             Image(systemName: viewState.review.rate > 4 ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
@@ -62,7 +62,7 @@ struct ReviewDetailView: View {
                                 .foregroundColor(.appMain)
                         }
                     }
-                    
+
                     if viewState.review.comment.isNotEmpty {
                         CommonText(
                             text: viewState.review.comment,
@@ -88,7 +88,6 @@ struct ReviewDetailView: View {
                                         .clipped()
                                 }
 
-                                
                                 Button {
                                     print("yyy")
                                 } label: {
@@ -99,7 +98,7 @@ struct ReviewDetailView: View {
                                         .clipped()
                                 }
                             }
-                            
+
                             HStack(spacing: 4) {
                                 Button {
                                     print("zzz")
@@ -125,7 +124,7 @@ struct ReviewDetailView: View {
                         .padding(.top, 12)
                     } else if viewState.review.images.count == 3 {
                         HStack(spacing: 4) {
-                            
+
                             Button {
                                 print("xxx")
                             } label: {
@@ -136,7 +135,6 @@ struct ReviewDetailView: View {
                                     .clipped()
                             }
 
-                            
                             VStack(spacing: 4) {
                                 Button {
                                     print("yyy")
@@ -172,7 +170,6 @@ struct ReviewDetailView: View {
                                     .clipped()
                             }
 
-                            
                             Button {
                                 print("xyz")
                             } label: {
