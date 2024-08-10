@@ -8,6 +8,7 @@ class ReviewDetailViewState: ObservableObject {
     @Published var comment = ""
 
     private let repository = FirestoreRepository()
+    private let reviewUseCase = ReviewUseCase()
 
     init(review: Review) {
         self.review = review
@@ -16,7 +17,7 @@ class ReviewDetailViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
-                let comments = try await repository.fetchComments(reviewId: review.id)
+                let comments = try await reviewUseCase.fetchReviewComments(reviewId: review.id)
                 self.comments = comments
             } catch {
                 print(error)

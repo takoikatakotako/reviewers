@@ -2,7 +2,14 @@ import FirebaseFirestore
 
 struct FirestoreReview: Hashable {
     static let collectionName = "reviews"
-    static let uid = "uid"
+    static let uidField = "uid"
+    static let codeField = "code"
+    static let rateField = "rate"
+    static let deletedField = "deleted"
+    static let commentField = "comment"
+    static let imagesField = "images"
+    static let createdAtField = "createdAt"
+    static let updatedAtField = "updatedAt"
 
     let id: String
     let uid: String
@@ -16,13 +23,13 @@ struct FirestoreReview: Hashable {
     init(document: QueryDocumentSnapshot) throws {
         let data = document.data()
         guard
-            let uid = data["uid"] as? String,
-            let code = data["code"] as? String,
-            let rate = data["rate"] as? Int,
-            let comment = data["comment"] as? String,
-            let images = data["images"] as? [String],
-            let createdAt = data["createdAt"] as? Timestamp,
-            let updatedAt = data["updatedAt"] as? Timestamp
+            let uid = data[Self.uidField] as? String,
+            let code = data[Self.codeField] as? String,
+            let rate = data[Self.rateField] as? Int,
+            let comment = data[Self.commentField] as? String,
+            let images = data[Self.imagesField] as? [String],
+            let createdAt = data[Self.createdAtField] as? Timestamp,
+            let updatedAt = data[Self.updatedAtField] as? Timestamp
         else {
             throw ReviewersError.temp
         }

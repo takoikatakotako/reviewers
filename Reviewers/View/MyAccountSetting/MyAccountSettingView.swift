@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct AccountSettingView: View {
+struct MyAccountSettingView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewState: AccountSettingViewState
+    @StateObject var viewState: MyAccountSettingViewState
 
     var body: some View {
         ZStack {
@@ -121,6 +121,6 @@ struct AccountSettingView: View {
 
 #Preview {
     NavigationStack {
-        AccountSettingView(viewState: AccountSettingViewState())
+        MyAccountSettingView(viewState: MyAccountSettingViewState())
     }
 }

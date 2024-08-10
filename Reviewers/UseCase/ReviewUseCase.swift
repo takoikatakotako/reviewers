@@ -40,4 +40,24 @@ struct ReviewUseCase {
         }
         return reviews
     }
+    
+    
+    
+    
+    
+    func fetchReviewComments(reviewId: String) async throws -> [Comment] {
+        let firestoreComments: [FirestoreComment] = try await firestoreRepository.fetchComments(reviewId: reviewId)
+
+        var comments: [Comment] = []
+        for firestoreComment in firestoreComments {
+            let comment = Comment(
+                id: firestoreComment.id,
+                uid: firestoreComment.uid,
+                comment: firestoreComment.comment
+            )
+            comments.append(comment)
+        }
+        return comments
+    }
+    
 }

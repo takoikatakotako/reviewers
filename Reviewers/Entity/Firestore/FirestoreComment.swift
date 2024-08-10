@@ -2,6 +2,11 @@ import FirebaseFirestore
 
 struct FirestoreComment: Hashable {
     static let collectionName = "comments"
+    static let uidField = "uid"
+    static let commentField = "comment"
+    static let createdAtField = "createdAt"
+    static let updatedAtField = "updatedAt"
+    
     let id: String
     let uid: String
     let comment: String
@@ -11,10 +16,10 @@ struct FirestoreComment: Hashable {
     init(document: QueryDocumentSnapshot) throws {
         let data = document.data()
         guard
-            let uid = data["uid"] as? String,
-            let comment = data["comment"] as? String,
-            let createdAt = data["createdAt"] as? Timestamp,
-            let updatedAt = data["updatedAt"] as? Timestamp
+            let uid = data[Self.uidField] as? String,
+            let comment = data[Self.commentField] as? String,
+            let createdAt = data[Self.createdAtField] as? Timestamp,
+            let updatedAt = data[Self.updatedAtField] as? Timestamp
         else {
             throw ReviewersError.temp
         }

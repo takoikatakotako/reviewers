@@ -1,7 +1,7 @@
 import SwiftUI
 import FirebaseAuth
 
-class AccountSettingViewState: ObservableObject {
+class MyAccountSettingViewState: ObservableObject {
     @Published var accoundID: String = ""
     @Published var nickname: String = ""
     @Published var profileImage: UIImage?
