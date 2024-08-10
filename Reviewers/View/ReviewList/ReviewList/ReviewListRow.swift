@@ -28,7 +28,7 @@ struct ReviewListRow: View {
                     Button(action: {
                             accountTapAction(review.uid)
                         }, label: {
-                            CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
+                            CommonText(text: review.userName, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                         })
                     CommonText(text: review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)

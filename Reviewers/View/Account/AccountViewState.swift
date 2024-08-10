@@ -8,6 +8,7 @@ class AccountViewState: ObservableObject {
 
     private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
+    private let profileUseCase = ProfileUseCase()
 
     var profileImageUrl: URL? {
         guard let uid = user?.uid else {
@@ -23,8 +24,8 @@ class AccountViewState: ObservableObject {
         self.user = user
 
         Task { @MainActor in
-            let profile = await firestoreRepository.fetchProfile(uid: user.uid)
-            nickname = profile?.nickname ?? "ななしさん"
+            let profile = await profileUseCase.fetchProfile(uid: user.uid)
+            nickname = profile.nickname
         }
     }
 

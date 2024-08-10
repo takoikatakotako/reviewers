@@ -5,6 +5,7 @@ struct Profile: Identifiable, Hashable {
     let nickname: String
 
     static func initialValue(uid: String) -> Profile {
-        return Profile(id: uid, nickname: "ななしさん")
+        return Profile(id: uid, nickname: Self.initialNickname)
     }
+    static let initialNickname = "ななしさん"
 }

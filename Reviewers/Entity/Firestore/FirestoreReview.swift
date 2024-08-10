@@ -2,6 +2,8 @@ import FirebaseFirestore
 
 struct FirestoreReview: Hashable {
     static let collectionName = "reviews"
+    static let uid = "uid"
+
     let id: String
     let uid: String
     let code: String

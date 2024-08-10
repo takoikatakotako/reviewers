@@ -61,6 +61,23 @@ struct FirestoreRepository {
         return reviews
     }
 
+    func fetchReviews(limit: Int = 20) async throws -> [FirestoreReview] {
+        let db = Firestore.firestore()
+        let querySnapshot = try await db
+            .collection(FirestoreReview.collectionName)
+            .whereField("deleted", isEqualTo: false)
+            .order(by: "createdAt")
+            .limit(to: limit)
+            .getDocuments()
+
+        var firestoreReviews: [FirestoreReview] = []
+        for document in querySnapshot.documents {
+            let firestoreReview = try FirestoreReview(document: document)
+            firestoreReviews.append(firestoreReview)
+        }
+        return firestoreReviews
+    }
+
     func fetchComments(reviewId: String) async throws -> [Comment] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -95,7 +112,24 @@ struct FirestoreRepository {
     }
 
     // MARK: - Profile Collection
-    func fetchProfile(uid: String) async -> Profile? {
+//    func fetchProfile(uid: String) async -> Profile? {
+//        let db = Firestore.firestore()
+//        let querySnapshot = try? await db
+//            .collection(FirestoreProfile.collectionName)
+//            .document(uid)
+//            .getDocument()
+//        
+//        guard let querySnapshot = querySnapshot else {
+//            return nil
+//        }
+//        
+//        if let firestoreProfile = try? FirestoreProfile(document: querySnapshot) {
+//            return Profile(id: firestoreProfile.id, nickname: firestoreProfile.nickname)
+//        }
+//        return nil
+//    }
+
+    func fetchProfile(uid: String) async throws -> FirestoreProfile {
         let db = Firestore.firestore()
         let querySnapshot = try? await db
             .collection(FirestoreProfile.collectionName)
@@ -103,11 +137,9 @@ struct FirestoreRepository {
             .getDocument()
 
         guard let querySnapshot = querySnapshot else {
-            return nil
+            throw ReviewersError.temp
         }
-
-        let firestoreProfile = FirestoreProfile(document: querySnapshot)
-        return Profile(id: firestoreProfile.id, nickname: firestoreProfile.nickname)
+        return try FirestoreProfile(document: querySnapshot)
     }
 
     func setNickname(uid: String, nickname: String) async throws {

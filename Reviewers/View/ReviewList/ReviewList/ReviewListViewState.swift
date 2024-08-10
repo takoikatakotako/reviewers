@@ -13,6 +13,7 @@ class ReviewListViewState: ObservableObject {
 
     private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
+    private let reviewUseCase = ReviewUseCase()
 
     func onAppear() {
         Task { @MainActor in
@@ -122,7 +123,7 @@ class ReviewListViewState: ObservableObject {
 
     @MainActor
     private func updatePosts() async throws {
-        let newReviews: [Review] = try await firestoreRepository.fetchReviews()
+        let newReviews: [Review] = try await reviewUseCase.fetchNewReviews()
         let margedReviews: [Review] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
         let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })

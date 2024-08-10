@@ -15,6 +15,7 @@ class AccountSettingViewState: ObservableObject {
     private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
     private let storageRepository = StorageRepository()
+    private let profileUseCase = ProfileUseCase()
 
     func onAppear() {
         guard let user = Auth.auth().currentUser else {
@@ -26,7 +27,7 @@ class AccountSettingViewState: ObservableObject {
 
         Task { @MainActor in
             do {
-                let profile: Profile = await firestoreRepository.fetchProfile(uid: user.uid) ?? Profile.initialValue(uid: user.uid)
+                let profile: Profile = await profileUseCase.fetchProfile(uid: user.uid)
                 self.nickname = profile.nickname
 
                 let image = try await storageRepository.fetchProfileImage(uid: user.uid)
