@@ -45,6 +45,16 @@ struct AccountView: View {
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
             
+            if viewState.loading {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+                        .scaleEffect(1.2)
+                    Spacer()
+                }
+            }
+            
             ForEach(viewState.reviews) { review in
                 Button {
                     viewState.reviewTapped(review: review)
@@ -54,21 +64,12 @@ struct AccountView: View {
                     } imageTapAction: { imageUrlString in
                         viewState.imageTapped(urlString: imageUrlString)
                     } menuTapAction: { review in
-                        print(review)
+                        viewState.menuTapped(review: review)
                     }
                 }
                 .listRowInsets(EdgeInsets())
             }
             
-            if viewState.loading {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                        .foregroundStyle(Color(.appMain))
-                        .scaleEffect(1.2)
-                    Spacer()
-                }
-            }
         }
         .onAppear {
             viewState.onAppear()
@@ -76,6 +77,25 @@ struct AccountView: View {
         .refreshable {
             await viewState.pullToRefresh()
         }
+        .alert("", isPresented: $viewState.showingReviewAlert, presenting: viewState.showingReviewAlertPresenting, actions: { presenting in
+            if presenting.isMyReview {
+                Button("投稿を削除", role: .destructive) {
+                     viewState.deleteReviewTapped(review: presenting.review)
+                }
+            }
+            Button("投稿を報告") {}
+            Button("とじる", role: .cancel) {}
+        }, message: { presenting in
+             Text("\(presenting.review.comment)")
+        })
+        .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { review in
+            Button("投稿を削除", role: .destructive) {
+                viewState.deleteReview(review: review)
+            }
+            Button("キャンセル", role: .cancel) {}
+        }, message: { review in
+            Text("投稿「\(review.comment)」を削除してもよろしいですか？")
+        })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
             case .account(uid: let uid):

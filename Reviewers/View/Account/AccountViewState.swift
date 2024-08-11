@@ -9,11 +9,16 @@ class AccountViewState: ObservableObject {
     @Published var nickname = ""
     @Published var reviews: [Review] = []
     @Published var loading = true
+    @Published var showingReviewAlert = false
+    @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
+    @Published var showingReviewDeleteConfirmAlert = false
+    @Published var showingReviewDeleteConfirmAlertPresenting: Review?
     @Published var navigationDestination: AccountViewDestination?
     @Published var fullScreenCover: AccountViewFullScreenCover?
     
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
+    private let authRepository = AuthRepository()
     
     var profileImageUrlString: String {
         return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png"
@@ -32,7 +37,7 @@ class AccountViewState: ObservableObject {
             } catch {
                 print(error)
             }
-            loading = true
+            loading = false
         }
     }
     
@@ -56,6 +61,34 @@ class AccountViewState: ObservableObject {
         fullScreenCover = .image(urlString: urlString)
     }
     
+    func menuTapped(review: Review) {
+        // sheet = .myReview
+        guard let user = authRepository.getUser() else {
+            // TODO: 未ログイン時の処理
+            return
+        }
+
+        showingReviewAlertPresenting = (review: review, review.uid == user.uid)
+        showingReviewAlert = true
+    }
+    
+    func deleteReviewTapped(review: Review) {
+        showingReviewDeleteConfirmAlertPresenting = review
+        showingReviewDeleteConfirmAlert = true
+    }
+    
+    func deleteReview(review: Review) {
+        Task { @MainActor in
+            do {
+                try await reviewUseCase.deleteReview(reviewId: review.id)
+                if let index = reviews.firstIndex(of: review) {
+                    reviews.remove(at: index)
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     @MainActor
     private func updateUserReviews(uid: String) async throws {

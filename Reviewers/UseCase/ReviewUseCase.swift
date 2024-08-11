@@ -41,9 +41,10 @@ struct ReviewUseCase {
         return comments
     }
     
-    
-    
-    
+    func deleteReview(reviewId: String) async throws {
+        try await firestoreRepository.deleteReview(reviewId: reviewId)
+    }
+
     private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile?) -> Review {
         if let firestoreProfile: FirestoreProfile = firestoreProfile {
             // プロフィールがある場合
