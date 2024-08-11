@@ -6,7 +6,7 @@ struct FirestoreComment: Hashable {
     static let commentField = "comment"
     static let createdAtField = "createdAt"
     static let updatedAtField = "updatedAt"
-    
+
     let id: String
     let uid: String
     let comment: String

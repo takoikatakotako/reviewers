@@ -11,16 +11,14 @@ class ReviewDetailViewState: ObservableObject {
     @Published var navigationDestination: ReviewDetailViewDestination?
     @Published var fullScreenCover: ReviewDetailFullScreenCover?
 
-    
     private let authUseCase = AuthUseCase()
     private let repository = FirestoreRepository()
     private let reviewUseCase = ReviewUseCase()
 
-    
     var profileImageURL: URL {
         return Profile.profileImageURL(uid: review.uid)
     }
-    
+
     init(review: Review) {
         self.review = review
     }
@@ -50,8 +48,7 @@ class ReviewDetailViewState: ObservableObject {
             print(error)
             return
         }
-            
-        
+
         Task { @MainActor in
             do {
                 guard let uid = Auth.auth().currentUser?.uid else {
@@ -64,14 +61,14 @@ class ReviewDetailViewState: ObservableObject {
         }
     }
 
-    func accounTapped() {
-        navigationDestination = .account(uid: review.uid)
+    func accounTapped(uid: String) {
+        navigationDestination = .account(uid: uid)
     }
-    
+
     func imageTapped(imageUrlString: String) {
         fullScreenCover = .image(urlString: imageUrlString)
     }
-    
+
     func signInTapped() {
         fullScreenCover = .signUp
     }

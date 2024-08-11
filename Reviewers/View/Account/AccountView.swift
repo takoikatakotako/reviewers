@@ -4,7 +4,7 @@ import SDWebImageSwiftUI
 struct AccountView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: AccountViewState
-    
+
     var body: some View {
         List {
             VStack(spacing: 12) {
@@ -18,7 +18,7 @@ struct AccountView: View {
                     .scaledToFill()
                     .frame(width: 60, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
+
                     VStack(alignment: .leading, spacing: 0) {
                         CommonText(text: viewState.nickname, font: .mPlus2SemiBold(size: 20), lineHeight: 28, alignment: .leading)
                             .foregroundStyle(.appMainText)
@@ -26,9 +26,9 @@ struct AccountView: View {
                             .foregroundStyle(.appSubText)
                             .lineLimit(1)
                     }
-                    
+
                     Spacer()
-                    
+
                     Button {
                         print("ellipsis")
                     } label: {
@@ -39,12 +39,12 @@ struct AccountView: View {
                             .foregroundStyle(Color(.appSubText))
                     }
                 }
-                
+
                 CommonText(text: "ポッカビゴンが大好きです！！！なんとかかんとかかんとかかんとか。ポッカビゴンが大好きです！！！なんとかかんとかかんとかかんとか。ポッカビゴンが大好きです!！小野", font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
                     .foregroundStyle(.appMainText)
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
-            
+
             if viewState.loading {
                 HStack {
                     Spacer()
@@ -54,7 +54,7 @@ struct AccountView: View {
                     Spacer()
                 }
             }
-            
+
             ForEach(viewState.reviews) { review in
                 Button {
                     viewState.reviewTapped(review: review)
@@ -69,7 +69,7 @@ struct AccountView: View {
                 }
                 .listRowInsets(EdgeInsets())
             }
-            
+
         }
         .onAppear {
             viewState.onAppear()
@@ -104,7 +104,7 @@ struct AccountView: View {
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }
         }
-        .fullScreenCover(item: $viewState.fullScreenCover){ item in
+        .fullScreenCover(item: $viewState.fullScreenCover) { item in
             switch item {
             case .image(urlString: let urlString):
                 CommonImageViewer(urlString: urlString)
@@ -116,7 +116,7 @@ struct AccountView: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                
+
                 Button {
                     dismiss()
                 } label: {

@@ -15,19 +15,19 @@ class AccountViewState: ObservableObject {
     @Published var showingReviewDeleteConfirmAlertPresenting: Review?
     @Published var navigationDestination: AccountViewDestination?
     @Published var fullScreenCover: AccountViewFullScreenCover?
-    
+
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let authRepository = AuthRepository()
-    
+
     var profileImageUrlString: String {
         return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png"
     }
-    
+
     init(uid: String) {
         self.uid = uid
     }
-    
+
     func onAppear() {
         Task { @MainActor in
             let profile = await profileUseCase.fetchProfile(uid: self.uid)
@@ -40,7 +40,7 @@ class AccountViewState: ObservableObject {
             loading = false
         }
     }
-    
+
     func pullToRefresh() async {
         do {
             try await updateUserReviews(uid: uid)
@@ -48,19 +48,19 @@ class AccountViewState: ObservableObject {
             print(error)
         }
     }
-    
+
     func accountTap(uid: String) {
         navigationDestination = .account(uid: uid)
     }
-    
+
     func reviewTapped(review: Review) {
         navigationDestination = .reviewDetail(review: review)
     }
-    
+
     func imageTapped(urlString: String) {
         fullScreenCover = .image(urlString: urlString)
     }
-    
+
     func menuTapped(review: Review) {
         // sheet = .myReview
         guard let user = authRepository.getUser() else {
@@ -71,12 +71,12 @@ class AccountViewState: ObservableObject {
         showingReviewAlertPresenting = (review: review, review.uid == user.uid)
         showingReviewAlert = true
     }
-    
+
     func deleteReviewTapped(review: Review) {
         showingReviewDeleteConfirmAlertPresenting = review
         showingReviewDeleteConfirmAlert = true
     }
-    
+
     func deleteReview(review: Review) {
         Task { @MainActor in
             do {
@@ -89,7 +89,7 @@ class AccountViewState: ObservableObject {
             }
         }
     }
-    
+
     @MainActor
     private func updateUserReviews(uid: String) async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)

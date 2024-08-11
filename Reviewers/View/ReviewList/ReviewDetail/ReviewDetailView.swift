@@ -12,12 +12,12 @@ struct ReviewDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
                         Button {
-                            viewState.accounTapped()
+                            viewState.accounTapped(uid: viewState.review.uid)
                         } label: {
                             WebImage(url: viewState.profileImageURL) { image in
                                 image.resizable()
                             } placeholder: {
-                                Rectangle().foregroundColor(Color(.appBackground))
+                                CommonAccountImageHolder()
                             }
                             .transition(.fade(duration: 0.5))
                             .scaledToFill()
@@ -25,10 +25,9 @@ struct ReviewDetailView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
 
-
                         VStack(alignment: .leading, spacing: 4) {
                             Button {
-                                viewState.accounTapped()
+                                viewState.accounTapped(uid: viewState.review.uid)
                             } label: {
                                 CommonText(text: viewState.review.userName, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
@@ -285,7 +284,6 @@ struct ReviewDetailView: View {
                     Divider()
                         .padding(.top, 12)
 
-                    
                     // 
                     if viewState.loading {
                         HStack {
@@ -297,24 +295,32 @@ struct ReviewDetailView: View {
                         }
                         .frame(height: 44)
                     }
-                    
+
                     // コメント
                     ForEach(viewState.comments) { comment in
                         VStack(alignment: .leading, spacing: 0) {
-                            HStack(spacing: 12) {   
-                                WebImage(url: viewState.profileImageURL) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    Rectangle().foregroundColor(Color(.appBackground))
+                            HStack(spacing: 12) {
+                                Button {
+                                    viewState.accounTapped(uid: comment.uid)
+                                } label: {
+                                    WebImage(url: comment.profile.profileImageURL) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        CommonAccountImageHolder()
+                                    }
+                                    .transition(.fade(duration: 0.5))
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                                 }
-                                .transition(.fade(duration: 0.5))
-                                .scaledToFill()
-                                .frame(width: 40, height: 40)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                 
+
                                 VStack(alignment: .leading, spacing: 4) {
-                                    CommonText(text: comment.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
-                                        .foregroundStyle(Color(.appMainText))
+                                    Button {
+                                        viewState.accounTapped(uid: comment.uid)
+                                    } label: {
+                                        CommonText(text: comment.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                            .foregroundStyle(Color(.appMainText))
+                                    }
                                     CommonText(text: comment.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
                                 }
@@ -354,7 +360,6 @@ struct ReviewDetailView: View {
                 .padding(.trailing, 12)
                 .padding(.bottom, 72)
             }
-
 
             if keyboardFocused {
                 Button {
@@ -414,7 +419,7 @@ struct ReviewDetailView: View {
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }
         }
-        .fullScreenCover(item: $viewState.fullScreenCover){ item in
+        .fullScreenCover(item: $viewState.fullScreenCover) { item in
             switch item {
             case .image(urlString: let urlString):
                 CommonImageViewer(urlString: urlString)

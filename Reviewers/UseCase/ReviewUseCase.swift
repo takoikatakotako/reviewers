@@ -14,7 +14,7 @@ struct ReviewUseCase {
         }
         return reviews
     }
-    
+
     func fetchNewUserReviews(uid: String) async throws -> [Review] {
         let firestoreReviews = try await firestoreRepository.fetchNewUserReviews(uid: uid, limit: 20)
         var reviews: [Review] = []
@@ -25,7 +25,7 @@ struct ReviewUseCase {
         }
         return reviews
     }
-    
+
     func fetchReviewComments(reviewId: String) async throws -> [Comment] {
         let firestoreComments: [FirestoreComment] = try await firestoreRepository.fetchComments(reviewId: reviewId)
 
@@ -37,14 +37,11 @@ struct ReviewUseCase {
         }
         return comments
     }
-    
+
     func deleteReview(reviewId: String) async throws {
         try await firestoreRepository.deleteReview(reviewId: reviewId)
     }
-    
-    
-    
-    
+
     private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile?) -> Review {
         if let firestoreProfile: FirestoreProfile = firestoreProfile {
             // プロフィールがある場合
@@ -76,14 +73,14 @@ struct ReviewUseCase {
             return review
         }
     }
-    
+
     private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile?) -> Comment {
         if let firestoreProfile: FirestoreProfile = firestoreProfile {
             // プロフィールがある場合
             let comment = Comment(
                 id: firestoreComment.id,
                 uid: firestoreComment.uid,
-                comment: firestoreComment.comment, 
+                comment: firestoreComment.comment,
                 createdAt: firestoreComment.createdAt,
                 profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname)
             )
@@ -93,7 +90,7 @@ struct ReviewUseCase {
             let comment = Comment(
                 id: firestoreComment.id,
                 uid: firestoreComment.uid,
-                comment: firestoreComment.comment, 
+                comment: firestoreComment.comment,
                 createdAt: firestoreComment.createdAt,
                 profile: Profile.initialValue(uid: firestoreComment.uid)
             )

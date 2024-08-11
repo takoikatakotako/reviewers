@@ -16,7 +16,7 @@ struct FirestoreRepository {
         ]
         )
     }
-    
+
     func addReviewComments(reviewId: String, uid: String, comment: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -32,7 +32,7 @@ struct FirestoreRepository {
                 ]
             )
     }
-    
+
     func fetchReviews(limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -41,7 +41,7 @@ struct FirestoreRepository {
             .order(by: FirestoreReview.createdAtField)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreReviews: [FirestoreReview] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
@@ -49,7 +49,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchNewUserReviews(uid: String, limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -59,7 +59,7 @@ struct FirestoreRepository {
             .order(by: FirestoreReview.createdAtField)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreReviews: [FirestoreReview] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
@@ -67,7 +67,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchComments(reviewId: String) async throws -> [FirestoreComment] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -76,7 +76,7 @@ struct FirestoreRepository {
             .collection(FirestoreComment.collectionName)
             .limit(to: 30)
             .getDocuments()
-        
+
         var comments: [FirestoreComment] = []
         for document in querySnapshot.documents {
             let firestoreComment = try FirestoreComment(document: document)
@@ -84,7 +84,7 @@ struct FirestoreRepository {
         }
         return comments
     }
-    
+
     func deleteReview(reviewId: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -95,7 +95,7 @@ struct FirestoreRepository {
                 FirestoreReview.updatedAtField: FieldValue.serverTimestamp()
             ], merge: true)
     }
-    
+
     // MARK: - Profile Collection
     func fetchProfile(uid: String) async throws -> FirestoreProfile {
         let db = Firestore.firestore()
@@ -103,13 +103,13 @@ struct FirestoreRepository {
             .collection(FirestoreProfile.collectionName)
             .document(uid)
             .getDocument()
-        
+
         guard let querySnapshot = querySnapshot else {
             throw ReviewersError.temp
         }
         return try FirestoreProfile(document: querySnapshot)
     }
-    
+
     func setNickname(uid: String, nickname: String) async throws {
         let db = Firestore.firestore()
         try await db
