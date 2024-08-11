@@ -10,6 +10,7 @@ class AccountViewState: ObservableObject {
     @Published var reviews: [Review] = []
     @Published var loading = true
     @Published var navigationDestination: AccountViewDestination?
+    @Published var fullScreenCover: AccountViewFullScreenCover?
     
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
@@ -35,8 +36,24 @@ class AccountViewState: ObservableObject {
         }
     }
     
+    func pullToRefresh() async {
+        do {
+            try await updateUserReviews(uid: uid)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func accountTap(uid: String) {
+        navigationDestination = .account(uid: uid)
+    }
+    
     func reviewTapped(review: Review) {
         navigationDestination = .reviewDetail(review: review)
+    }
+    
+    func imageTapped(urlString: String) {
+        fullScreenCover = .image(urlString: urlString)
     }
     
     

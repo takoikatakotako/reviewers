@@ -50,9 +50,9 @@ struct AccountView: View {
                     viewState.reviewTapped(review: review)
                 } label: {
                     CommonReviewRow(review: review) { uid in
-                        print(uid)
+                        viewState.accountTap(uid: uid)
                     } imageTapAction: { imageUrlString in
-                        print(imageUrlString)
+                        viewState.imageTapped(urlString: imageUrlString)
                     } menuTapAction: { review in
                         print(review)
                     }
@@ -74,7 +74,7 @@ struct AccountView: View {
             viewState.onAppear()
         }
         .refreshable {
-            //await viewState.pullToRefresh()
+            await viewState.pullToRefresh()
         }
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
@@ -82,6 +82,12 @@ struct AccountView: View {
                 AccountView(viewState: AccountViewState(uid: uid))
             case .reviewDetail(review: let review):
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+            }
+        }
+        .fullScreenCover(item: $viewState.fullScreenCover){ item in
+            switch item {
+            case .image(urlString: let urlString):
+                CommonImageViewer(urlString: urlString)
             }
         }
         .listStyle(.inset)
@@ -100,13 +106,6 @@ struct AccountView: View {
                         .padding(.trailing, 8)
                 }
             }
-            //
-            //            ToolbarItem(placement: .principal) {
-            //                Text(viewState.title)
-            //                    .font(.system(size: 16).bold())
-            //                    .foregroundStyle(Color.white)
-            //            }
-            
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
