@@ -46,14 +46,28 @@ struct AccountView: View {
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
             
             ForEach(viewState.reviews) { review in
-                CommonReviewRow(review: review) { uid in
-                    print(uid)
-                } imageTapAction: { imageUrlString in
-                    print(imageUrlString)
-                } menuTapAction: { review in
-                    print(review)
+                Button {
+                    viewState.reviewTapped(review: review)
+                } label: {
+                    CommonReviewRow(review: review) { uid in
+                        print(uid)
+                    } imageTapAction: { imageUrlString in
+                        print(imageUrlString)
+                    } menuTapAction: { review in
+                        print(review)
+                    }
                 }
                 .listRowInsets(EdgeInsets())
+            }
+            
+            if viewState.loading {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                        .foregroundStyle(Color(.appMain))
+                        .scaleEffect(1.2)
+                    Spacer()
+                }
             }
         }
         .onAppear {
@@ -61,6 +75,14 @@ struct AccountView: View {
         }
         .refreshable {
             //await viewState.pullToRefresh()
+        }
+        .navigationDestination(item: $viewState.navigationDestination) { item in
+            switch item {
+            case .account(uid: let uid):
+                AccountView(viewState: AccountViewState(uid: uid))
+            case .reviewDetail(review: let review):
+                ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+            }
         }
         .listStyle(.inset)
         .scrollIndicators(.hidden)

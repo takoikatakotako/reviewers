@@ -50,6 +50,24 @@ struct FirestoreRepository {
         return firestoreReviews
     }
     
+    func fetchNewUserReviews(uid: String, limit: Int = 20) async throws -> [FirestoreReview] {
+        let db = Firestore.firestore()
+        let querySnapshot = try await db
+            .collection(FirestoreReview.collectionName)
+            .whereField(FirestoreReview.uidField, isEqualTo: uid)
+            .whereField(FirestoreReview.deletedField, isEqualTo: false)
+            .order(by: FirestoreReview.createdAtField)
+            .limit(to: limit)
+            .getDocuments()
+        
+        var firestoreReviews: [FirestoreReview] = []
+        for document in querySnapshot.documents {
+            let firestoreReview = try FirestoreReview(document: document)
+            firestoreReviews.append(firestoreReview)
+        }
+        return firestoreReviews
+    }
+    
     func fetchComments(reviewId: String) async throws -> [FirestoreComment] {
         let db = Firestore.firestore()
         let querySnapshot = try await db

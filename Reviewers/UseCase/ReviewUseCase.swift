@@ -8,42 +8,23 @@ struct ReviewUseCase {
 
         var reviews: [Review] = []
         for firestoreReview in firestoreReviews {
-            if let firestoreProfile: FirestoreProfile = try? await firestoreRepository.fetchProfile(uid: firestoreReview.uid) {
-                // プロフィールがある場合
-                let review = Review(
-                    id: firestoreReview.id,
-                    uid: firestoreReview.uid,
-                    userName: firestoreProfile.nickname,
-                    code: firestoreReview.code,
-                    rate: firestoreReview.rate,
-                    comment: firestoreReview.comment,
-                    images: firestoreReview.images,
-                    createdAt: firestoreReview.createdAt,
-                    updatedAt: firestoreReview.updatedAt
-                )
-                reviews.append(review)
-            } else {
-                // プロフィールがない場合
-                let review = Review(
-                    id: firestoreReview.id,
-                    uid: firestoreReview.uid,
-                    userName: Profile.initialNickname,
-                    code: firestoreReview.code,
-                    rate: firestoreReview.rate,
-                    comment: firestoreReview.comment,
-                    images: firestoreReview.images,
-                    createdAt: firestoreReview.createdAt,
-                    updatedAt: firestoreReview.updatedAt
-                )
-                reviews.append(review)
-            }
+            let firestoreProfile: FirestoreProfile? = try? await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
+            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
+            reviews.append(review)
         }
         return reviews
     }
     
-    
-    
-    
+    func fetchNewUserReviews(uid: String) async throws -> [Review] {
+        let firestoreReviews = try await firestoreRepository.fetchNewUserReviews(uid: uid, limit: 20)
+        var reviews: [Review] = []
+        for firestoreReview in firestoreReviews {
+            let firestoreProfile: FirestoreProfile? = try? await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
+            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
+            reviews.append(review)
+        }
+        return reviews
+    }
     
     func fetchReviewComments(reviewId: String) async throws -> [Comment] {
         let firestoreComments: [FirestoreComment] = try await firestoreRepository.fetchComments(reviewId: reviewId)
@@ -60,4 +41,38 @@ struct ReviewUseCase {
         return comments
     }
     
+    
+    
+    
+    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile?) -> Review {
+        if let firestoreProfile: FirestoreProfile = firestoreProfile {
+            // プロフィールがある場合
+            let review = Review(
+                id: firestoreReview.id,
+                uid: firestoreReview.uid,
+                userName: firestoreProfile.nickname,
+                code: firestoreReview.code,
+                rate: firestoreReview.rate,
+                comment: firestoreReview.comment,
+                images: firestoreReview.images,
+                createdAt: firestoreReview.createdAt,
+                updatedAt: firestoreReview.updatedAt
+            )
+            return review
+        } else {
+            // プロフィールがない場合
+            let review = Review(
+                id: firestoreReview.id,
+                uid: firestoreReview.uid,
+                userName: Profile.initialNickname,
+                code: firestoreReview.code,
+                rate: firestoreReview.rate,
+                comment: firestoreReview.comment,
+                images: firestoreReview.images,
+                createdAt: firestoreReview.createdAt,
+                updatedAt: firestoreReview.updatedAt
+            )
+            return review
+        }
+    }
 }
