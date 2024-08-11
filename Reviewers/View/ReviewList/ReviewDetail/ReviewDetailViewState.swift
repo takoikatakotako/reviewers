@@ -6,10 +6,21 @@ class ReviewDetailViewState: ObservableObject {
     let review: Review
     @Published var comments: [Comment] = []
     @Published var comment = ""
+    @Published var loading = true
+    @Published var showingSignInAlert = false
+    @Published var navigationDestination: ReviewDetailViewDestination?
+    @Published var fullScreenCover: ReviewDetailFullScreenCover?
 
+    
+    private let authUseCase = AuthUseCase()
     private let repository = FirestoreRepository()
     private let reviewUseCase = ReviewUseCase()
 
+    
+    var profileImageURL: URL {
+        return Profile.profileImageURL(uid: review.uid)
+    }
+    
     init(review: Review) {
         self.review = review
     }
@@ -22,10 +33,25 @@ class ReviewDetailViewState: ObservableObject {
             } catch {
                 print(error)
             }
+            self.loading = false
         }
     }
 
     func postComment() {
+        // 匿名ユーザーの場合はログインアラートを表示
+        do {
+            let isAnonymous = try authUseCase.isAnonymousUser()
+            if isAnonymous {
+                // ログインアラートを表示
+                self.showingSignInAlert = true
+                return
+            }
+        } catch {
+            print(error)
+            return
+        }
+            
+        
         Task { @MainActor in
             do {
                 guard let uid = Auth.auth().currentUser?.uid else {
@@ -37,4 +63,17 @@ class ReviewDetailViewState: ObservableObject {
             }
         }
     }
+
+    func accounTapped() {
+        navigationDestination = .account(uid: review.uid)
+    }
+    
+    func imageTapped(imageUrlString: String) {
+        fullScreenCover = .image(urlString: imageUrlString)
+    }
+    
+    func signInTapped() {
+        fullScreenCover = .signUp
+    }
+
 }

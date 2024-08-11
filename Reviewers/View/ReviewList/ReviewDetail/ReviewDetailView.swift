@@ -11,19 +11,29 @@ struct ReviewDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
-                        WebImage(url: URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(viewState.review.uid)/profile.png")) { image in
-                            image.resizable()
-                        } placeholder: {
-                            Rectangle().foregroundColor(Color(.appBackground))
+                        Button {
+                            viewState.accounTapped()
+                        } label: {
+                            WebImage(url: viewState.profileImageURL) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Rectangle().foregroundColor(Color(.appBackground))
+                            }
+                            .transition(.fade(duration: 0.5))
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
-                        .transition(.fade(duration: 0.5))
-                        .scaledToFill()
-                        .frame(width: 40, height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+
 
                         VStack(alignment: .leading, spacing: 4) {
-                            CommonText(text: "かびごん小野", font: .mPlus2Medium(size: 14), lineHeight: 18)
-                                .foregroundStyle(Color(.appMainText))
+                            Button {
+                                viewState.accounTapped()
+                            } label: {
+                                CommonText(text: viewState.review.userName, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                    .foregroundStyle(Color(.appMainText))
+                            }
+
                             CommonText(text: viewState.review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                         }
@@ -79,7 +89,7 @@ struct ReviewDetailView: View {
                         VStack(spacing: 4) {
                             HStack(spacing: 4) {
                                 Button {
-                                    print("xxx")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -89,7 +99,7 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    print("yyy")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -101,7 +111,7 @@ struct ReviewDetailView: View {
 
                             HStack(spacing: 4) {
                                 Button {
-                                    print("zzz")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[2])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[2])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -111,7 +121,7 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    print("xyz")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[3])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[3])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -126,7 +136,7 @@ struct ReviewDetailView: View {
                         HStack(spacing: 4) {
 
                             Button {
-                                print("xxx")
+                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
                             } label: {
                                 ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
                                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -137,7 +147,7 @@ struct ReviewDetailView: View {
 
                             VStack(spacing: 4) {
                                 Button {
-                                    print("yyy")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -147,7 +157,7 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    print("zzz")
+                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[2])
                                 } label: {
                                     ReviewListRowImage(urlString: viewState.review.imageUrlStrings[2])
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -161,7 +171,7 @@ struct ReviewDetailView: View {
                     } else if viewState.review.images.count == 2 {
                         HStack(spacing: 4) {
                             Button {
-                                print("zzz")
+                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
                             } label: {
                                 ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
                                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -171,7 +181,7 @@ struct ReviewDetailView: View {
                             }
 
                             Button {
-                                print("xyz")
+                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
                             } label: {
                                 ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
                                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -183,7 +193,7 @@ struct ReviewDetailView: View {
                         .padding(.top, 12)
                     } else if viewState.review.images.count == 1 {
                         Button {
-                            print("xyz")
+                            viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
                         } label: {
                             ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
                                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -199,16 +209,16 @@ struct ReviewDetailView: View {
                         Spacer()
 
                         HStack(spacing: 8) {
-                            Button {
-
-                            } label: {
-                                Image(systemName: "bookmark")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundStyle(Color(.appMainText))
-                                    .padding(8)
-                            }
+//                            Button {
+//
+//                            } label: {
+//                                Image(systemName: "bookmark")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 24, height: 24)
+//                                    .foregroundStyle(Color(.appMainText))
+//                                    .padding(8)
+//                            }
 
                             Button {
 
@@ -275,20 +285,37 @@ struct ReviewDetailView: View {
                     Divider()
                         .padding(.top, 12)
 
+                    
+                    // 
+                    if viewState.loading {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+                                .scaleEffect(1.2)
+                            Spacer()
+                        }
+                        .frame(height: 44)
+                    }
+                    
+                    // コメント
                     ForEach(viewState.comments) { comment in
-
                         VStack(alignment: .leading, spacing: 0) {
-                            HStack(spacing: 12) {
-                                Image(.icon)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-
+                            HStack(spacing: 12) {   
+                                WebImage(url: viewState.profileImageURL) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Rectangle().foregroundColor(Color(.appBackground))
+                                }
+                                .transition(.fade(duration: 0.5))
+                                .scaledToFill()
+                                .frame(width: 40, height: 40)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    CommonText(text: comment.uid, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                    CommonText(text: comment.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
-                                    CommonText(text: "2024/12/23 23:12", font: .mPlus2Regular(size: 14), lineHeight: 18)
+                                    CommonText(text: comment.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
                                 }
 
@@ -328,49 +355,6 @@ struct ReviewDetailView: View {
                 .padding(.bottom, 72)
             }
 
-            //            VStack(spacing: 8) {
-            //                HStack(spacing: 8) {
-            //                    Button {
-            //
-            //                    } label: {
-            //                        Text("間違えた問題")
-            //                            .font(.system(size: 18).bold())
-            //                            .foregroundStyle(Color.white)
-            //                            .frame(height: 48)
-            //                            .frame(minWidth: 0, maxWidth: .infinity)
-            //                            .background(Color(.appBlueBackground))
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                    }
-            //
-            //                    Button {
-            //
-            //                    } label: {
-            //                        Text("チェックから出題")
-            //                            .font(.system(size: 18).bold())
-            //                            .foregroundStyle(Color.white)
-            //                            .frame(height: 48)
-            //                            .frame(minWidth: 0, maxWidth: .infinity)
-            //                            .background(Color(.appRedBackground))
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                    }
-            //                }
-            //                .padding(.horizontal, 16)
-            //
-            //                Button {
-            //
-            //                } label: {
-            //                    Text("ランダムに出題")
-            //                        .font(.system(size: 18).bold())
-            //                        .foregroundStyle(Color.white)
-            //                        .frame(height: 48)
-            //                        .frame(minWidth: 0, maxWidth: .infinity)
-            //                        .background(Color(.appGreenBackground))
-            //                        .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                        .padding(.horizontal, 16)
-            //                        .padding(.bottom, 8)
-            //                }
-            //            }
-            //            .clipped()
 
             if keyboardFocused {
                 Button {
@@ -413,6 +397,30 @@ struct ReviewDetailView: View {
         }
         .onAppear {
             viewState.onAppear()
+        }
+        .alert("", isPresented: $viewState.showingSignInAlert, actions: {
+            Button("とじる") {}
+            Button("ログイン") {
+                viewState.signInTapped()
+            }
+        }, message: {
+            Text("コメントを投稿するにはログイン、アカウント作成が必要です。")
+        })
+        .navigationDestination(item: $viewState.navigationDestination) { item in
+            switch item {
+            case .account(uid: let uid):
+                AccountView(viewState: AccountViewState(uid: uid))
+            case .reviewDetail(review: let review):
+                ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+            }
+        }
+        .fullScreenCover(item: $viewState.fullScreenCover){ item in
+            switch item {
+            case .image(urlString: let urlString):
+                CommonImageViewer(urlString: urlString)
+            case .signUp:
+                SignUpView(viewState: SignUpViewState())
+            }
         }
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
