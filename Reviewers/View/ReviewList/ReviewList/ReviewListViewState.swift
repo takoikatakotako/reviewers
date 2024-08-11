@@ -34,8 +34,12 @@ class ReviewListViewState: ObservableObject {
             }
         }
     }
+    
+    func accountTapped(uid: String) {
+        path.append(.account(uid: uid))
+    }
 
-    func tapped(review: Review) {
+    func reviewTapped(review: Review) {
         path.append(.reviewDetail(review: review))
     }
 

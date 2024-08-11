@@ -8,10 +8,10 @@ struct ReviewListView: View {
             ZStack(alignment: .bottomTrailing) {
                 List(viewState.reviews) {review in
                     Button {
-                        viewState.tapped(review: review)
+                        viewState.reviewTapped(review: review)
                     } label: {
-                        ReviewListRow(review: review, accountTapAction: {uid in
-                            print(uid)
+                        CommonReviewRow(review: review, accountTapAction: {uid in
+                            viewState.accountTapped(uid: uid)
                         }, imageTapAction: {imageUrlString in
                             viewState.fullScreenCover = .image(urlString: imageUrlString)
                         }, menuTapAction: { review in
@@ -47,8 +47,8 @@ struct ReviewListView: View {
             }
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
-                case let .study(title, questions):
-                    StudyView(viewState: StudyViewState(title: title, questions: questions, results: []))
+                case .account(uid: let uid):
+                    AccountView(viewState: AccountViewState(uid: uid))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 }

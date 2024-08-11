@@ -1,7 +1,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct ReviewListRow: View {
+struct CommonReviewRow: View {
     let review: Review
     let accountTapAction: (_ uid: String) -> Void
     let imageTapAction: (_ imageUrlString: String) -> Void
