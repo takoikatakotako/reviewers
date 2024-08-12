@@ -29,14 +29,16 @@ struct AccountView: View {
 
                     Spacer()
 
-                    Button {
-                        print("ellipsis")
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(Color(.appSubText))
+                    if !viewState.isMe {
+                        Button {
+                            viewState.accountMenuTapped(uid: viewState.uid)
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(Color(.appSubText))
+                        }
                     }
                 }
 
@@ -77,6 +79,15 @@ struct AccountView: View {
         .refreshable {
             await viewState.pullToRefresh()
         }
+        .alert("", isPresented: $viewState.showingAccountAlert, presenting: viewState.showingAccountAlertPresenting, actions: { presenting in
+            Button("ユーザーをブロッック", role: .destructive) {
+                 viewState.blockUser(uid: presenting)
+            }
+            Button("投稿を報告") {}
+            Button("とじる", role: .cancel) {}
+        }, message: { presenting in
+             Text("\(presenting)")
+        })
         .alert("", isPresented: $viewState.showingReviewAlert, presenting: viewState.showingReviewAlertPresenting, actions: { presenting in
             if presenting.isMyReview {
                 Button("投稿を削除", role: .destructive) {

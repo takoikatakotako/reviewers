@@ -6,9 +6,13 @@ import FirebaseFirestore
 
 class AccountViewState: ObservableObject {
     let uid: String
+    let isMe: Bool
     @Published var nickname = ""
     @Published var reviews: [Review] = []
     @Published var loading = true
+    @Published var showingAccountAlert = false
+    // TODO: Stringだとわかりづらいので profile とかにする
+    @Published var showingAccountAlertPresenting: (String)?
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
@@ -26,6 +30,7 @@ class AccountViewState: ObservableObject {
 
     init(uid: String) {
         self.uid = uid
+        self.isMe = (self.uid == authRepository.getUser()?.uid ?? "")
     }
 
     func onAppear() {
@@ -88,6 +93,15 @@ class AccountViewState: ObservableObject {
                 print(error)
             }
         }
+    }
+    
+    func accountMenuTapped(uid: String) {
+        showingAccountAlertPresenting = uid
+        showingAccountAlert = true
+    }
+    
+    func blockUser(uid: String) {
+        
     }
 
     @MainActor
