@@ -8,17 +8,30 @@ struct MyAccountSettingView: View {
         ZStack {
             List {
                 Section("アカウントID") {
-                    Text(viewState.accoundID)
+                    Text(viewState.uid)
                         .foregroundStyle(Color(.appMainText))
                 }
 
                 Section("ニックネーム") {
                     Button {
-                        viewState.nicknameAlert = true
-
+                        viewState.nicknameTapped()
                     } label: {
                         Text(viewState.nickname)
                             .foregroundStyle(Color(.appMainText))
+                    }
+                }
+                
+                Section("プロフィール") {
+                    Button {
+                        viewState.profileTapped()
+                    } label: {
+                        if viewState.profile.isNotEmpty {
+                            CommonText(text: viewState.profile, font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
+                                .foregroundStyle(Color(.appMainText))
+                        } else {
+                            CommonText(text: "プロフィールを入力", font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
+                                .foregroundStyle(Color(.appBackground))
+                        }
                     }
                 }
 
@@ -47,33 +60,16 @@ struct MyAccountSettingView: View {
                         }
                     }
                 }
-
-                Section("メールアドレス") {
-                    NavigationLink {
-
-                    } label: {
-                        Text(viewState.email)
-                            .foregroundStyle(Color(.appMainText))
-                    }
-                }
-
-                Section("パスワード") {
-                    NavigationLink {
-
-                    } label: {
-                        Text("**********")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-                }
             }
             .onAppear {
                 viewState.onAppear()
             }
-            .navigationDestination(item: $viewState.xx) { s in
-                Text(s.description)
-            }
+            .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination, destination: {
+                MyAccountSettingProfileInputView(text: $viewState.profile)
+
+            })
             .alert("アラート", isPresented: $viewState.nicknameAlert) {
-                TextField("テキストフィールド", text: $viewState.nickname)
+                TextField("テキストフィールド", text: $viewState.newNickname)
 
                 Button {
                 } label: {
@@ -86,6 +82,11 @@ struct MyAccountSettingView: View {
                     Text("更新")
                 }
             }
+            .alert("", isPresented: $viewState.errorAlert, actions: {
+                Button("とじる", role: .cancel, action: {} )
+            }, message: {
+                Text("不明なエラーが発生しました。")
+            })
             .sheet(isPresented: $viewState.imagePickerSheet) {
                 viewState.selectProfileImageComplete()
             } content: {
@@ -97,7 +98,6 @@ struct MyAccountSettingView: View {
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-
                     Button {
                         dismiss()
                     } label: {
@@ -111,6 +111,16 @@ struct MyAccountSettingView: View {
                     Text("ユーザー情報変更")
                         .font(.system(size: 16).bold())
                         .foregroundStyle(Color.white)
+                }
+                
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewState.update()
+                    } label: {
+                        CommonText(text: "更新", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
+                            .foregroundStyle(Color.white)
+                    }
                 }
             }
             .toolbarBackground(Color(.appMain), for: .navigationBar)

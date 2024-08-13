@@ -46,13 +46,28 @@ struct MyAccountView: View {
                         Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
                     }
-
-                    NavigationLink {
-
+//
+//                    NavigationLink {
+//
+//                    } label: {
+//                        Text("プレミアムプランについて")
+//                    }
+                }
+                
+                Section("アカウント") {
+                    Button {
+                        print("TODO: サインイン")
                     } label: {
-                        Text("プレミアムプランについて")
+                        Text("サインイン")
+                    }
+                    
+                    Button {
+                        viewState.signOut()
+                    } label: {
+                        Text("サインアウト")
                     }
                 }
+
 
                 Section("お問い合わせ") {
                     NavigationLink {
@@ -88,16 +103,8 @@ struct MyAccountView: View {
                         LicenseListView()
                     } label: {
                         Text("ライセンス")
+                            .foregroundStyle(Color(.appMainText))
                     }
-                }
-
-                Section("") {
-                    Button {
-                        viewState.signOut()
-                    } label: {
-                        Text("サインアウト")
-                    }
-
                 }
 
                 Section("Debug") {
@@ -108,6 +115,7 @@ struct MyAccountView: View {
                     }
                 }
             }
+            .tint(Color(.appMainText))
             .onAppear {
                 viewState.onAppear()
             }

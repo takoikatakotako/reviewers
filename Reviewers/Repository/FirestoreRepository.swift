@@ -120,6 +120,29 @@ struct FirestoreRepository {
                     FirestoreProfile.nicknameField: nickname,
                     FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
                 ]
-                , merge: true)
+                , merge: true
+            )
+    }
+    
+    func setProfile(uid: String, nickname: String? = nil, profile: String? = nil) async throws {
+        if nickname == nil && profile == nil {
+            throw ReviewersError.temp
+        }
+        
+        var data: [String: Any] = [:]
+        
+        if let nickname = nickname {
+            data[FirestoreProfile.nicknameField] = nickname
+        }
+        
+        if let profile = profile {
+            data[FirestoreProfile.profileField] = profile
+        }
+        
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreProfile.collectionName)
+            .document(uid)
+            .setData(data, merge: true)
     }
 }

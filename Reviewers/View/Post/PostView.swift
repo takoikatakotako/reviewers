@@ -186,7 +186,7 @@ struct PostView: View {
                 }
             }
             .navigationDestination(isPresented: $destinationTextInputView) {
-                PostInputTextView(text: $viewState.text)
+                ReviewInputView(text: $viewState.text)
             }
             .sheet(item: $viewState.sheet, onDismiss: {
 

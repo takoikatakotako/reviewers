@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PostInputTextView: View {
+struct ReviewInputView: View {
     @Environment(\.dismiss) var dismiss
 
     @Binding var text: String
@@ -58,5 +58,5 @@ struct PostInputTextView: View {
 }
 
 #Preview {
-    PostInputTextView(text: .constant(""))
+    ReviewInputView(text: .constant(""))
 }

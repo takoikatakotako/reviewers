@@ -3,9 +3,10 @@ import Foundation
 struct Profile: Identifiable, Hashable {
     let id: String
     let nickname: String
+    let profile: String
 
     static func initialValue(uid: String) -> Profile {
-        return Profile(id: uid, nickname: Self.initialNickname)
+        return Profile(id: uid, nickname: Self.initialNickname, profile: "")
     }
     static let initialNickname = "ななしさん"
 

@@ -82,7 +82,7 @@ struct ReviewUseCase {
                 uid: firestoreComment.uid,
                 comment: firestoreComment.comment,
                 createdAt: firestoreComment.createdAt,
-                profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname)
+                profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
             )
             return comment
         } else {
