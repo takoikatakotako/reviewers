@@ -1,6 +1,6 @@
 import Foundation
 
 enum ReviewListViewPath: Hashable {
-    case account(uid: String)
+    case account(profile: Profile)
     case reviewDetail(review: Review)
 }

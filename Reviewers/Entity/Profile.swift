@@ -5,9 +5,6 @@ struct Profile: Identifiable, Hashable {
     let nickname: String
     let profile: String
 
-    static func initialValue(uid: String) -> Profile {
-        return Profile(id: uid, nickname: Self.initialNickname, profile: "")
-    }
     static let initialNickname = "ななしさん"
 
     static func profileImageURL(uid: String) -> URL {

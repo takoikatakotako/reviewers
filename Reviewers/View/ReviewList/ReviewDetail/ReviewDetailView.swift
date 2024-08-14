@@ -12,7 +12,7 @@ struct ReviewDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 12) {
                         Button {
-                            viewState.accounTapped(uid: viewState.review.uid)
+                            viewState.accounTapped(profile: viewState.review.profile)
                         } label: {
                             WebImage(url: viewState.profileImageURL) { image in
                                 image.resizable()
@@ -27,9 +27,9 @@ struct ReviewDetailView: View {
 
                         VStack(alignment: .leading, spacing: 4) {
                             Button {
-                                viewState.accounTapped(uid: viewState.review.uid)
+                                viewState.accounTapped(profile: viewState.review.profile)
                             } label: {
-                                CommonText(text: viewState.review.userName, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                                CommonText(text: viewState.review.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                     .foregroundStyle(Color(.appMainText))
                             }
 
@@ -301,7 +301,7 @@ struct ReviewDetailView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             HStack(spacing: 12) {
                                 Button {
-                                    viewState.accounTapped(uid: comment.uid)
+                                    viewState.accounTapped(profile: comment.profile)
                                 } label: {
                                     WebImage(url: comment.profile.profileImageURL) { image in
                                         image.resizable()
@@ -316,7 +316,7 @@ struct ReviewDetailView: View {
 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Button {
-                                        viewState.accounTapped(uid: comment.uid)
+                                        viewState.accounTapped(profile: comment.profile)
                                     } label: {
                                         CommonText(text: comment.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                             .foregroundStyle(Color(.appMainText))
@@ -413,8 +413,8 @@ struct ReviewDetailView: View {
         })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
-            case .account(uid: let uid):
-                AccountView(viewState: AccountViewState(uid: uid))
+            case .account(profile: let profile):
+                AccountView(viewState: AccountViewState(profile: profile))
             case .reviewDetail(review: let review):
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }

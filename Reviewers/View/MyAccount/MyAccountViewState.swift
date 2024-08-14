@@ -2,31 +2,41 @@ import SwiftUI
 import FirebaseAuth
 
 class MyAccountViewState: ObservableObject {
-    @Published var user: User?
-    @Published var nickname: String = ""
-    @Published var xx: Bool?
+    @Published var uid: String = ""
+    @Published var profile: Profile?
+    
+    // Navigation Destination
+    @Published var navigationDestination: MyAccountNavigationDestination?
 
     private let authRepository = AuthRepository()
-    private let firestoreRepository = FirestoreRepository()
     private let profileUseCase = ProfileUseCase()
+    private let authUseCase = AuthUseCase()
 
     var profileImageUrl: URL? {
-        guard let uid = user?.uid else {
+        guard let uid = try? authUseCase.getUserId() else {
             return nil
         }
         return URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png")
     }
 
     func onAppear() {
-        guard let user = authRepository.getUser() else {
+        Task { @MainActor in
+            do {
+                let uid = try authUseCase.getUserId()
+                self.uid = uid
+                let profile = try await profileUseCase.fetchProfile(uid: uid)
+                self.profile = profile
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func accountTapped() {
+        guard let profile = profile else {
             return
         }
-        self.user = user
-
-        Task { @MainActor in
-            let profile = await profileUseCase.fetchProfile(uid: user.uid)
-            nickname = profile.nickname
-        }
+        navigationDestination = .account(profile: profile)
     }
 
     func signOut() {

@@ -3,7 +3,7 @@ import SDWebImageSwiftUI
 
 struct CommonReviewRow: View {
     let review: Review
-    let accountTapAction: (_ uid: String) -> Void
+    let accountTapAction: (_ profile: Profile) -> Void
     let imageTapAction: (_ imageUrlString: String) -> Void
     let menuTapAction: (_ review: Review) -> Void
 
@@ -11,7 +11,7 @@ struct CommonReviewRow: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {
                 Button {
-                    accountTapAction(review.uid)
+                    accountTapAction(review.profile)
                 } label: {
                     WebImage(url: URL(string: review.profileImageUrlString)) { image in
                         image.resizable()
@@ -26,9 +26,9 @@ struct CommonReviewRow: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Button(action: {
-                            accountTapAction(review.uid)
+                        accountTapAction(review.profile)
                         }, label: {
-                            CommonText(text: review.userName, font: .mPlus2Medium(size: 14), lineHeight: 18)
+                            CommonText(text: review.profile.nickname, font: .mPlus2Medium(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
                         })
                     CommonText(text: review.createdAtString, font: .mPlus2Regular(size: 14), lineHeight: 18)

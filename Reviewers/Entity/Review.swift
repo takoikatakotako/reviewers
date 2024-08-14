@@ -3,7 +3,7 @@ import Foundation
 struct Review: Identifiable, Hashable {
     let id: String
     let uid: String
-    let userName: String
+    let profile: Profile
     let code: String
     let rate: Int
     let comment: String

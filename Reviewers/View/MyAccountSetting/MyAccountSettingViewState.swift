@@ -39,7 +39,7 @@ class MyAccountSettingViewState: ObservableObject {
                 let uid = try authUseCase.getUserId()
                 self.uid = uid
                 self.isAnonymousUser = try authUseCase.isAnonymousUser()
-                let profile: Profile = await profileUseCase.fetchProfile(uid: uid)
+                let profile: Profile = try await profileUseCase.fetchProfile(uid: uid)
                 self.nickname = profile.nickname
                 self.profile = profile.profile
                 let image = try? await storageRepository.fetchProfileImage(uid: uid)

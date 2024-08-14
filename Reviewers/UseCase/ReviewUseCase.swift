@@ -8,7 +8,7 @@ struct ReviewUseCase {
 
         var reviews: [Review] = []
         for firestoreReview in firestoreReviews {
-            let firestoreProfile: FirestoreProfile? = try? await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
+            let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
             let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
             reviews.append(review)
         }
@@ -19,7 +19,7 @@ struct ReviewUseCase {
         let firestoreReviews = try await firestoreRepository.fetchNewUserReviews(uid: uid, limit: 20)
         var reviews: [Review] = []
         for firestoreReview in firestoreReviews {
-            let firestoreProfile: FirestoreProfile? = try? await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
+            let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
             let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
             reviews.append(review)
         }
@@ -31,7 +31,7 @@ struct ReviewUseCase {
 
         var comments: [Comment] = []
         for firestoreComment in firestoreComments {
-            let firestoreProfile: FirestoreProfile? = try? await firestoreRepository.fetchProfile(uid: firestoreComment.uid)
+            let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreComment.uid)
             let comment = convertReviewComment(firestoreComment: firestoreComment, firestoreProfile: firestoreProfile)
             comments.append(comment)
         }
@@ -42,59 +42,31 @@ struct ReviewUseCase {
         try await firestoreRepository.deleteReview(reviewId: reviewId)
     }
 
-    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile?) -> Review {
-        if let firestoreProfile: FirestoreProfile = firestoreProfile {
-            // プロフィールがある場合
-            let review = Review(
-                id: firestoreReview.id,
-                uid: firestoreReview.uid,
-                userName: firestoreProfile.nickname,
-                code: firestoreReview.code,
-                rate: firestoreReview.rate,
-                comment: firestoreReview.comment,
-                images: firestoreReview.images,
-                createdAt: firestoreReview.createdAt,
-                updatedAt: firestoreReview.updatedAt
-            )
-            return review
-        } else {
-            // プロフィールがない場合
-            let review = Review(
-                id: firestoreReview.id,
-                uid: firestoreReview.uid,
-                userName: Profile.initialNickname,
-                code: firestoreReview.code,
-                rate: firestoreReview.rate,
-                comment: firestoreReview.comment,
-                images: firestoreReview.images,
-                createdAt: firestoreReview.createdAt,
-                updatedAt: firestoreReview.updatedAt
-            )
-            return review
-        }
+    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile) -> Review {
+        let profile = Profile(id: firestoreProfile.id, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
+        let review = Review(
+            id: firestoreReview.id,
+            uid: firestoreReview.uid,
+            profile: profile,
+            code: firestoreReview.code,
+            rate: firestoreReview.rate,
+            comment: firestoreReview.comment,
+            images: firestoreReview.images,
+            createdAt: firestoreReview.createdAt,
+            updatedAt: firestoreReview.updatedAt
+        )
+        return review
     }
 
-    private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile?) -> Comment {
-        if let firestoreProfile: FirestoreProfile = firestoreProfile {
-            // プロフィールがある場合
-            let comment = Comment(
-                id: firestoreComment.id,
-                uid: firestoreComment.uid,
-                comment: firestoreComment.comment,
-                createdAt: firestoreComment.createdAt,
-                profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
-            )
-            return comment
-        } else {
-            // プロフィールがない場合
-            let comment = Comment(
-                id: firestoreComment.id,
-                uid: firestoreComment.uid,
-                comment: firestoreComment.comment,
-                createdAt: firestoreComment.createdAt,
-                profile: Profile.initialValue(uid: firestoreComment.uid)
-            )
-            return comment
-        }
+    private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile) -> Comment {
+        // プロフィールがある場合
+        let comment = Comment(
+            id: firestoreComment.id,
+            uid: firestoreComment.uid,
+            comment: firestoreComment.comment,
+            createdAt: firestoreComment.createdAt,
+            profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
+        )
+        return comment
     }
 }

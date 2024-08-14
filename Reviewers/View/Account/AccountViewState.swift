@@ -5,7 +5,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class AccountViewState: ObservableObject {
-    let uid: String
+    let profile: Profile
     let isMe: Bool
     @Published var nickname = ""
     @Published var reviews: [Review] = []
@@ -25,20 +25,18 @@ class AccountViewState: ObservableObject {
     private let authRepository = AuthRepository()
 
     var profileImageUrlString: String {
-        return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png"
+        return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(profile.id)/profile.png"
     }
 
-    init(uid: String) {
-        self.uid = uid
-        self.isMe = (self.uid == authRepository.getUser()?.uid ?? "")
+    init(profile: Profile) {
+        self.profile = profile
+        self.isMe = (profile.id == authRepository.getUser()?.uid ?? "")
     }
 
     func onAppear() {
         Task { @MainActor in
-            let profile = await profileUseCase.fetchProfile(uid: self.uid)
-            nickname = profile.nickname
             do {
-                try await updateUserReviews(uid: uid)
+                try await updateUserReviews(uid: profile.id)
             } catch {
                 print(error)
             }
@@ -48,14 +46,14 @@ class AccountViewState: ObservableObject {
 
     func pullToRefresh() async {
         do {
-            try await updateUserReviews(uid: uid)
+            try await updateUserReviews(uid: profile.id)
         } catch {
             print(error)
         }
     }
 
-    func accountTap(uid: String) {
-        navigationDestination = .account(uid: uid)
+    func accountTap(profile: Profile) {
+        navigationDestination = .account(profile: profile)
     }
 
     func reviewTapped(review: Review) {

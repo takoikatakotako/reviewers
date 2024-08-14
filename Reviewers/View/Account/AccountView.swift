@@ -20,9 +20,9 @@ struct AccountView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
                     VStack(alignment: .leading, spacing: 0) {
-                        CommonText(text: viewState.nickname, font: .mPlus2SemiBold(size: 20), lineHeight: 28, alignment: .leading)
+                        CommonText(text: viewState.profile.nickname, font: .mPlus2SemiBold(size: 20), lineHeight: 28, alignment: .leading)
                             .foregroundStyle(.appMainText)
-                        CommonText(text: "ID: \(viewState.uid)", font: .mPlus2SemiBold(size: 14), lineHeight: 20, alignment: .leading)
+                        CommonText(text: "ID: \(viewState.profile.id)", font: .mPlus2SemiBold(size: 14), lineHeight: 20, alignment: .leading)
                             .foregroundStyle(.appSubText)
                             .lineLimit(1)
                     }
@@ -31,7 +31,7 @@ struct AccountView: View {
 
                     if !viewState.isMe {
                         Button {
-                            viewState.accountMenuTapped(uid: viewState.uid)
+                            //viewState.accountMenuTapped(profile: viewState.profile)
                         } label: {
                             Image(systemName: "ellipsis")
                                 .resizable()
@@ -42,27 +42,27 @@ struct AccountView: View {
                     }
                 }
 
-                CommonText(text: "ポッカビゴンが大好きです！！！なんとかかんとかかんとかかんとか。ポッカビゴンが大好きです！！！なんとかかんとかかんとかかんとか。ポッカビゴンが大好きです!！小野", font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
+                CommonText(text: viewState.profile.profile, font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
                     .foregroundStyle(.appMainText)
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
-
-            if viewState.loading {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
-                        .scaleEffect(1.2)
-                    Spacer()
-                }
-            }
+//
+//            if viewState.loading {
+//                HStack {
+//                    Spacer()
+//                    ProgressView()
+//                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+//                        .scaleEffect(1.2)
+//                    Spacer()
+//                }
+//            }
 
             ForEach(viewState.reviews) { review in
                 Button {
                     viewState.reviewTapped(review: review)
                 } label: {
-                    CommonReviewRow(review: review) { uid in
-                        viewState.accountTap(uid: uid)
+                    CommonReviewRow(review: review) { profile in
+                        viewState.accountTap(profile: profile)
                     } imageTapAction: { imageUrlString in
                         viewState.imageTapped(urlString: imageUrlString)
                     } menuTapAction: { review in
@@ -109,8 +109,8 @@ struct AccountView: View {
         })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
-            case .account(uid: let uid):
-                AccountView(viewState: AccountViewState(uid: uid))
+            case .account(profile: let profile):
+                AccountView(viewState: AccountViewState(profile: profile))
             case .reviewDetail(review: let review):
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }
@@ -143,6 +143,6 @@ struct AccountView: View {
     }
 }
 
-#Preview {
-    AccountView(viewState: AccountViewState(uid: ""))
-}
+//#Preview {
+//    AccountView(viewState: AccountViewState(uid: ""))
+//}

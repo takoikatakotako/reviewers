@@ -10,8 +10,8 @@ struct ReviewListView: View {
                     Button {
                         viewState.reviewTapped(review: review)
                     } label: {
-                        CommonReviewRow(review: review, accountTapAction: {uid in
-                            viewState.accountTapped(uid: uid)
+                        CommonReviewRow(review: review, accountTapAction: {profile in
+                            viewState.accountTapped(profile: profile)
                         }, imageTapAction: {imageUrlString in
                             viewState.fullScreenCover = .image(urlString: imageUrlString)
                         }, menuTapAction: { review in
@@ -47,8 +47,8 @@ struct ReviewListView: View {
             }
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
-                case .account(uid: let uid):
-                    AccountView(viewState: AccountViewState(uid: uid))
+                case .account(profile: let profile):
+                    AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 }

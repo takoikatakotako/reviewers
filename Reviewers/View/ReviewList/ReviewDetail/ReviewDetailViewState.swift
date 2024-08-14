@@ -61,8 +61,8 @@ class ReviewDetailViewState: ObservableObject {
         }
     }
 
-    func accounTapped(uid: String) {
-        navigationDestination = .account(uid: uid)
+    func accounTapped(profile: Profile) {
+        navigationDestination = .account(profile: profile)
     }
 
     func imageTapped(imageUrlString: String) {
