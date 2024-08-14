@@ -7,7 +7,7 @@ struct AccountView: View {
 
     var body: some View {
         List {
-            VStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {
                     WebImage(url: URL(string: viewState.profileImageUrlString)) { image in
                         image.resizable()
@@ -31,7 +31,7 @@ struct AccountView: View {
 
                     if !viewState.isMe {
                         Button {
-                            //viewState.accountMenuTapped(profile: viewState.profile)
+                            viewState.accountMenuTapped()
                         } label: {
                             Image(systemName: "ellipsis")
                                 .resizable()
@@ -41,9 +41,11 @@ struct AccountView: View {
                         }
                     }
                 }
-
-                CommonText(text: viewState.profile.profile, font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
-                    .foregroundStyle(.appMainText)
+                
+                if viewState.profile.profile.isNotEmpty {
+                    CommonText(text: viewState.profile.profile, font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
+                        .foregroundStyle(.appMainText)
+                }
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
 //
@@ -62,7 +64,7 @@ struct AccountView: View {
                     viewState.reviewTapped(review: review)
                 } label: {
                     CommonReviewRow(review: review) { profile in
-                        viewState.accountTap(profile: profile)
+                        viewState.accountTapped(profile: profile)
                     } imageTapAction: { imageUrlString in
                         viewState.imageTapped(urlString: imageUrlString)
                     } menuTapAction: { review in
@@ -81,7 +83,7 @@ struct AccountView: View {
         }
         .alert("", isPresented: $viewState.showingAccountAlert, presenting: viewState.showingAccountAlertPresenting, actions: { presenting in
             Button("ユーザーをブロッック", role: .destructive) {
-                 viewState.blockUser(uid: presenting)
+                viewState.blockUser(uid: presenting.id)
             }
             Button("投稿を報告") {}
             Button("とじる", role: .cancel) {}

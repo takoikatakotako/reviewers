@@ -10,9 +10,12 @@ class AccountViewState: ObservableObject {
     @Published var nickname = ""
     @Published var reviews: [Review] = []
     @Published var loading = true
+    
+    
+    // Alert
     @Published var showingAccountAlert = false
-    // TODO: Stringだとわかりづらいので profile とかにする
-    @Published var showingAccountAlertPresenting: (String)?
+    @Published var showingAccountAlertPresenting: (Profile)?
+    
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
@@ -51,8 +54,15 @@ class AccountViewState: ObservableObject {
             print(error)
         }
     }
+    
+    // アカウントの…がタップされた時
+    func accountMenuTapped() {
+        showingAccountAlertPresenting = profile
+        showingAccountAlert = true
+    }
 
-    func accountTap(profile: Profile) {
+    // アイコンや名前がタップされた時
+    func accountTapped(profile: Profile) {
         navigationDestination = .account(profile: profile)
     }
 
@@ -91,11 +101,6 @@ class AccountViewState: ObservableObject {
                 print(error)
             }
         }
-    }
-    
-    func accountMenuTapped(uid: String) {
-        showingAccountAlertPresenting = uid
-        showingAccountAlert = true
     }
     
     func blockUser(uid: String) {
