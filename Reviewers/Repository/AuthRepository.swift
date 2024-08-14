@@ -3,24 +3,6 @@ import FirebaseAuth
 
 struct AuthRepository {
 
-//    func isValidUser() async throws -> Bool {
-//        guard let user = Auth.auth().currentUser else {
-//            throw ReviewersError.clientError
-//        }
-//        
-//        // アノニマスユーザーはNG
-//        guard user.isAnonymous == false {
-//            return false
-//        }
-//        
-//        // メール認証が終わっていること
-//        guard user.isEmailVerified {
-//            return false
-//        }
-//        
-//    
-//    }
-
     func getUser() -> User? {
         return  Auth.auth().currentUser
     }

@@ -1,21 +1,21 @@
 import SwiftUI
 
 struct MyAccountSettingProfileInputView: View {
-     @Environment(\.dismiss) var dismiss
-
+    @Environment(\.dismiss) var dismiss
+    
     @Binding var text: String
-
-     @FocusState private var keyboardFocused: Bool
+    
+    @FocusState private var keyboardFocused: Bool
     
     var body: some View {
         VStack {
-            TextField("レビューを入力", text: $text, axis: .vertical)
+            TextField("プロフィールを入力", text: $text, axis: .vertical)
                 .focused($keyboardFocused)
                 .font(.mPlus2Regular(size: 16))
                 .foregroundStyle(Color(.appMainText))
                 .padding(.top, 16)
                 .padding(.horizontal, 12)
-
+            
             Spacer()
         }
         .onAppear {

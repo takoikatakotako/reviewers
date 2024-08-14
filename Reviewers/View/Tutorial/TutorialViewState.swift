@@ -3,7 +3,8 @@ import SwiftUI
 class TutorialViewState: ObservableObject {
     @Published var index = 0
 
-    private let authRepository = AuthRepository()
+    private let authUseCase = AuthUseCase()
+
 
     var title: String {
         if index == 0 {
@@ -45,10 +46,12 @@ class TutorialViewState: ObservableObject {
         guard index < 2 else {
             Task { @MainActor in
                 do {
-                    try await authRepository.signInAnonymously()
+                    // ユーザー作成 & 初期設定
+                    try await authUseCase.signInAnonymouslyWithInitialSetting()
                     NotificationCenter.default.post(name: NSNotification.doneTutorial, object: self, userInfo: nil)
                 } catch {
                     // TODO: エラーハンドリング
+                    print(error)
                 }
             }
 

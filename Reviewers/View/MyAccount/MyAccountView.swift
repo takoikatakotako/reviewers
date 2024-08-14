@@ -46,28 +46,7 @@ struct MyAccountView: View {
                         Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
                     }
-//
-//                    NavigationLink {
-//
-//                    } label: {
-//                        Text("プレミアムプランについて")
-//                    }
                 }
-                
-                Section("アカウント") {
-                    Button {
-                        print("TODO: サインイン")
-                    } label: {
-                        Text("サインイン")
-                    }
-                    
-                    Button {
-                        viewState.signOut()
-                    } label: {
-                        Text("サインアウト")
-                    }
-                }
-
 
                 Section("お問い合わせ") {
                     NavigationLink {
@@ -106,6 +85,21 @@ struct MyAccountView: View {
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
+                
+                Section("アカウント") {
+                    Button {
+                        print("TODO: サインイン")
+                    } label: {
+                        Text("サインイン")
+                    }
+                    
+                    Button {
+                        viewState.signOut()
+                    } label: {
+                        Text("サインアウト")
+                    }
+                }
+
 
                 Section("Debug") {
                     NavigationLink {

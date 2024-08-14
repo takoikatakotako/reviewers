@@ -109,6 +109,34 @@ struct FirestoreRepository {
         }
         return try FirestoreProfile(document: querySnapshot)
     }
+    
+    func createProfile(uid: String, nickname: String, profile: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreProfile.collectionName)
+            .document(uid)
+            .setData(
+                [
+                    FirestoreProfile.nicknameField: nickname,
+                    FirestoreProfile.profileField: profile,
+                    FirestoreProfile.createdAtField: FieldValue.serverTimestamp(),
+                    FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
+                ]
+            )
+    }
+    
+    func profileDocumentExists(uid: String) async throws -> Bool {
+        let db = Firestore.firestore()
+        let querySnapshot = try? await db
+            .collection(FirestoreProfile.collectionName)
+            .document(uid)
+            .getDocument()
+        guard let document = querySnapshot else {
+            throw ReviewersError.temp
+        }
+        return document.exists
+    }
+
 
     func setNickname(uid: String, nickname: String) async throws {
         let db = Firestore.firestore()
@@ -123,7 +151,7 @@ struct FirestoreRepository {
                 , merge: true
             )
     }
-    
+        
     func setProfile(uid: String, nickname: String? = nil, profile: String? = nil) async throws {
         if nickname == nil && profile == nil {
             throw ReviewersError.temp

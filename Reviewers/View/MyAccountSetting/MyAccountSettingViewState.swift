@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseAuth
+import SDWebImage
 
 class MyAccountSettingViewState: ObservableObject {
     @Published var uid: String = ""
@@ -8,7 +9,11 @@ class MyAccountSettingViewState: ObservableObject {
     @Published var newNickname: String = ""
     @Published var profile: String = ""
     @Published var profileImage: UIImage?
-
+ 
+    // Flug
+    @Published var isFirstOnAppear = true
+    @Published var showingIndicator = false
+    
     // Navigation Destination
     @Published var changeProfileNaviagtionDestination: Bool = false
 
@@ -25,6 +30,10 @@ class MyAccountSettingViewState: ObservableObject {
     private let authUseCase = AuthUseCase()
 
     func onAppear() {
+        guard isFirstOnAppear else {
+            return
+        }
+        
         Task { @MainActor in
             do {
                 let uid = try authUseCase.getUserId()
@@ -33,12 +42,14 @@ class MyAccountSettingViewState: ObservableObject {
                 let profile: Profile = await profileUseCase.fetchProfile(uid: uid)
                 self.nickname = profile.nickname
                 self.profile = profile.profile
-                let image = try await storageRepository.fetchProfileImage(uid: uid)
+                let image = try? await storageRepository.fetchProfileImage(uid: uid)
                 self.profileImage = image
             } catch {
                 print(error)
                 errorAlert = true
             }
+            
+            self.isFirstOnAppear = false
         }
     }
     
@@ -81,16 +92,25 @@ class MyAccountSettingViewState: ObservableObject {
     // MARK - XXX
     func update() {
         Task { @MainActor in
+            showingIndicator = true
+            
             do {
                 let uid = try authUseCase.getUserId()
                 try await profileUseCase.setProfile(uid:uid, nickname: nickname, profile: profile)
 
                 if let image = profileImage {
                     try await storageRepository.uploadProfileImage(uid: uid, image: image)
+                    
+                    // キャッシュ削除
+                    let key = Profile.profileImageURL(uid: uid).description
+                    SDImageCache.shared.removeImageFromDisk(forKey: key)
+                    SDImageCache.shared.removeImageFromMemory(forKey: key)
                 }
             } catch {
                 print(error)
             }
+            
+            showingIndicator = false
         }
     }
 }

@@ -4,7 +4,6 @@ struct PostView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: PostViewState
 
-    @State var text = ""
     @State var destinationTextInputView = false
 
     var body: some View {

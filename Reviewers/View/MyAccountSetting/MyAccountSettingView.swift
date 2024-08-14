@@ -3,7 +3,7 @@ import SwiftUI
 struct MyAccountSettingView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: MyAccountSettingViewState
-
+    
     var body: some View {
         ZStack {
             List {
@@ -61,71 +61,80 @@ struct MyAccountSettingView: View {
                     }
                 }
             }
-            .onAppear {
-                viewState.onAppear()
+            
+            if viewState.showingIndicator {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .padding()
+                    .tint(Color.white)
+                    .background(Color.gray)
+                    .cornerRadius(8)
+                    .scaleEffect(1.2)
             }
-            .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination, destination: {
-                MyAccountSettingProfileInputView(text: $viewState.profile)
+        }
+        .onAppear {
+            viewState.onAppear()
+        }
+        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination){
+             MyAccountSettingProfileInputView(text: $viewState.profile)
+        }
+        .alert("アラート", isPresented: $viewState.nicknameAlert) {
+            TextField("テキストフィールド", text: $viewState.newNickname)
 
-            })
-            .alert("アラート", isPresented: $viewState.nicknameAlert) {
-                TextField("テキストフィールド", text: $viewState.newNickname)
+            Button {
+            } label: {
+                Text("とじる")
+            }
 
+            Button {
+                viewState.updateNickname()
+            } label: {
+                Text("更新")
+            }
+        }
+        .alert("", isPresented: $viewState.errorAlert, actions: {
+            Button("とじる", role: .cancel, action: {} )
+        }, message: {
+            Text("不明なエラーが発生しました。")
+        })
+        .sheet(isPresented: $viewState.imagePickerSheet) {
+            viewState.selectProfileImageComplete()
+        } content: {
+            ImagePicker(image: $viewState.profileImage)
+        }
+        .listStyle(.grouped)
+        .scrollIndicators(.hidden)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
+                    dismiss()
                 } label: {
-                    Text("とじる")
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
+                        .padding(.vertical, 8)
+                        .padding(.trailing, 8)
                 }
-
+            }
+            ToolbarItem(placement: .principal) {
+                Text("ユーザー情報変更")
+                    .font(.system(size: 16).bold())
+                    .foregroundStyle(Color.white)
+            }
+            
+            
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    viewState.updateNickname()
+                    viewState.update()
                 } label: {
-                    Text("更新")
-                }
-            }
-            .alert("", isPresented: $viewState.errorAlert, actions: {
-                Button("とじる", role: .cancel, action: {} )
-            }, message: {
-                Text("不明なエラーが発生しました。")
-            })
-            .sheet(isPresented: $viewState.imagePickerSheet) {
-                viewState.selectProfileImageComplete()
-            } content: {
-                ImagePicker(image: $viewState.profileImage)
-            }
-            .listStyle(.grouped)
-            .scrollIndicators(.hidden)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(Color.white)
-                            .padding(.vertical, 8)
-                            .padding(.trailing, 8)
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    Text("ユーザー情報変更")
-                        .font(.system(size: 16).bold())
+                    CommonText(text: "更新", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
                         .foregroundStyle(Color.white)
                 }
-                
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        viewState.update()
-                    } label: {
-                        CommonText(text: "更新", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
-                            .foregroundStyle(Color.white)
-                    }
-                }
             }
-            .toolbarBackground(Color(.appMain), for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
         }
+        .toolbarBackground(Color(.appMain), for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }
 
