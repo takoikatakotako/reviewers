@@ -432,7 +432,6 @@ struct ReviewDetailView: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-
                 Button {
                     dismiss()
                 } label: {

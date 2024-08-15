@@ -41,7 +41,7 @@ struct AccountView: View {
                         }
                     }
                 }
-                
+
                 if viewState.profile.profile.isNotEmpty {
                     CommonText(text: viewState.profile.profile, font: .mPlus2Regular(size: 14), lineHeight: 20, alignment: .leading)
                         .foregroundStyle(.appMainText)
@@ -145,6 +145,6 @@ struct AccountView: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    AccountView(viewState: AccountViewState(uid: ""))
-//}
+// }

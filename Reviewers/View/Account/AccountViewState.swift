@@ -10,12 +10,11 @@ class AccountViewState: ObservableObject {
     @Published var nickname = ""
     @Published var reviews: [Review] = []
     @Published var loading = true
-    
-    
+
     // Alert
     @Published var showingAccountAlert = false
     @Published var showingAccountAlertPresenting: (Profile)?
-    
+
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
@@ -54,7 +53,7 @@ class AccountViewState: ObservableObject {
             print(error)
         }
     }
-    
+
     // アカウントの…がタップされた時
     func accountMenuTapped() {
         showingAccountAlertPresenting = profile
@@ -102,9 +101,9 @@ class AccountViewState: ObservableObject {
             }
         }
     }
-    
+
     func blockUser(uid: String) {
-        
+
     }
 
     @MainActor

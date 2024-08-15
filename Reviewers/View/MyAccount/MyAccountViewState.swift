@@ -4,7 +4,7 @@ import FirebaseAuth
 class MyAccountViewState: ObservableObject {
     @Published var uid: String = ""
     @Published var profile: Profile?
-    
+
     // Navigation Destination
     @Published var navigationDestination: MyAccountNavigationDestination?
 
@@ -31,7 +31,7 @@ class MyAccountViewState: ObservableObject {
             }
         }
     }
-    
+
     func accountTapped() {
         guard let profile = profile else {
             return

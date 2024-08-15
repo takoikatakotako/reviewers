@@ -3,7 +3,7 @@ import SwiftUI
 struct MyAccountSettingView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: MyAccountSettingViewState
-    
+
     var body: some View {
         ZStack {
             List {
@@ -20,7 +20,7 @@ struct MyAccountSettingView: View {
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
-                
+
                 Section("プロフィール") {
                     Button {
                         viewState.profileTapped()
@@ -61,7 +61,7 @@ struct MyAccountSettingView: View {
                     }
                 }
             }
-            
+
             if viewState.showingIndicator {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -75,7 +75,7 @@ struct MyAccountSettingView: View {
         .onAppear {
             viewState.onAppear()
         }
-        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination){
+        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination) {
              MyAccountSettingProfileInputView(text: $viewState.profile)
         }
         .alert("アラート", isPresented: $viewState.nicknameAlert) {
@@ -93,7 +93,7 @@ struct MyAccountSettingView: View {
             }
         }
         .alert("", isPresented: $viewState.errorAlert, actions: {
-            Button("とじる", role: .cancel, action: {} )
+            Button("とじる", role: .cancel, action: {})
         }, message: {
             Text("不明なエラーが発生しました。")
         })
@@ -122,8 +122,7 @@ struct MyAccountSettingView: View {
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-            
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     viewState.update()

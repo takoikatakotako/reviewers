@@ -5,7 +5,6 @@ class TutorialViewState: ObservableObject {
 
     private let authUseCase = AuthUseCase()
 
-
     var title: String {
         if index == 0 {
             return "レビューを読む"

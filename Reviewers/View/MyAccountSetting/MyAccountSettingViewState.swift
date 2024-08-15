@@ -9,11 +9,11 @@ class MyAccountSettingViewState: ObservableObject {
     @Published var newNickname: String = ""
     @Published var profile: String = ""
     @Published var profileImage: UIImage?
- 
+
     // Flug
     @Published var isFirstOnAppear = true
     @Published var showingIndicator = false
-    
+
     // Navigation Destination
     @Published var changeProfileNaviagtionDestination: Bool = false
 
@@ -23,7 +23,7 @@ class MyAccountSettingViewState: ObservableObject {
 
     // Sheet
     @Published var imagePickerSheet = false
-    
+
     private let authRepository = AuthRepository()
     private let storageRepository = StorageRepository()
     private let profileUseCase = ProfileUseCase()
@@ -33,7 +33,7 @@ class MyAccountSettingViewState: ObservableObject {
         guard isFirstOnAppear else {
             return
         }
-        
+
         Task { @MainActor in
             do {
                 let uid = try authUseCase.getUserId()
@@ -48,12 +48,12 @@ class MyAccountSettingViewState: ObservableObject {
                 print(error)
                 errorAlert = true
             }
-            
+
             self.isFirstOnAppear = false
         }
     }
-    
-    // MARK - Nickname
+
+    // MARK: - Nickname
     func nicknameTapped() {
         newNickname = nickname
         nicknameAlert = true
@@ -62,13 +62,13 @@ class MyAccountSettingViewState: ObservableObject {
     func updateNickname() {
         nickname = newNickname
     }
-    
-    // MARK - Profile
+
+    // MARK: - Profile
     func profileTapped() {
         changeProfileNaviagtionDestination = true
     }
 
-    // MARK - Profile Image
+    // MARK: - Profile Image
     func updateProfileImage() {
         imagePickerSheet = true
     }
@@ -87,20 +87,19 @@ class MyAccountSettingViewState: ObservableObject {
             }
         }
     }
-    
-    
-    // MARK - XXX
+
+    // MARK: - XXX
     func update() {
         Task { @MainActor in
             showingIndicator = true
-            
+
             do {
                 let uid = try authUseCase.getUserId()
-                try await profileUseCase.setProfile(uid:uid, nickname: nickname, profile: profile)
+                try await profileUseCase.setProfile(uid: uid, nickname: nickname, profile: profile)
 
                 if let image = profileImage {
                     try await storageRepository.uploadProfileImage(uid: uid, image: image)
-                    
+
                     // キャッシュ削除
                     let key = Profile.profileImageURL(uid: uid).description
                     SDImageCache.shared.removeImageFromDisk(forKey: key)
@@ -109,7 +108,7 @@ class MyAccountSettingViewState: ObservableObject {
             } catch {
                 print(error)
             }
-            
+
             showingIndicator = false
         }
     }

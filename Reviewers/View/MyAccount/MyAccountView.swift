@@ -85,14 +85,14 @@ struct MyAccountView: View {
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
-                
+
                 Section("アカウント") {
                     Button {
                         print("TODO: サインイン")
                     } label: {
                         Text("サインイン")
                     }
-                    
+
                     Button {
                         viewState.signOut()
                     } label: {
@@ -100,10 +100,9 @@ struct MyAccountView: View {
                     }
                 }
 
-
                 Section("Debug") {
                     NavigationLink {
-                        // DebugView(viewState: DebugViewState())
+                        DebugView(viewState: DebugViewState())
                     } label: {
                         Text("Debug")
                     }

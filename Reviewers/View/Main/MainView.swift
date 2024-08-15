@@ -9,7 +9,7 @@ struct MainView: View {
                 }
                 .tag(1)
 
-            ReviewSearchView(viewState: ListenViewState())
+            ReviewSearchView(viewState: ReviewSearchViewState())
                 .tabItem {
                     Label("レビュー検索", systemImage: "barcode.viewfinder")
                 }

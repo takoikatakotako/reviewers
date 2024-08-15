@@ -109,7 +109,7 @@ struct FirestoreRepository {
         }
         return try FirestoreProfile(document: querySnapshot)
     }
-    
+
     func createProfile(uid: String, nickname: String, profile: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -124,7 +124,7 @@ struct FirestoreRepository {
                 ]
             )
     }
-    
+
     func profileDocumentExists(uid: String) async throws -> Bool {
         let db = Firestore.firestore()
         let querySnapshot = try? await db
@@ -136,7 +136,6 @@ struct FirestoreRepository {
         }
         return document.exists
     }
-
 
     func setNickname(uid: String, nickname: String) async throws {
         let db = Firestore.firestore()
@@ -151,26 +150,55 @@ struct FirestoreRepository {
                 , merge: true
             )
     }
-        
+
     func setProfile(uid: String, nickname: String? = nil, profile: String? = nil) async throws {
         if nickname == nil && profile == nil {
             throw ReviewersError.temp
         }
-        
+
         var data: [String: Any] = [:]
-        
+
         if let nickname = nickname {
             data[FirestoreProfile.nicknameField] = nickname
         }
-        
+
         if let profile = profile {
             data[FirestoreProfile.profileField] = profile
         }
-        
+
         let db = Firestore.firestore()
         try await db
             .collection(FirestoreProfile.collectionName)
             .document(uid)
             .setData(data, merge: true)
+    }
+
+    // MARK: - Merchandise Collection
+    func fetchMerchandise(code: String) async throws -> FirestoreMerchandise {
+        let db = Firestore.firestore()
+        let querySnapshot = try? await db
+            .collection(FirestoreMerchandise.collectionName)
+            .document(code)
+            .getDocument()
+
+        guard let querySnapshot = querySnapshot else {
+            throw ReviewersError.temp
+        }
+        return try FirestoreMerchandise(document: querySnapshot)
+    }
+
+    func createMerchandise(code: String, status: String, name: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreMerchandise.collectionName)
+            .document(code)
+            .setData(
+                [
+                    FirestoreProfile.nicknameField: status,
+                    FirestoreProfile.profileField: name,
+                    FirestoreProfile.createdAtField: FieldValue.serverTimestamp(),
+                    FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
+                ]
+            )
     }
 }
