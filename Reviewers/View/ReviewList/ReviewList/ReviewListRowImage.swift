@@ -2,9 +2,9 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ReviewListRowImage: View {
-    let urlString: String
+    let url: URL?
     var body: some View {
-        WebImage(url: URL(string: urlString)) { image in
+        WebImage(url: url) { image in
             image.resizable()
         } placeholder: {
             Rectangle().foregroundColor(Color(.appBackground))
@@ -15,6 +15,6 @@ struct ReviewListRowImage: View {
     }
 }
 
-#Preview {
-    ReviewListRowImage(urlString: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143.png")
-}
+// #Preview {
+//    ReviewListRowImage(urlString: "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/143.png")
+// }

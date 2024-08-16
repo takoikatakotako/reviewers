@@ -173,6 +173,36 @@ struct FirestoreRepository {
             .setData(data, merge: true)
     }
 
+    // MARK: - Blocks Collection
+    func fetchBlockedUsers(uid: String) async throws -> [FirestoreBlockedUser] {
+        let db = Firestore.firestore()
+        let querySnapshot = try? await db
+            .collection(FirestoreBlockedUser.collectionName)
+            .whereField(FirestoreBlockedUser.uidField, isEqualTo: uid)
+            .limit(to: 20)
+            .getDocuments()
+        guard let querySnapshot = querySnapshot else {
+            throw ReviewersError.temp
+        }
+
+        var firestoreBlockedUsers: [FirestoreBlockedUser] = []
+        for document in querySnapshot.documents {
+            let firestoreBlockedUser = try FirestoreBlockedUser(document: document)
+            firestoreBlockedUsers.append(firestoreBlockedUser)
+        }
+        return firestoreBlockedUsers
+    }
+
+    func createBlockedUser(uid: String, blockedUserId: String) async throws {
+        let db = Firestore.firestore()
+        let querySnapshot = try? await db
+            .collection(FirestoreBlockedUser.collectionName)
+            .addDocument(data: [
+                FirestoreBlockedUser.uidField: uid,
+                FirestoreBlockedUser.blockedUserIdField: blockedUserId
+            ])
+    }
+
     // MARK: - Merchandise Collection
     func fetchMerchandise(code: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()

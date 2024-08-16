@@ -43,7 +43,21 @@ struct MyAccountView: View {
                     NavigationLink {
                         MyAccountSettingView(viewState: MyAccountSettingViewState())
                     } label: {
-                        Text("ユーザー情報変更")
+                        Text("プロフィール変更")
+                            .foregroundStyle(Color(.appMainText))
+                    }
+
+                    NavigationLink {
+                        Text("メールアドレス変更")
+                    } label: {
+                        Text("メールアドレス変更")
+                            .foregroundStyle(Color(.appMainText))
+                    }
+
+                    NavigationLink {
+                        Text("パスワード変更")
+                    } label: {
+                        Text("パスワード変更")
                             .foregroundStyle(Color(.appMainText))
                     }
                 }

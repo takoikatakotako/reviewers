@@ -48,16 +48,16 @@ struct AccountView: View {
                 }
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
-//
-//            if viewState.loading {
-//                HStack {
-//                    Spacer()
-//                    ProgressView()
-//                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
-//                        .scaleEffect(1.2)
-//                    Spacer()
-//                }
-//            }
+
+            if viewState.loading {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+                        .scaleEffect(1.2)
+                    Spacer()
+                }
+            }
 
             ForEach(viewState.reviews) { review in
                 Button {
@@ -65,15 +65,14 @@ struct AccountView: View {
                 } label: {
                     CommonReviewRow(review: review) { profile in
                         viewState.accountTapped(profile: profile)
-                    } imageTapAction: { imageUrlString in
-                        viewState.imageTapped(urlString: imageUrlString)
+                    } imageTapAction: { imageURL in
+                        viewState.imageTapped(imageURL: imageURL)
                     } menuTapAction: { review in
                         viewState.menuTapped(review: review)
                     }
                 }
                 .listRowInsets(EdgeInsets())
             }
-
         }
         .onAppear {
             viewState.onAppear()
@@ -83,7 +82,7 @@ struct AccountView: View {
         }
         .alert("", isPresented: $viewState.showingAccountAlert, presenting: viewState.showingAccountAlertPresenting, actions: { presenting in
             Button("ユーザーをブロッック", role: .destructive) {
-                viewState.blockUser(uid: presenting.id)
+                viewState.blockUser(blockUserId: presenting.id)
             }
             Button("投稿を報告") {}
             Button("とじる", role: .cancel) {}
@@ -117,12 +116,12 @@ struct AccountView: View {
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }
         }
-        .fullScreenCover(item: $viewState.fullScreenCover) { item in
-            switch item {
-            case .image(urlString: let urlString):
-                CommonImageViewer(urlString: urlString)
-            }
-        }
+//        .fullScreenCover(item: $viewState.fullScreenCover) { item in
+//            switch item {
+//            case .image(url: let imageURL):
+//                CommonImageViewer(url: imageURL)
+//            }
+//        }
         .listStyle(.inset)
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
@@ -140,6 +139,7 @@ struct AccountView: View {
                 }
             }
         }
+        .toolbar(.visible, for: .tabBar)
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }

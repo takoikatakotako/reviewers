@@ -7,7 +7,11 @@ struct Review: Identifiable, Hashable {
     let code: String
     let rate: Int
     let comment: String
+
+    @available(*, deprecated, renamed: "imageUrls", message: "use url")
     let images: [String]
+    let imageUrls: [URL?]
+    let merchandise: Merchandise?
     let createdAt: Date
     let updatedAt: Date
 
@@ -22,7 +26,7 @@ struct Review: Identifiable, Hashable {
         return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png"
     }
 
-    var imageUrlStrings: [String] {
-        return images.map { "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/\($0)" }
-    }
+//    var imageUrlStrings: [String] {
+//        return images.map { "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/\($0)" }
+//    }
 }

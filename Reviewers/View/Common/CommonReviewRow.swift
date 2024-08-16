@@ -4,7 +4,7 @@ import SDWebImageSwiftUI
 struct CommonReviewRow: View {
     let review: Review
     let accountTapAction: (_ profile: Profile) -> Void
-    let imageTapAction: (_ imageUrlString: String) -> Void
+    let imageTapAction: (_ url: URL?) -> Void
     let menuTapAction: (_ review: Review) -> Void
 
     var body: some View {
@@ -82,13 +82,13 @@ struct CommonReviewRow: View {
             }
 
             // 画像
-            if review.images.count == 4 {
+            if review.imageUrls.count == 4 {
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
                         Button {
-                            imageTapAction(review.imageUrlStrings[0])
+                            imageTapAction(review.imageUrls[0])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                            ReviewListRowImage(url: review.imageUrls[0])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -96,9 +96,9 @@ struct CommonReviewRow: View {
                         }
 
                         Button {
-                            imageTapAction(review.imageUrlStrings[1])
+                            imageTapAction(review.imageUrls[1])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                            ReviewListRowImage(url: review.imageUrls[1])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -108,9 +108,9 @@ struct CommonReviewRow: View {
 
                     HStack(spacing: 4) {
                         Button {
-                            imageTapAction(review.imageUrlStrings[2])
+                            imageTapAction(review.imageUrls[2])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[2])
+                            ReviewListRowImage(url: review.imageUrls[2])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -118,9 +118,9 @@ struct CommonReviewRow: View {
                         }
 
                         Button {
-                            imageTapAction(review.imageUrlStrings[3])
+                            imageTapAction(review.imageUrls[3])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[3])
+                            ReviewListRowImage(url: review.imageUrls[3])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -132,9 +132,9 @@ struct CommonReviewRow: View {
             } else if review.images.count == 3 {
                 HStack(spacing: 4) {
                     Button {
-                        imageTapAction(review.imageUrlStrings[0])
+                        imageTapAction(review.imageUrls[0])
                     } label: {
-                        ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                        ReviewListRowImage(url: review.imageUrls[0])
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 204)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -143,9 +143,9 @@ struct CommonReviewRow: View {
 
                     VStack(spacing: 4) {
                         Button {
-                            imageTapAction(review.imageUrlStrings[1])
+                            imageTapAction(review.imageUrls[1])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                            ReviewListRowImage(url: review.imageUrls[1])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -153,9 +153,9 @@ struct CommonReviewRow: View {
                         }
 
                         Button {
-                            imageTapAction(review.imageUrlStrings[2])
+                            imageTapAction(review.imageUrls[2])
                         } label: {
-                            ReviewListRowImage(urlString: review.imageUrlStrings[2])
+                            ReviewListRowImage(url: review.imageUrls[2])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -167,9 +167,9 @@ struct CommonReviewRow: View {
             } else if review.images.count == 2 {
                 HStack(spacing: 4) {
                     Button {
-                        imageTapAction(review.imageUrlStrings[0])
+                        imageTapAction(review.imageUrls[0])
                     } label: {
-                        ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                        ReviewListRowImage(url: review.imageUrls[0])
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 200)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -177,9 +177,9 @@ struct CommonReviewRow: View {
                     }
 
                     Button {
-                        imageTapAction(review.imageUrlStrings[1])
+                        imageTapAction(review.imageUrls[1])
                     } label: {
-                        ReviewListRowImage(urlString: review.imageUrlStrings[1])
+                        ReviewListRowImage(url: review.imageUrls[1])
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 200)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -189,9 +189,9 @@ struct CommonReviewRow: View {
                 .padding(.top, 12)
             } else if review.images.count == 1 {
                 Button {
-                    imageTapAction(review.imageUrlStrings[0])
+                    imageTapAction(review.imageUrls[0])
                 } label: {
-                    ReviewListRowImage(urlString: review.imageUrlStrings[0])
+                    ReviewListRowImage(url: review.imageUrls[0])
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 8))

@@ -12,8 +12,8 @@ struct ReviewListView: View {
                     } label: {
                         CommonReviewRow(review: review, accountTapAction: {profile in
                             viewState.accountTapped(profile: profile)
-                        }, imageTapAction: {imageUrlString in
-                            viewState.fullScreenCover = .image(urlString: imageUrlString)
+                        }, imageTapAction: { imageUrl in
+                            viewState.imageTapped(imageURL: imageUrl)
                         }, menuTapAction: { review in
                             viewState.menuTapped(review: review)
                         })
@@ -51,6 +51,7 @@ struct ReviewListView: View {
                     AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+                        .toolbar(.hidden, for: .tabBar)
                 }
             }
             .fullScreenCover(item: $viewState.fullScreenCover, onDismiss: {
@@ -59,8 +60,8 @@ struct ReviewListView: View {
                 switch item {
                 case .newPost:
                     PostView(viewState: PostViewState())
-                case .image(urlString: let urlString):
-                    CommonImageViewer(urlString: urlString)
+                case .image(imageURL: let imageURL):
+                    CommonImageViewer(url: imageURL)
                 case .signUp:
                     SignUpView(viewState: SignUpViewState())
                 }
@@ -102,6 +103,7 @@ struct ReviewListView: View {
                         .frame(height: 28)
                 }
             }
+            .toolbar(.visible, for: .tabBar)
             .toolbarBackground(Color(.appMain), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
         }

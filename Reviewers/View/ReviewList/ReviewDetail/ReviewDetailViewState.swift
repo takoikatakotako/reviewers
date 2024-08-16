@@ -8,8 +8,12 @@ class ReviewDetailViewState: ObservableObject {
     @Published var comment = ""
     @Published var loading = true
     @Published var showingSignInAlert = false
-    @Published var navigationDestination: ReviewDetailViewDestination?
+
+    // FullScreen
     @Published var fullScreenCover: ReviewDetailFullScreenCover?
+
+    // Navigation Destination
+    @Published var navigationDestination: ReviewDetailViewDestination?
 
     private let authUseCase = AuthUseCase()
     private let repository = FirestoreRepository()
@@ -65,8 +69,8 @@ class ReviewDetailViewState: ObservableObject {
         navigationDestination = .account(profile: profile)
     }
 
-    func imageTapped(imageUrlString: String) {
-        fullScreenCover = .image(urlString: imageUrlString)
+    func imageTapped(imageURL: URL?) {
+        fullScreenCover = .image(imageUrl: imageURL)
     }
 
     func signInTapped() {

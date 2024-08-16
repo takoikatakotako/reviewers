@@ -4,11 +4,11 @@ import SDWebImageSwiftUI
 struct CommonImageViewer: View {
     @Environment(\.dismiss) var dismiss
 
-    let urlString: String
+    let url: URL?
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                WebImage(url: URL(string: urlString)) { image in
+                WebImage(url: url) { image in
                     image.resizable()
                 } placeholder: {
                     Rectangle().foregroundColor(Color(.appBackground))
@@ -38,6 +38,6 @@ struct CommonImageViewer: View {
     }
 }
 
-#Preview {
-    CommonImageViewer(urlString: "")
-}
+// #Preview {
+//    CommonImageViewer(urlString: "")
+// }

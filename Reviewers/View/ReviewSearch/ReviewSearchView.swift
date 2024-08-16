@@ -58,7 +58,7 @@ struct ReviewSearchView: View {
                         CommonText(text: "ブランド: 江崎グリコ", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
                             .foregroundStyle(.appMainText)
 
-                        ReviewListRowImage(urlString: "https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/mf-649509-pocky-hero-amazon-new-1ec72242df10b2fbc24617e702b8bd97.jpg")
+                        ReviewListRowImage(url: URL(string: "https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/mf-649509-pocky-hero-amazon-new-1ec72242df10b2fbc24617e702b8bd97.jpg"))
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 100)
                             .clipShape(RoundedRectangle(cornerRadius: 8))

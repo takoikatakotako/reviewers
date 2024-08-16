@@ -88,9 +88,9 @@ struct ReviewDetailView: View {
                         VStack(spacing: 4) {
                             HStack(spacing: 4) {
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[0])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -98,9 +98,9 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[1])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[1])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -110,9 +110,9 @@ struct ReviewDetailView: View {
 
                             HStack(spacing: 4) {
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[2])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[2])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[2])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[2])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -120,9 +120,9 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[3])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[3])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[3])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[3])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -135,9 +135,9 @@ struct ReviewDetailView: View {
                         HStack(spacing: 4) {
 
                             Button {
-                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
+                                viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
                             } label: {
-                                ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
+                                ReviewListRowImage(url: viewState.review.imageUrls[0])
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .frame(height: 204)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -146,9 +146,9 @@ struct ReviewDetailView: View {
 
                             VStack(spacing: 4) {
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[1])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[1])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -156,9 +156,9 @@ struct ReviewDetailView: View {
                                 }
 
                                 Button {
-                                    viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[2])
+                                    viewState.imageTapped(imageURL: viewState.review.imageUrls[2])
                                 } label: {
-                                    ReviewListRowImage(urlString: viewState.review.imageUrlStrings[2])
+                                    ReviewListRowImage(url: viewState.review.imageUrls[2])
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .frame(height: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -170,9 +170,9 @@ struct ReviewDetailView: View {
                     } else if viewState.review.images.count == 2 {
                         HStack(spacing: 4) {
                             Button {
-                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
+                                viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
                             } label: {
-                                ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
+                                ReviewListRowImage(url: viewState.review.imageUrls[0])
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .frame(height: 200)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -180,9 +180,9 @@ struct ReviewDetailView: View {
                             }
 
                             Button {
-                                viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[1])
+                                viewState.imageTapped(imageURL: viewState.review.imageUrls[1])
                             } label: {
-                                ReviewListRowImage(urlString: viewState.review.imageUrlStrings[1])
+                                ReviewListRowImage(url: viewState.review.imageUrls[1])
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .frame(height: 200)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -192,9 +192,9 @@ struct ReviewDetailView: View {
                         .padding(.top, 12)
                     } else if viewState.review.images.count == 1 {
                         Button {
-                            viewState.imageTapped(imageUrlString: viewState.review.imageUrlStrings[0])
+                            viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
                         } label: {
-                            ReviewListRowImage(urlString: viewState.review.imageUrlStrings[0])
+                            ReviewListRowImage(url: viewState.review.imageUrls[0])
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .frame(height: 200)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -421,8 +421,8 @@ struct ReviewDetailView: View {
         }
         .fullScreenCover(item: $viewState.fullScreenCover) { item in
             switch item {
-            case .image(urlString: let urlString):
-                CommonImageViewer(urlString: urlString)
+            case .image(imageUrl: let url):
+                CommonImageViewer(url: url)
             case .signUp:
                 SignUpView(viewState: SignUpViewState())
             }
@@ -451,6 +451,7 @@ struct ReviewDetailView: View {
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

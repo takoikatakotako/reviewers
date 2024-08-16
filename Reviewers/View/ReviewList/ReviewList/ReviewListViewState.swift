@@ -1,15 +1,20 @@
 import Foundation
 
 class ReviewListViewState: ObservableObject {
-    @Published var path: [ReviewListViewPath] = []
     @Published var reviews: [Review] = []
 
-    @Published var fullScreenCover: ReviewListFullScreenCover?
+    // Alert
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
     @Published var showingReviewDeleteConfirmAlertPresenting: Review?
     @Published var showingSignInAlert = false
+
+    // FullScreenCover
+    @Published var fullScreenCover: ReviewListFullScreenCover?
+
+    // NavigationPath
+    @Published var path: [ReviewListViewPath] = []
 
     private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
@@ -41,6 +46,10 @@ class ReviewListViewState: ObservableObject {
 
     func reviewTapped(review: Review) {
         path.append(.reviewDetail(review: review))
+    }
+
+    func imageTapped(imageURL: URL?) {
+        fullScreenCover = .image(imageURL: imageURL)
     }
 
     func postButtonTapped() {

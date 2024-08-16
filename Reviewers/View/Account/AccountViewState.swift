@@ -25,6 +25,8 @@ class AccountViewState: ObservableObject {
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let authRepository = AuthRepository()
+    private let authUseCase = AuthUseCase()
+    private let blockedUserUseCase = BlockedUserUseCase()
 
     var profileImageUrlString: String {
         return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(profile.id)/profile.png"
@@ -69,8 +71,8 @@ class AccountViewState: ObservableObject {
         navigationDestination = .reviewDetail(review: review)
     }
 
-    func imageTapped(urlString: String) {
-        fullScreenCover = .image(urlString: urlString)
+    func imageTapped(imageURL: URL?) {
+        fullScreenCover = .image(url: imageURL)
     }
 
     func menuTapped(review: Review) {
@@ -102,8 +104,15 @@ class AccountViewState: ObservableObject {
         }
     }
 
-    func blockUser(uid: String) {
-
+    func blockUser(blockUserId: String) {
+        Task { @MainActor in
+            do {
+                let uid = try authUseCase.getUserId()
+                try await blockedUserUseCase.createBlockedUser(uid: uid, blockedUserId: blockUserId)
+            } catch {
+                print(error)
+            }
+        }
     }
 
     @MainActor
