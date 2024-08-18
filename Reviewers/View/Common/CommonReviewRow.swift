@@ -129,7 +129,7 @@ struct CommonReviewRow: View {
                     }
                 }
                 .padding(.top, 12)
-            } else if review.images.count == 3 {
+            } else if review.imageUrls.count == 3 {
                 HStack(spacing: 4) {
                     Button {
                         imageTapAction(review.imageUrls[0])
@@ -164,7 +164,7 @@ struct CommonReviewRow: View {
                     }
                 }
                 .padding(.top, 12)
-            } else if review.images.count == 2 {
+            } else if review.imageUrls.count == 2 {
                 HStack(spacing: 4) {
                     Button {
                         imageTapAction(review.imageUrls[0])
@@ -187,7 +187,7 @@ struct CommonReviewRow: View {
                     }
                 }
                 .padding(.top, 12)
-            } else if review.images.count == 1 {
+            } else if review.imageUrls.count == 1 {
                 Button {
                     imageTapAction(review.imageUrls[0])
                 } label: {

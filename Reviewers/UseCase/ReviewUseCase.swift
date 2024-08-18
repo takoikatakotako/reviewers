@@ -9,7 +9,8 @@ struct ReviewUseCase {
         var reviews: [Review] = []
         for firestoreReview in firestoreReviews {
             let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
-            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
+            let firestoreMerchandise = try? await firestoreRepository.fetchMerchandise(code: firestoreReview.code)
+            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile, firestoreMerchindise: firestoreMerchandise)
             reviews.append(review)
         }
         return reviews
@@ -20,7 +21,8 @@ struct ReviewUseCase {
         var reviews: [Review] = []
         for firestoreReview in firestoreReviews {
             let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
-            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile)
+            let firestoreMerchandise = try? await firestoreRepository.fetchMerchandise(code: firestoreReview.code)
+            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile, firestoreMerchindise: firestoreMerchandise)
             reviews.append(review)
         }
         return reviews
@@ -42,8 +44,9 @@ struct ReviewUseCase {
         try await firestoreRepository.deleteReview(reviewId: reviewId)
     }
 
-    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile) -> Review {
-        let profile = Profile(id: firestoreProfile.id, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
+    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile, firestoreMerchindise: FirestoreMerchandise?) -> Review {
+        let profile = convertProfile(firestoreProfile: firestoreProfile)
+
         let imageUrls = firestoreReview.images.map { URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreReview.uid)/\($0)") }
         let review = Review(
             id: firestoreReview.id,
@@ -52,7 +55,6 @@ struct ReviewUseCase {
             code: firestoreReview.code,
             rate: firestoreReview.rate,
             comment: firestoreReview.comment,
-            images: firestoreReview.images,
             imageUrls: imageUrls,
             merchandise: nil,
             createdAt: firestoreReview.createdAt,
@@ -62,14 +64,32 @@ struct ReviewUseCase {
     }
 
     private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile) -> Comment {
+        let profile = convertProfile(firestoreProfile: firestoreProfile)
+        
         // プロフィールがある場合
         let comment = Comment(
             id: firestoreComment.id,
             uid: firestoreComment.uid,
             comment: firestoreComment.comment,
             createdAt: firestoreComment.createdAt,
-            profile: Profile(id: firestoreComment.uid, nickname: firestoreProfile.nickname, profile: firestoreProfile.profile)
+            profile: profile
         )
         return comment
+    }
+    
+    private func convertProfile(firestoreProfile: FirestoreProfile) -> Profile {
+        let profileImageURL =  URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreProfile.id)/profile.png")
+        return Profile(
+            id: firestoreProfile.id,
+            nickname: firestoreProfile.nickname,
+            profile: firestoreProfile.profile,
+            profileImageURL: profileImageURL)
+    }
+    
+    private func convertMerchindise(firestoreMerchandise: FirestoreMerchandise?) -> Merchandise? {
+        guard let firestoreMerchandise = firestoreMerchandise else {
+            return nil
+        }
+        return Merchandise(id: firestoreMerchandise.id, status: firestoreMerchandise.status, name: firestoreMerchandise.name)
     }
 }

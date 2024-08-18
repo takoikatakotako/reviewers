@@ -116,12 +116,12 @@ struct AccountView: View {
                 ReviewDetailView(viewState: ReviewDetailViewState(review: review))
             }
         }
-//        .fullScreenCover(item: $viewState.fullScreenCover) { item in
-//            switch item {
-//            case .image(url: let imageURL):
-//                CommonImageViewer(url: imageURL)
-//            }
-//        }
+        .fullScreenCover(item: $viewState.fullScreenCover) { item in
+            switch item {
+            case .image(url: let imageURL):
+                CommonImageViewer(url: imageURL)
+            }
+        }
         .listStyle(.inset)
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
@@ -139,9 +139,9 @@ struct AccountView: View {
                 }
             }
         }
-        .toolbar(.visible, for: .tabBar)
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

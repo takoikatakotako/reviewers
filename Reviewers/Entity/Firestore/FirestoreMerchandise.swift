@@ -9,7 +9,7 @@ struct FirestoreMerchandise: Hashable {
     static let updatedAtField = "updatedAt"
 
     let id: String
-    let status: String
+    let status: FirestoreMerchandiseStatus
     let name: String
     let createdAt: Date
     let updatedAt: Date
@@ -17,7 +17,8 @@ struct FirestoreMerchandise: Hashable {
     init(document: DocumentSnapshot) throws {
         guard
             let data = document.data(),
-            let status = data[Self.statusField] as? String,
+            let statusString = data[Self.statusField] as? String,
+            let status = FirestoreMerchandiseStatus(rawValue: statusString),
             let name = data[Self.nameField] as? String,
             let createdAt = (data[Self.createdAtField] as? Timestamp)?.dateValue(),
             let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue() else {
@@ -30,7 +31,7 @@ struct FirestoreMerchandise: Hashable {
         self.updatedAt = updatedAt
     }
 
-    init(id: String, status: String, name: String, createdAt: Date, updatedAt: Date) {
+    init(id: String, status: FirestoreMerchandiseStatus, name: String, createdAt: Date, updatedAt: Date) {
         self.id = id
         self.status = status
         self.name = name
@@ -41,4 +42,5 @@ struct FirestoreMerchandise: Hashable {
 
 enum FirestoreMerchandiseStatus: String {
     case pendingReview = "PendingReview"
+    case reviewComplete = "ReviewComplete"
 }

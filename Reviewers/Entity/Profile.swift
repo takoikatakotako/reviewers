@@ -4,6 +4,7 @@ struct Profile: Identifiable, Hashable {
     let id: String
     let nickname: String
     let profile: String
+    let profileImageURL: URL?
 
     static let initialNickname = "ななしさん"
 
@@ -11,7 +12,7 @@ struct Profile: Identifiable, Hashable {
         return URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png")!
     }
 
-    var profileImageURL: URL {
-        return Self.profileImageURL(uid: id)
-    }
+//    var profileImageURL: URL {
+//        return Self.profileImageURL(uid: id)
+//    }
 }

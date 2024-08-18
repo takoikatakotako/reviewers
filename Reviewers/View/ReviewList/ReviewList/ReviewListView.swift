@@ -59,7 +59,7 @@ struct ReviewListView: View {
             }, content: { item in
                 switch item {
                 case .newPost:
-                    PostView(viewState: PostViewState())
+                    PostReviewView(viewState: PostViewState())
                 case .image(imageURL: let imageURL):
                     CommonImageViewer(url: imageURL)
                 case .signUp:

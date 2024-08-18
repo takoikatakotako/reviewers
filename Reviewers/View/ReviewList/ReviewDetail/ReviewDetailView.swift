@@ -84,7 +84,7 @@ struct ReviewDetailView: View {
                     }
 
                     // 画像
-                    if viewState.review.images.count == 4 {
+                    if viewState.review.imageUrls.count == 4 {
                         VStack(spacing: 4) {
                             HStack(spacing: 4) {
                                 Button {
@@ -131,7 +131,7 @@ struct ReviewDetailView: View {
                             }
                         }
                         .padding(.top, 12)
-                    } else if viewState.review.images.count == 3 {
+                    } else if viewState.review.imageUrls.count == 3 {
                         HStack(spacing: 4) {
 
                             Button {
@@ -167,7 +167,7 @@ struct ReviewDetailView: View {
                             }
                         }
                         .padding(.top, 12)
-                    } else if viewState.review.images.count == 2 {
+                    } else if viewState.review.imageUrls.count == 2 {
                         HStack(spacing: 4) {
                             Button {
                                 viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
@@ -190,7 +190,7 @@ struct ReviewDetailView: View {
                             }
                         }
                         .padding(.top, 12)
-                    } else if viewState.review.images.count == 1 {
+                    } else if viewState.review.imageUrls.count == 1 {
                         Button {
                             viewState.imageTapped(imageURL: viewState.review.imageUrls[0])
                         } label: {
