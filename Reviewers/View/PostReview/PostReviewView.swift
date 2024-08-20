@@ -8,13 +8,12 @@ struct PostReviewView: View {
 
     var body: some View {
         NavigationStack {
-            
+
             ZStack {
-            
-            
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        
+
                         // バーコード
                         Button {
                             viewState.barcodeTapped()
@@ -23,7 +22,7 @@ struct PostReviewView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     CommonText(text: "バーコード", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
-                                    
+
                                     if viewState.code.isEmpty {
                                         CommonText(text: "バーコードをスキャンしてください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                             .foregroundStyle(Color(.appSubText))
@@ -32,9 +31,9 @@ struct PostReviewView: View {
                                             .foregroundStyle(Color(.appMainText))
                                     }
                                 }
-                                
+
                                 Spacer()
-                                
+
                                 Image(systemName: "barcode.viewfinder")
                                     .resizable()
                                     .scaledToFit()
@@ -45,16 +44,16 @@ struct PostReviewView: View {
                             .padding(.horizontal, 12)
                             .padding(.bottom, 12)
                         }
-                        
+
                         Divider()
-                        
+
                         // レビュー
                         VStack(alignment: .leading, spacing: 12) {
                             CommonText(text: "レビュー", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
-                            
+
                             HStack(spacing: 8) {
-                                
+
                                 Button {
                                     viewState.updateRate(rate: 1)
                                 } label: {
@@ -64,7 +63,7 @@ struct PostReviewView: View {
                                         .frame(width: 44, height: 44)
                                         .foregroundStyle(Color(.appMain))
                                 }
-                                
+
                                 Button {
                                     viewState.updateRate(rate: 2)
                                 } label: {
@@ -74,7 +73,7 @@ struct PostReviewView: View {
                                         .frame(width: 44, height: 44)
                                         .foregroundStyle(Color(.appMain))
                                 }
-                                
+
                                 Button {
                                     viewState.updateRate(rate: 3)
                                 } label: {
@@ -84,7 +83,7 @@ struct PostReviewView: View {
                                         .frame(width: 44, height: 44)
                                         .foregroundStyle(Color(.appMain))
                                 }
-                                
+
                                 Button {
                                     viewState.updateRate(rate: 4)
                                 } label: {
@@ -94,7 +93,7 @@ struct PostReviewView: View {
                                         .frame(width: 44, height: 44)
                                         .foregroundStyle(Color(.appMain))
                                 }
-                                
+
                                 Button {
                                     viewState.updateRate(rate: 5)
                                 } label: {
@@ -104,16 +103,16 @@ struct PostReviewView: View {
                                         .frame(width: 44, height: 44)
                                         .foregroundStyle(Color(.appMain))
                                 }
-                                
+
                                 Spacer()
                             }
                         }
                         .padding(.top, 12)
                         .padding(.horizontal, 12)
                         .padding(.bottom, 12)
-                        
+
                         Divider()
-                        
+
                         // テキスト
                         Button {
                             destinationTextInputView = true
@@ -122,7 +121,7 @@ struct PostReviewView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     CommonText(text: "コメント", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
-                                    
+
                                     if viewState.text.isEmpty {
                                         CommonText(text: "コメントを入力してください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                             .foregroundStyle(Color(.appSubText))
@@ -131,23 +130,23 @@ struct PostReviewView: View {
                                             .foregroundStyle(Color(.appMainText))
                                     }
                                 }
-                                
+
                                 Spacer()
                             }
                             .padding(.top, 12)
                             .padding(.horizontal, 12)
                             .padding(.bottom, 12)
                         }
-                        
+
                         Divider()
-                        
+
                         // 写真
                         VStack(alignment: .leading, spacing: 8) {
                             CommonText(text: "写真", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
-                            
+
                             HStack(spacing: 8) {
-                                
+
                                 ForEach(viewState.images, id: \.self) { image in
                                     Button {
                                         viewState.imageTapped(image: image)
@@ -160,7 +159,7 @@ struct PostReviewView: View {
                                             .clipShape(RoundedRectangle(cornerRadius: 8))
                                     }
                                 }
-                                
+
                                 if viewState.images.count < 4 {
                                     Button {
                                         viewState.addImage()
@@ -177,18 +176,17 @@ struct PostReviewView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
                                     }
                                 }
-                                
+
                                 Spacer()
                             }
                         }
                         .padding(.top, 12)
                         .padding(.horizontal, 12)
                         .padding(.bottom, 12)
-                        
+
                         Divider()
                     }
-                    
-                 
+
                     if viewState.indicator == false {
                         ProgressView()
                             .progressViewStyle(.circular)
@@ -203,16 +201,16 @@ struct PostReviewView: View {
             .onAppear {
                 // viewState.onAppear()
             }
-            
+
             .alert("", isPresented: $viewState.showingRegisterMerchandiseAlert, actions: {
                 TextField("商品名", text: $viewState.merchandiseName)
-                
+
                 Button {
                     viewState.registerMerchandise()
                 } label: {
                     Text("登録")
                 }
-                
+
                 Button {
                     dismiss()
                 } label: {

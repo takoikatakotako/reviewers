@@ -24,7 +24,7 @@ struct FirestoreBlockedUser: Hashable {
             let blockedUserId = data[Self.blockedUserIdField] as? String,
             let createdAt = (data[Self.createdAtField] as? Timestamp)?.dateValue(),
             let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue() else {
-            throw ReviewersError.temp
+            throw ReviewersError.decode
         }
         self.id = document.documentID
         self.enable = enable

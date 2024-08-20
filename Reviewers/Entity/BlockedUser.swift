@@ -1,6 +1,6 @@
 import Foundation
 
-struct BlockedUser {
+struct BlockedUser: Identifiable {
     let id: String
     let blockedUserId: String
 }

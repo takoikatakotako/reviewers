@@ -6,6 +6,7 @@ enum ReviewersError: Error {
     case decode
     case encode
     case temp
+    case temp2(xxx: String)
 }
 
 extension ReviewersError: LocalizedError {
@@ -21,6 +22,9 @@ extension ReviewersError: LocalizedError {
             return "クライアントエラー。データのエンコードに失敗しました。"
         case .temp:
             return "あああああああああああ"
+            
+        case .temp2(let xxx):
+            return "\(xxx)"
         }
     }
 }

@@ -198,8 +198,11 @@ struct FirestoreRepository {
         let querySnapshot = try? await db
             .collection(FirestoreBlockedUser.collectionName)
             .addDocument(data: [
+                FirestoreBlockedUser.enableField: true,
                 FirestoreBlockedUser.uidField: uid,
-                FirestoreBlockedUser.blockedUserIdField: blockedUserId
+                FirestoreBlockedUser.blockedUserIdField: blockedUserId,
+                FirestoreProfile.createdAtField: FieldValue.serverTimestamp(),
+                FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
             ])
     }
 

@@ -48,6 +48,13 @@ struct MyAccountView: View {
                     }
 
                     NavigationLink {
+                        BlockedUsersView(viewState: BlockedUsersViewState())
+                    } label: {
+                        Text("ブロックユーザー一覧")
+                            .foregroundStyle(Color(.appMainText))
+                    }
+
+                    NavigationLink {
                         Text("メールアドレス変更")
                     } label: {
                         Text("メールアドレス変更")

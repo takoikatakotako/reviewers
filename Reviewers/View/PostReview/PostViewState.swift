@@ -5,13 +5,10 @@ class PostViewState: ObservableObject {
     @Published var code = ""
     @Published var rate = 5
     @Published var images: [UIImage] = []
-    
+
     @Published var merchandiseName = ""
-    
+
     @Published var indicator = true
-    
-    
-    
 
     // Alert
     @Published var showingPostCompleteAlert: Bool = false
@@ -19,7 +16,7 @@ class PostViewState: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showingRegisterMerchandiseAlert: Bool = false
     @Published var showingRegisterMerchandiseCompleteAlert: Bool = false
-    
+
     // Sheet
     @Published var sheet: PostViewSheetItem?
 
@@ -28,7 +25,6 @@ class PostViewState: ObservableObject {
     private let storageRepository = StorageRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
 
-    
     func barcodeTapped() {
         sheet = .showBarcodeScannerSheet
     }
@@ -73,7 +69,7 @@ class PostViewState: ObservableObject {
 
         Task { @MainActor in
             indicator = true
-            
+
             do {
                 // 画像の処理
                 var fileNames: [String] = []
@@ -83,7 +79,7 @@ class PostViewState: ObservableObject {
                     fileNames.append(fileName)
                 }
                 try await firestoreRepository.addReview(uid: user.uid, code: code, rate: rate, comment: text, images: fileNames)
-                
+
                 // すでに商品があるか調査
                 let merchandise = try? await merchandiseUseCase.fetchMerchandise(code: code)
                 if merchandise != nil {
@@ -97,12 +93,11 @@ class PostViewState: ObservableObject {
                 showingMessageAlert = true
                 return
             }
-            
+
             indicator = false
         }
     }
-    
-    
+
     func registerMerchandise() {
         Task { @MainActor in
             do {

@@ -65,7 +65,7 @@ struct ReviewUseCase {
 
     private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile) -> Comment {
         let profile = convertProfile(firestoreProfile: firestoreProfile)
-        
+
         // プロフィールがある場合
         let comment = Comment(
             id: firestoreComment.id,
@@ -76,7 +76,7 @@ struct ReviewUseCase {
         )
         return comment
     }
-    
+
     private func convertProfile(firestoreProfile: FirestoreProfile) -> Profile {
         let profileImageURL =  URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreProfile.id)/profile.png")
         return Profile(
@@ -85,11 +85,11 @@ struct ReviewUseCase {
             profile: firestoreProfile.profile,
             profileImageURL: profileImageURL)
     }
-    
+
     private func convertMerchindise(firestoreMerchandise: FirestoreMerchandise?) -> Merchandise? {
         guard let firestoreMerchandise = firestoreMerchandise else {
             return nil
         }
-        return Merchandise(id: firestoreMerchandise.id, status: firestoreMerchandise.status, name: firestoreMerchandise.name)
+        return Merchandise(id: firestoreMerchandise.id, name: firestoreMerchandise.name)
     }
 }

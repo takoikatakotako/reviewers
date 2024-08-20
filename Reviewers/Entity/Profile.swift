@@ -11,8 +11,4 @@ struct Profile: Identifiable, Hashable {
     static func profileImageURL(uid: String) -> URL {
         return URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png")!
     }
-
-//    var profileImageURL: URL {
-//        return Self.profileImageURL(uid: id)
-//    }
 }

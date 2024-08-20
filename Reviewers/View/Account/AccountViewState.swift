@@ -11,15 +11,25 @@ class AccountViewState: ObservableObject {
     @Published var reviews: [Review] = []
     @Published var loading = true
 
-    // Alert
+    // Alert Account
     @Published var showingAccountAlert = false
     @Published var showingAccountAlertPresenting: (Profile)?
 
+    // Alert Review
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
+
+    // Alert Review Delete Confirm
     @Published var showingReviewDeleteConfirmAlert = false
     @Published var showingReviewDeleteConfirmAlertPresenting: Review?
+
+    // Alert Error
+    @Published var showingErrorAlert = false
+
+    // Navigation Destination
     @Published var navigationDestination: AccountViewDestination?
+
+    // FullScreenCover
     @Published var fullScreenCover: AccountViewFullScreenCover?
 
     private let profileUseCase = ProfileUseCase()
@@ -27,10 +37,6 @@ class AccountViewState: ObservableObject {
     private let authRepository = AuthRepository()
     private let authUseCase = AuthUseCase()
     private let blockedUserUseCase = BlockedUserUseCase()
-
-    var profileImageUrlString: String {
-        return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(profile.id)/profile.png"
-    }
 
     init(profile: Profile) {
         self.profile = profile
@@ -110,7 +116,7 @@ class AccountViewState: ObservableObject {
                 let uid = try authUseCase.getUserId()
                 try await blockedUserUseCase.createBlockedUser(uid: uid, blockedUserId: blockUserId)
             } catch {
-                print(error)
+                showingErrorAlert = true
             }
         }
     }

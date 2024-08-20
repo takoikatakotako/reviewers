@@ -9,7 +9,7 @@ struct AccountView: View {
         List {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {
-                    WebImage(url: URL(string: viewState.profileImageUrlString)) { image in
+                    WebImage(url: viewState.profile.profileImageURL) { image in
                         image.resizable()
                     } placeholder: {
                         CommonAccountImageHolder()
@@ -107,6 +107,11 @@ struct AccountView: View {
             Button("キャンセル", role: .cancel) {}
         }, message: { review in
             Text("投稿「\(review.comment)」を削除してもよろしいですか？")
+        })
+        .alert("", isPresented: $viewState.showingErrorAlert, actions: {
+            Button("とじる", role: .cancel) {}
+        }, message: {
+            Text("不明なエラーが発生しました。")
         })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
