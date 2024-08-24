@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DebugMerchandiseAddView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewState: DebugMerchandiseAddViewState
 
     var body: some View {
@@ -62,6 +63,17 @@ struct DebugMerchandiseAddView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(Color.white)
+                        .padding(.vertical, 8)
+                        .padding(.trailing, 8)
+                }
+            }
+            
             ToolbarItem(placement: .principal) {
                 Text("商品登録")
                     .font(.system(size: 16).bold())

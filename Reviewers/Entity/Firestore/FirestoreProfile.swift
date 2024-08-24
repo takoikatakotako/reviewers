@@ -16,10 +16,10 @@ struct FirestoreProfile: Hashable {
     init(document: DocumentSnapshot) throws {
         guard
             let data = document.data(),
-            let nickname = data[FirestoreProfile.nicknameField] as? String,
-            let profile = data[FirestoreProfile.profileField] as? String,
-            let createdAt = (data[FirestoreProfile.createdAtField] as? Timestamp)?.dateValue(),
-            let updatedAt = (data[FirestoreProfile.updatedAtField] as? Timestamp)?.dateValue() else {
+            let nickname = data[Self.nicknameField] as? String,
+            let profile = data[Self.profileField] as? String,
+            let createdAt = (data[Self.createdAtField] as? Timestamp)?.dateValue(),
+            let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue() else {
             throw ReviewersError.temp
         }
         self.id = document.documentID

@@ -200,45 +200,25 @@ struct CommonReviewRow: View {
                 .padding(.top, 12)
             }
 
-            //                VStack(spacing: 8) {
-            //                    HStack(spacing: 8) {
-            //                        FirestorageImage(uid: review.uid, fileName: review.images[0])
-            //                            .frame(height: 100)
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                            .clipped()
-            //
-            //                        FirestorageImage(uid: review.uid, fileName: review.images[1])
-            //                            .frame(height: 100)
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                            .clipped()
-            //                    }
-            //
-            //                    HStack(spacing: 8) {
-            //                        FirestorageImage(uid: review.uid, fileName: review.images[2])
-            //                            .frame(height: 100)
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                            .clipped()
-            //
-            //                        FirestorageImage(uid: review.uid, fileName: review.images[3])
-            //                            .frame(height: 100)
-            //                            .clipShape(RoundedRectangle(cornerRadius: 8))
-            //                            .clipped()
-            //                    }
-            //                }
-            //                .padding(.top, 12)
-
-            //            ForEach(review.images, id: \.self) { image in
-            //
-            //            }
-
-            CommonText(
-                text: "JANコード: \(review.code)",
-                font: .mPlus2Regular(size: 14),
-                lineHeight: 20,
-                alignment: .leading
-            )
-            .foregroundStyle(Color(.appMainText))
-            .padding(.top, 12)
+            if let merchandise = review.merchandise {
+                CommonText(
+                    text: "商品名: \(merchandise.name)",
+                    font: .mPlus2Regular(size: 14),
+                    lineHeight: 20,
+                    alignment: .leading
+                )
+                .foregroundStyle(Color(.appMainText))
+                .padding(.top, 12)
+            } else {
+                CommonText(
+                    text: "JANコード: \(review.code)",
+                    font: .mPlus2Regular(size: 14),
+                    lineHeight: 20,
+                    alignment: .leading
+                )
+                .foregroundStyle(Color(.appMainText))
+                .padding(.top, 12)
+            }
 
             HStack(spacing: 0) {
                 Spacer()

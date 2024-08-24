@@ -109,7 +109,7 @@ struct MyAccountView: View {
 
                 Section("アカウント") {
                     Button {
-                        print("TODO: サインイン")
+                        viewState.signIn()
                     } label: {
                         Text("サインイン")
                     }
@@ -138,6 +138,9 @@ struct MyAccountView: View {
                 case .account(profile: let profile):
                     AccountView(viewState: AccountViewState(profile: profile))
                 }
+            }
+            .fullScreenCover(isPresented: $viewState.showingFullscreenCover) {
+                SignUpView(viewState: SignUpViewState())
             }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)

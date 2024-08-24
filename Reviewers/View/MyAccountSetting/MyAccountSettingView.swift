@@ -117,6 +117,7 @@ struct MyAccountSettingView: View {
                         .padding(.trailing, 8)
                 }
             }
+            
             ToolbarItem(placement: .principal) {
                 Text("ユーザー情報変更")
                     .font(.system(size: 16).bold())
@@ -134,6 +135,7 @@ struct MyAccountSettingView: View {
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

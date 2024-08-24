@@ -7,6 +7,9 @@ class MyAccountViewState: ObservableObject {
 
     // Navigation Destination
     @Published var navigationDestination: MyAccountNavigationDestination?
+    
+    // Fullscreen Cover
+    @Published var showingFullscreenCover = false
 
     private let authRepository = AuthRepository()
     private let profileUseCase = ProfileUseCase()
@@ -37,6 +40,20 @@ class MyAccountViewState: ObservableObject {
             return
         }
         navigationDestination = .account(profile: profile)
+    }
+    
+    func signIn() {
+        Task { @MainActor in
+            do {
+                if try authUseCase.isAnonymousUser() {
+                    showingFullscreenCover = true
+                } else {
+                    print("error")
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 
     func signOut() {
