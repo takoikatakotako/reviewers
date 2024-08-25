@@ -39,6 +39,7 @@ struct DebugMerchandiseAddView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $viewState.navigationDestination) {
             CommonBarcodeScannerView(code: $viewState.code)
         }
@@ -51,6 +52,12 @@ struct DebugMerchandiseAddView: View {
             }
         }
         .alert("登録完了", isPresented: $viewState.showingSuccessAlert) {
+            Button {
+            } label: {
+                Text("とじる")
+            }
+        }
+        .alert("すでに登録された商品です", isPresented: $viewState.showingAlreadyRegisterdAlert) {
             Button {
             } label: {
                 Text("とじる")

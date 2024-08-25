@@ -8,7 +8,7 @@ struct MerchandiseUseCase {
         return Merchandise(id: firestoreMerchandise.id, name: firestoreMerchandise.name)
     }
 
-    func createMerchandise(code: String, status: String, name: String) async throws {
-        try await firestoreRepository.createMerchandise(code: code, status: status, name: name)
+    func createMerchandise(code: String, name: String) async throws {
+        try await firestoreRepository.createMerchandise(code: code, name: name)
     }
 }

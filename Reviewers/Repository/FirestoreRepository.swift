@@ -238,17 +238,18 @@ struct FirestoreRepository {
         return try FirestoreMerchandise(document: querySnapshot)
     }
 
-    func createMerchandise(code: String, status: String, name: String) async throws {
+    func createMerchandise(code: String, name: String) async throws {
         let db = Firestore.firestore()
         try await db
             .collection(FirestoreMerchandise.collectionName)
             .document(code)
             .setData(
                 [
-                    FirestoreProfile.nicknameField: status,
-                    FirestoreProfile.profileField: name,
-                    FirestoreProfile.createdAtField: FieldValue.serverTimestamp(),
-                    FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
+                    FirestoreMerchandise.enableField: true,
+                    FirestoreMerchandise.statusField: FirestoreMerchandiseStatus.pendingReview.rawValue,
+                    FirestoreMerchandise.nameField: name,
+                    FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
+                    FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp()
                 ]
             )
     }

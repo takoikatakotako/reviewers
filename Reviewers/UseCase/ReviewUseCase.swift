@@ -58,6 +58,7 @@ struct ReviewUseCase {
 
     private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile, firestoreMerchindise: FirestoreMerchandise?) -> Review {
         let profile = convertProfile(firestoreProfile: firestoreProfile)
+        let merchandise = convertMerchindise(firestoreMerchandise: firestoreMerchindise)
 
         let imageUrls = firestoreReview.images.map { URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreReview.uid)/\($0)") }
         let review = Review(
@@ -68,7 +69,7 @@ struct ReviewUseCase {
             rate: firestoreReview.rate,
             comment: firestoreReview.comment,
             imageUrls: imageUrls,
-            merchandise: nil,
+            merchandise: merchandise,
             createdAt: firestoreReview.createdAt,
             updatedAt: firestoreReview.updatedAt
         )

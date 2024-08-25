@@ -3,6 +3,7 @@ import FirebaseFirestore
 struct FirestoreMerchandise: Hashable {
     static let collectionName = "merchandises"
 
+    static let enableField = "enable"
     static let statusField = "status"
     static let nameField = "name"
     static let createdAtField = "createdAt"

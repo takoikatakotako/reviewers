@@ -101,7 +101,7 @@ class PostViewState: ObservableObject {
     func registerMerchandise() {
         Task { @MainActor in
             do {
-                try await merchandiseUseCase.createMerchandise(code: code, status: "xxx", name: merchandiseName)
+                try await merchandiseUseCase.createMerchandise(code: code, name: merchandiseName)
             } catch {
                 print(error)
             }
