@@ -177,8 +177,6 @@ struct ReviewSearchView: View {
                 // バーコード
                 if viewState.code == nil {
                     BarcodeScannerView { code in
-                        // self.code = code
-                        // dismiss()
                         viewState.codeSccaned(code: code)
                     }
                 }

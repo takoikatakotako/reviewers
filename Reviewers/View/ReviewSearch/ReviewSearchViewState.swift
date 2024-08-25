@@ -1,36 +1,25 @@
 import SwiftUI
 
 class ReviewSearchViewState: ObservableObject {
-
     @Published var code: String?
-    @Published var loading: Bool = false
+    @Published var merchandise: Merchandise?
     @Published var reviews: [Review] = []
+    @Published var loading: Bool = false
 
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let authRepository = AuthRepository()
+    private let merchandiseUseCase = MerchandiseUseCase()
 
-//    func onAppear() {
+    func xxxxx() {
 //        Task { @MainActor in
 //            do {
-//                try await updateUserReviews(uid: profile.id)
+//                self.reviews = try await reviewUseCase.fetchNewReviews()
 //            } catch {
 //                print(error)
 //            }
-//            loading = false
+////            loading = false
 //        }
-//    }
-//    
-
-    func xxxxx() {
-        Task { @MainActor in
-            do {
-                self.reviews = try await reviewUseCase.fetchNewReviews()
-            } catch {
-                print(error)
-            }
-//            loading = false
-        }
     }
 
     func codeSccaned(code: String) {
@@ -40,9 +29,12 @@ class ReviewSearchViewState: ObservableObject {
         Task { @MainActor in
             do {
                 // 商品を取得
-
+                let merchandise = try await merchandiseUseCase.fetchMerchandise(code: code)
+                let reviews = try await reviewUseCase.fetchMerchandiseReviews(merchandise: merchandise)
+                self.merchandise = merchandise
             } catch {
-
+                // 商品が見つかりませんでした
+                print("error")
             }
         }
     }

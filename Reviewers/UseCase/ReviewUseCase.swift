@@ -39,6 +39,18 @@ struct ReviewUseCase {
         }
         return comments
     }
+    
+    func fetchMerchandiseReviews(merchandise: Merchandise) async throws -> [Review] {
+        let firestoreReviews = try await firestoreRepository.fetchMerchandiseReviews(merchandise: merchandise)
+
+        var reviews: [Review] = []
+        for firestoreReview in firestoreReviews {
+            let firestoreProfile: FirestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreReview.uid)
+            let review = convertReview(firestoreReview: firestoreReview, firestoreProfile: firestoreProfile, merchandise: merchandise)
+            reviews.append(review)
+        }
+        return reviews
+    }
 
     func deleteReview(reviewId: String) async throws {
         try await firestoreRepository.deleteReview(reviewId: reviewId)
@@ -62,7 +74,26 @@ struct ReviewUseCase {
         )
         return review
     }
+    
+    private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile, merchandise: Merchandise?) -> Review {
+        let profile = convertProfile(firestoreProfile: firestoreProfile)
 
+        let imageUrls = firestoreReview.images.map { URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreReview.uid)/\($0)") }
+        let review = Review(
+            id: firestoreReview.id,
+            uid: firestoreReview.uid,
+            profile: profile,
+            code: firestoreReview.code,
+            rate: firestoreReview.rate,
+            comment: firestoreReview.comment,
+            imageUrls: imageUrls,
+            merchandise: merchandise,
+            createdAt: firestoreReview.createdAt,
+            updatedAt: firestoreReview.updatedAt
+        )
+        return review
+    }
+    
     private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile) -> Comment {
         let profile = convertProfile(firestoreProfile: firestoreProfile)
 
