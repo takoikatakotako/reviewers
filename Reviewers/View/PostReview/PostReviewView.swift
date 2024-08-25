@@ -187,7 +187,7 @@ struct PostReviewView: View {
                         Divider()
                     }
 
-                    if viewState.indicator == false {
+                    if viewState.indicator {
                         ProgressView()
                             .progressViewStyle(.circular)
                             .padding()
@@ -201,22 +201,20 @@ struct PostReviewView: View {
             .onAppear {
                 // viewState.onAppear()
             }
-
             .alert("", isPresented: $viewState.showingRegisterMerchandiseAlert, actions: {
                 TextField("商品名", text: $viewState.merchandiseName)
-
-                Button {
-                    viewState.registerMerchandise()
-                } label: {
-                    Text("登録")
-                }
 
                 Button {
                     dismiss()
                 } label: {
                     Text("とじる")
                 }
-
+                
+                Button {
+                    viewState.registerMerchandise()
+                } label: {
+                    Text("登録")
+                }
             }, message: {
                 Text("レビューの投稿が完了しました。ただ登録されていない商品でした。商品名をよかったら教えてください。")
             })

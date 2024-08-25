@@ -8,7 +8,8 @@ class PostViewState: ObservableObject {
 
     @Published var merchandiseName = ""
 
-    @Published var indicator = true
+    // Indicator
+    @Published var indicator = false
 
     // Alert
     @Published var showingPostCompleteAlert: Bool = false
@@ -20,6 +21,7 @@ class PostViewState: ObservableObject {
     // Sheet
     @Published var sheet: PostViewSheetItem?
 
+    // Repository
     private let firestoreRepository = FirestoreRepository()
     private let authRepository = AuthRepository()
     private let storageRepository = StorageRepository()
@@ -88,7 +90,7 @@ class PostViewState: ObservableObject {
                     showingRegisterMerchandiseAlert = true
                 }
             } catch {
-                print(error)
+                print(error, "\(Self.self)")
                 alertMessage = "エラー: \(error.localizedDescription)"
                 showingMessageAlert = true
                 return
@@ -102,6 +104,7 @@ class PostViewState: ObservableObject {
         Task { @MainActor in
             do {
                 try await merchandiseUseCase.createMerchandise(code: code, name: merchandiseName)
+                showingRegisterMerchandiseCompleteAlert = true
             } catch {
                 print(error)
             }

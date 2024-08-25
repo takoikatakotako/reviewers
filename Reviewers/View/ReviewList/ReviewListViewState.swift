@@ -2,7 +2,7 @@ import Foundation
 
 class ReviewListViewState: ObservableObject {
     @Published var reviews: [Review] = []
-
+    
     // Alert
     @Published var showingReviewAlert = false
     @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?

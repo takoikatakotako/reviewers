@@ -6,24 +6,39 @@ struct ReviewListView: View {
     var body: some View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
-                List(viewState.reviews) {review in
-                    Button {
-                        viewState.reviewTapped(review: review)
-                    } label: {
-                        CommonReviewRow(review: review, accountTapAction: {profile in
-                            viewState.accountTapped(profile: profile)
-                        }, imageTapAction: { imageUrl in
-                            viewState.imageTapped(imageURL: imageUrl)
-                        }, menuTapAction: { review in
-                            viewState.menuTapped(review: review)
-                        })
+                ZStack {
+                    List(viewState.reviews) {review in
+                        Button {
+                            viewState.reviewTapped(review: review)
+                        } label: {
+                            CommonReviewRow(review: review, accountTapAction: {profile in
+                                viewState.accountTapped(profile: profile)
+                            }, imageTapAction: { imageUrl in
+                                viewState.imageTapped(imageURL: imageUrl)
+                            }, menuTapAction: { review in
+                                viewState.menuTapped(review: review)
+                            })
+                        }
+                        .listRowInsets(EdgeInsets())
                     }
-                    .listRowInsets(EdgeInsets())
+                    .refreshable {
+                        await viewState.pullToRefresh()
+                    }
+                    .listStyle(.inset)
+                    
+                    if viewState.reviews.isEmpty {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .padding()
+                            .tint(Color.white)
+                            .background(Color.gray)
+                            .cornerRadius(8)
+                            .scaleEffect(1.2)
+                    }
                 }
-                .refreshable {
-                    await viewState.pullToRefresh()
-                }
-                .listStyle(.inset)
+                
+                
+                
 
                 Button {
                     viewState.postButtonTapped()
