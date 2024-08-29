@@ -22,7 +22,7 @@ extension ReviewersError: LocalizedError {
             return "クライアントエラー。データのエンコードに失敗しました。"
         case .temp:
             return "あああああああああああ"
-            
+
         case .temp2(let xxx):
             return "\(xxx)"
         }

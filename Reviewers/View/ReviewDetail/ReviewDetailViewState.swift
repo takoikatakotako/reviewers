@@ -77,4 +77,9 @@ class ReviewDetailViewState: ObservableObject {
         fullScreenCover = .signUp
     }
 
+    // メニュー
+    func commentMenuTapped() {
+
+    }
+
 }

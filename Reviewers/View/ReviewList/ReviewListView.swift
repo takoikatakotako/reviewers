@@ -25,7 +25,7 @@ struct ReviewListView: View {
                         await viewState.pullToRefresh()
                     }
                     .listStyle(.inset)
-                    
+
                     if viewState.reviews.isEmpty {
                         ProgressView()
                             .progressViewStyle(.circular)
@@ -36,9 +36,6 @@ struct ReviewListView: View {
                             .scaleEffect(1.2)
                     }
                 }
-                
-                
-                
 
                 Button {
                     viewState.postButtonTapped()
@@ -74,7 +71,7 @@ struct ReviewListView: View {
             }, content: { item in
                 switch item {
                 case .newPost:
-                    PostReviewView(viewState: PostViewState())
+                    PostReviewView(viewState: PostReviewViewState())
                 case .image(imageURL: let imageURL):
                     CommonImageViewer(url: imageURL)
                 case .signUp:

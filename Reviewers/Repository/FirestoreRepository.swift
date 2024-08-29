@@ -67,7 +67,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchMerchandiseReviews(merchandise: Merchandise, limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db

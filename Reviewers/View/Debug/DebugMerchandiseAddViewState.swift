@@ -40,7 +40,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
                 } catch {
                     print(error)
                 }
-                
+
                 // 登録する
                 try await merchandiseUseCase.createMerchandise(code: code, name: name)
                 showingSuccessAlert = true

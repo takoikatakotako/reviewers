@@ -1,6 +1,6 @@
 import SwiftUI
 
-class PostViewState: ObservableObject {
+class PostReviewViewState: ObservableObject {
     @Published var text = ""
     @Published var code = ""
     @Published var rate = 5
@@ -39,8 +39,12 @@ class PostViewState: ObservableObject {
         sheet = .showImageViewerSheet(image)
     }
 
-    func addImage() {
+    func addImageByPhoto() {
         sheet = .showImagePickerSheet
+    }
+
+    func addImageByCamera() {
+
     }
 
     func post() {

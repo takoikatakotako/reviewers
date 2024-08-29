@@ -39,8 +39,7 @@ struct BlockedUsersView: View {
     BlockedUsersView(viewState: BlockedUsersViewState())
 }
 
-
-//.toolbar {
+// .toolbar {
 
 //    ToolbarItem(placement: .principal) {
 //        Text("ユーザー情報変更")
@@ -56,5 +55,5 @@ struct BlockedUsersView: View {
 //                .foregroundStyle(Color.white)
 //        }
 //    }
-//}
+// }
 //

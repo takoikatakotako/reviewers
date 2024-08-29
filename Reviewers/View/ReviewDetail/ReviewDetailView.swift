@@ -328,7 +328,7 @@ struct ReviewDetailView: View {
                                 Spacer()
 
                                 Button {
-
+                                    viewState.commentMenuTapped()
                                 } label: {
                                     Image(systemName: "ellipsis")
                                         .resizable()

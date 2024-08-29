@@ -39,7 +39,7 @@ struct ReviewUseCase {
         }
         return comments
     }
-    
+
     func fetchMerchandiseReviews(merchandise: Merchandise) async throws -> [Review] {
         let firestoreReviews = try await firestoreRepository.fetchMerchandiseReviews(merchandise: merchandise)
 
@@ -75,7 +75,7 @@ struct ReviewUseCase {
         )
         return review
     }
-    
+
     private func convertReview(firestoreReview: FirestoreReview, firestoreProfile: FirestoreProfile, merchandise: Merchandise?) -> Review {
         let profile = convertProfile(firestoreProfile: firestoreProfile)
 
@@ -94,7 +94,7 @@ struct ReviewUseCase {
         )
         return review
     }
-    
+
     private func convertReviewComment(firestoreComment: FirestoreComment, firestoreProfile: FirestoreProfile) -> Comment {
         let profile = convertProfile(firestoreProfile: firestoreProfile)
 

@@ -80,7 +80,7 @@ struct DebugMerchandiseAddView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 Text("商品登録")
                     .font(.system(size: 16).bold())

@@ -7,7 +7,7 @@ class MyAccountViewState: ObservableObject {
 
     // Navigation Destination
     @Published var navigationDestination: MyAccountNavigationDestination?
-    
+
     // Fullscreen Cover
     @Published var showingFullscreenCover = false
 
@@ -41,7 +41,7 @@ class MyAccountViewState: ObservableObject {
         }
         navigationDestination = .account(profile: profile)
     }
-    
+
     func signIn() {
         Task { @MainActor in
             do {

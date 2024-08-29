@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PostReviewView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewState: PostViewState
+    @StateObject var viewState: PostReviewViewState
 
     @State var destinationTextInputView = false
 
@@ -145,39 +145,53 @@ struct PostReviewView: View {
                             CommonText(text: "写真", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
 
-                            HStack(spacing: 8) {
-
-                                ForEach(viewState.images, id: \.self) { image in
-                                    Button {
-                                        viewState.imageTapped(image: image)
-                                    } label: {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 80, height: 56)
-                                            .clipped()
-                                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                                    }
-                                }
-
-                                if viewState.images.count < 4 {
-                                    Button {
-                                        viewState.addImage()
-                                    } label: {
-                                        VStack(spacing: 0) {
-                                            Image(systemName: "photo")
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 8) {
+                                    ForEach(viewState.images, id: \.self) { image in
+                                        Button {
+                                            viewState.imageTapped(image: image)
+                                        } label: {
+                                            Image(uiImage: image)
                                                 .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 36, height: 36)
-                                                .foregroundStyle(Color.white)
+                                                .scaledToFill()
+                                                .frame(width: 80, height: 56)
+                                                .clipped()
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
                                         }
-                                        .frame(width: 80, height: 56)
-                                        .background(Color(.appGreenBackground))
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    }
+
+                                    if viewState.images.count < 4 {
+                                        Button {
+                                            viewState.addImageByPhoto()
+                                        } label: {
+                                            VStack(spacing: 0) {
+                                                Image(systemName: "photo")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 36, height: 36)
+                                                    .foregroundStyle(Color.white)
+                                            }
+                                            .frame(width: 80, height: 56)
+                                            .background(Color(.appGreenBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        }
+
+                                        Button {
+                                            viewState.addImageByCamera()
+                                        } label: {
+                                            VStack(spacing: 0) {
+                                                Image(systemName: "camera")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 36, height: 36)
+                                                    .foregroundStyle(Color.white)
+                                            }
+                                            .frame(width: 80, height: 56)
+                                            .background(Color(.appGreenBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        }
                                     }
                                 }
-
-                                Spacer()
                             }
                         }
                         .padding(.top, 12)
@@ -209,7 +223,7 @@ struct PostReviewView: View {
                 } label: {
                     Text("とじる")
                 }
-                
+
                 Button {
                     viewState.registerMerchandise()
                 } label: {
@@ -290,5 +304,5 @@ struct PostReviewView: View {
 }
 
 #Preview {
-    PostReviewView(viewState: PostViewState())
+    PostReviewView(viewState: PostReviewViewState())
 }
