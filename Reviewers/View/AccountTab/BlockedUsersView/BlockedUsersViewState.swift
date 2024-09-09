@@ -2,7 +2,8 @@ import Foundation
 
 class BlockedUsersViewState: ObservableObject {
     @Published var blockedUsers: [BlockedUser] = []
-
+    @Published var loading = true
+    
     private let authUseCase = AuthUseCase()
     private let blockedUserUseCase = BlockedUserUseCase()
 
@@ -15,6 +16,7 @@ class BlockedUsersViewState: ObservableObject {
             } catch {
                 print(error)
             }
+            loading = false
         }
     }
 }

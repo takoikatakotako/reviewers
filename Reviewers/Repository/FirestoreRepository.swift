@@ -213,7 +213,7 @@ struct FirestoreRepository {
 
     func createBlockedUser(uid: String, blockedUserId: String) async throws {
         let db = Firestore.firestore()
-        let querySnapshot = try? await db
+        try await db
             .collection(FirestoreBlockedUser.collectionName)
             .addDocument(data: [
                 FirestoreBlockedUser.enableField: true,
