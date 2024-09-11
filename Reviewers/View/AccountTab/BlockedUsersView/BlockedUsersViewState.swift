@@ -4,6 +4,9 @@ class BlockedUsersViewState: ObservableObject {
     @Published var blockedUsers: [BlockedUser] = []
     @Published var loading = true
     
+    // Navigation Destination
+    @Published var navigationDestination: BlockedUserViewDestination?
+    
     private let authUseCase = AuthUseCase()
     private let blockedUserUseCase = BlockedUserUseCase()
 
@@ -18,5 +21,9 @@ class BlockedUsersViewState: ObservableObject {
             }
             loading = false
         }
+    }
+    
+    func xxx(profile: Profile) {
+        navigationDestination = .account(profile: profile)
     }
 }

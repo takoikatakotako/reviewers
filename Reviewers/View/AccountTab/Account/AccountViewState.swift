@@ -1,5 +1,3 @@
-import Foundation
-
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
@@ -39,6 +37,7 @@ class AccountViewState: ObservableObject {
     private let blockedUserUseCase = BlockedUserUseCase()
 
     init(profile: Profile) {
+        print(profile)
         self.profile = profile
         self.isMe = (profile.id == authRepository.getUser()?.uid ?? "")
     }
