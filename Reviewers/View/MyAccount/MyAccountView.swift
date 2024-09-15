@@ -136,7 +136,7 @@ struct MyAccountView: View {
             .navigationDestination(item: $viewState.navigationDestination) { item in
                 switch item {
                 case .account(profile: let profile):
-                    //AccountView(viewState: AccountViewState(profile: profile))
+                    // AccountView(viewState: AccountViewState(profile: profile))
                     Text("temp")
                 }
             }

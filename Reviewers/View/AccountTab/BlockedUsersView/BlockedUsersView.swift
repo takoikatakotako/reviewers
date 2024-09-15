@@ -4,41 +4,24 @@ import SDWebImageSwiftUI
 struct BlockedUsersView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: BlockedUsersViewState
-    
+
     var body: some View {
         ZStack {
             List(viewState.blockedUsers) { blockedUser in
                 Button(action: {
                     viewState.xxx(profile: blockedUser.blockedUserProfile)
                 }, label: {
-                    HStack {
-                        WebImage(url: blockedUser.blockedUserProfile.profileImageURL) { image in
-                            image.resizable()
-                        } placeholder: {
-                            Rectangle().foregroundColor(Color(.appBackground))
-                        }
-                        .transition(.fade(duration: 0.5))
-                        .scaledToFill()
-                        .frame(width: 40, height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        
-                        CommonText(
-                            text: blockedUser.blockedUserProfile.nickname,
-                            font: Font.mPlus2Regular(size: 16),
-                            lineHeight: 18)
-                        
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
+                    BlockedUsersRow(profile: blockedUser.blockedUserProfile)
                 })
+                .listRowInsets(EdgeInsets())
             }
-            
+
             if viewState.loading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
                     .scaleEffect(1.2)
             }
-            
+
             if viewState.loading == false && viewState.blockedUsers.isEmpty {
                 Text("ブロックしているユーザーはいません")
             }

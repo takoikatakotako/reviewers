@@ -13,7 +13,7 @@ struct BlockedUserUseCase {
 
     func fetchBlockedUsers(uid: String) async throws -> [BlockedUser] {
         let firestoreBlockedUsers = try await firestoreRepository.fetchBlockedUsers(uid: uid)
-        
+
         var blockedUsers: [BlockedUser] = []
         for firestoreBlockedUser in firestoreBlockedUsers {
             let firestoreProfile = try await firestoreRepository.fetchProfile(uid: firestoreBlockedUser.blockedUserId)

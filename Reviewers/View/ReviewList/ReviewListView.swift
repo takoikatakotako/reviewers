@@ -60,7 +60,7 @@ struct ReviewListView: View {
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
                 case .account(profile: let profile):
-                    //AccountView(viewState: AccountViewState(profile: profile))
+                    // AccountView(viewState: AccountViewState(profile: profile))
                     Text("XXX")
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
