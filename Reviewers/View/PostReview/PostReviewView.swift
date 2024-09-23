@@ -268,7 +268,7 @@ struct PostReviewView: View {
                 case .showBarcodeScannerSheet:
                     PostBarcodeScannerView(code: $viewState.code)
                 case .showCameraSheet:
-                    PostCameraView()
+                    PostReviewCameraView(images: $viewState.images).ignoresSafeArea(.all)
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
