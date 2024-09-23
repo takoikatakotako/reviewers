@@ -8,4 +8,5 @@ enum PostViewSheetItem: Hashable, Identifiable {
     case showImagePickerSheet
     case showImageViewerSheet(UIImage)
     case showBarcodeScannerSheet
+    case showCameraSheet
 }

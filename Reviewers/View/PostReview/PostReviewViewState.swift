@@ -44,7 +44,7 @@ class PostReviewViewState: ObservableObject {
     }
 
     func addImageByCamera() {
-
+        sheet = .showCameraSheet
     }
 
     func post() {

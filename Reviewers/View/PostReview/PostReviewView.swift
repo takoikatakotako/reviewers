@@ -113,7 +113,7 @@ struct PostReviewView: View {
 
                         Divider()
 
-                        // テキスト
+                        // MARK: - テキスト
                         Button {
                             destinationTextInputView = true
                         } label: {
@@ -140,7 +140,7 @@ struct PostReviewView: View {
 
                         Divider()
 
-                        // 写真
+                        // MARK: - 写真
                         VStack(alignment: .leading, spacing: 8) {
                             CommonText(text: "写真", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                 .foregroundStyle(Color(.appMainText))
@@ -267,6 +267,8 @@ struct PostReviewView: View {
                     PostImageViewer(image: image, images: $viewState.images)
                 case .showBarcodeScannerSheet:
                     PostBarcodeScannerView(code: $viewState.code)
+                case .showCameraSheet:
+                    PostCameraView()
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
