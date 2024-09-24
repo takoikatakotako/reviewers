@@ -191,25 +191,25 @@ struct CommonSimpleReviewRow: View {
                 .padding(.top, 12)
             }
 
-            if let merchandise = review.merchandise {
-                CommonText(
-                    text: "商品名: \(merchandise.name)",
-                    font: .mPlus2Regular(size: 14),
-                    lineHeight: 20,
-                    alignment: .leading
-                )
-                .foregroundStyle(Color(.appMainText))
-                .padding(.top, 12)
-            } else {
-                CommonText(
-                    text: "JANコード: \(review.code)",
-                    font: .mPlus2Regular(size: 14),
-                    lineHeight: 20,
-                    alignment: .leading
-                )
-                .foregroundStyle(Color(.appMainText))
-                .padding(.top, 12)
-            }
+//            if let merchandise = review.merchandise {
+//                CommonText(
+//                    text: "商品名: \(merchandise.name)",
+//                    font: .mPlus2Regular(size: 14),
+//                    lineHeight: 20,
+//                    alignment: .leading
+//                )
+//                .foregroundStyle(Color(.appMainText))
+//                .padding(.top, 12)
+//            } else {
+//                CommonText(
+//                    text: "JANコード: \(review.code)",
+//                    font: .mPlus2Regular(size: 14),
+//                    lineHeight: 20,
+//                    alignment: .leading
+//                )
+//                .foregroundStyle(Color(.appMainText))
+//                .padding(.top, 12)
+//            }
         }
         .padding(.top, 12)
         .padding(.leading, 12)
