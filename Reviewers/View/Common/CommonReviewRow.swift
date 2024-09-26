@@ -2,10 +2,10 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct CommonReviewRow: View {
-    let review: Review
+    let review: ReviewProfile
     let accountTapAction: (_ profile: Profile) -> Void
     let imageTapAction: (_ url: URL?) -> Void
-    let menuTapAction: (_ review: Review) -> Void
+    let menuTapAction: (_ review: ReviewProfile) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {

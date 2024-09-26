@@ -6,7 +6,7 @@ class AccountViewState: ObservableObject {
     let profile: Profile
     let isMe: Bool
     @Published var nickname = ""
-    @Published var reviews: [Review] = []
+    @Published var reviews: [ReviewProfile] = []
     @Published var loading = true
 
     // Alert Account
@@ -15,11 +15,11 @@ class AccountViewState: ObservableObject {
 
     // Alert Review
     @Published var showingReviewAlert = false
-    @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
+    @Published var showingReviewAlertPresenting: (review: ReviewProfile, isMyReview: Bool)?
 
     // Alert Review Delete Confirm
     @Published var showingReviewDeleteConfirmAlert = false
-    @Published var showingReviewDeleteConfirmAlertPresenting: Review?
+    @Published var showingReviewDeleteConfirmAlertPresenting: ReviewProfile?
 
     // Alert Error
     @Published var showingErrorAlert = false
@@ -31,7 +31,7 @@ class AccountViewState: ObservableObject {
     @Published var fullScreenCover: AccountViewFullScreenCover?
 
     private let profileUseCase = ProfileUseCase()
-    private let reviewUseCase = ReviewUseCase()
+    private let reviewUseCase = ReviewProfileUseCase()
     private let authRepository = AuthRepository()
     private let authUseCase = AuthUseCase()
     private let blockedUserUseCase = BlockedUserUseCase()
@@ -72,7 +72,7 @@ class AccountViewState: ObservableObject {
         navigationDestination = .account(profile: profile)
     }
 
-    func reviewTapped(review: Review) {
+    func reviewTapped(review: ReviewProfile) {
         navigationDestination = .reviewDetail(review: review)
     }
 
@@ -80,7 +80,7 @@ class AccountViewState: ObservableObject {
         fullScreenCover = .image(url: imageURL)
     }
 
-    func menuTapped(review: Review) {
+    func menuTapped(review: ReviewProfile) {
         // sheet = .myReview
         guard let user = authRepository.getUser() else {
             // TODO: 未ログイン時の処理
@@ -91,12 +91,12 @@ class AccountViewState: ObservableObject {
         showingReviewAlert = true
     }
 
-    func deleteReviewTapped(review: Review) {
+    func deleteReviewTapped(review: ReviewProfile) {
         showingReviewDeleteConfirmAlertPresenting = review
         showingReviewDeleteConfirmAlert = true
     }
 
-    func deleteReview(review: Review) {
+    func deleteReview(review: ReviewProfile) {
         Task { @MainActor in
             do {
                 try await reviewUseCase.deleteReview(reviewId: review.id)
@@ -122,8 +122,8 @@ class AccountViewState: ObservableObject {
 
     @MainActor
     private func updateUserReviews(uid: String) async throws {
-        let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
-        let margedReviews: [Review] = newReviews + self.reviews
+        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
+        let margedReviews: [ReviewProfile] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
         let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
         self.reviews = sortedReviews

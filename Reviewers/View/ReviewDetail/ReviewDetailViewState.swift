@@ -4,6 +4,8 @@ import FirebaseFirestore
 
 class ReviewDetailViewState: ObservableObject {
     let review: Review
+
+    @Published var merchandise: Merchandise?
     @Published var comments: [Comment] = []
     @Published var comment = ""
     @Published var loading = true
@@ -16,12 +18,12 @@ class ReviewDetailViewState: ObservableObject {
     @Published var navigationDestination: ReviewDetailViewDestination?
 
     private let authUseCase = AuthUseCase()
-    private let repository = FirestoreRepository()
-    private let reviewUseCase = ReviewUseCase()
+    private let reviewUseCase = ReviewProfileUseCase()
+    private let merchandiseUseCase = MerchandiseUseCase()
 
-    var profileImageURL: URL {
-        return Profile.profileImageURL(uid: review.uid)
-    }
+//    var profileImageURL: URL {
+//        return Profile.profileImageURL(uid: reviewProfile.uid)
+//    }
 
     init(review: Review) {
         self.review = review
@@ -29,13 +31,7 @@ class ReviewDetailViewState: ObservableObject {
 
     func onAppear() {
         Task { @MainActor in
-            do {
-                let comments = try await reviewUseCase.fetchReviewComments(reviewId: review.id)
-                self.comments = comments
-            } catch {
-                print(error)
-            }
-            self.loading = false
+            self.merchandise = try? await merchandiseUseCase.fetchMerchandise(code: review.code)
         }
     }
 
@@ -53,16 +49,16 @@ class ReviewDetailViewState: ObservableObject {
             return
         }
 
-        Task { @MainActor in
-            do {
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    throw ReviewersError.temp
-                }
-                try await repository.addReviewComments(reviewId: review.id, uid: uid, comment: comment)
-            } catch {
-                print(error)
-            }
-        }
+//        Task { @MainActor in
+//            do {
+//                guard let uid = Auth.auth().currentUser?.uid else {
+//                    throw ReviewersError.temp
+//                }
+//                try await repository.addReviewComments(reviewId: reviewProfile.id, uid: uid, comment: comment)
+//            } catch {
+//                print(error)
+//            }
+//        }
     }
 
     func accounTapped(profile: Profile) {

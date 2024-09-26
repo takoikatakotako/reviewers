@@ -46,7 +46,7 @@ struct CommonSimpleReviewRow: View {
                 }
 
                 Spacer()
-                
+
                 HStack(spacing: 0) {
                     Spacer()
                     Button {

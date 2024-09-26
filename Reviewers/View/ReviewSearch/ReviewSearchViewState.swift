@@ -3,11 +3,11 @@ import SwiftUI
 class ReviewSearchViewState: ObservableObject {
     @Published var code: String?
     @Published var merchandise: Merchandise?
-    @Published var reviews: [Review] = []
+    @Published var reviews: [ReviewProfile] = []
     @Published var loading: Bool = false
 
     private let profileUseCase = ProfileUseCase()
-    private let reviewUseCase = ReviewUseCase()
+    private let reviewUseCase = ReviewProfileUseCase()
     private let authRepository = AuthRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
 
@@ -41,8 +41,8 @@ class ReviewSearchViewState: ObservableObject {
 
     @MainActor
     private func updateUserReviews(uid: String) async throws {
-        let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
-        let margedReviews: [Review] = newReviews + self.reviews
+        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
+        let margedReviews: [ReviewProfile] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
         let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
         self.reviews = sortedReviews

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ReviewListView: View {
     @StateObject var viewState: ReviewListViewState
-    
+
     var body: some View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
@@ -24,7 +24,7 @@ struct ReviewListView: View {
                         await viewState.pullToRefresh()
                     }
                     .listStyle(.inset)
-                    
+
                     if viewState.reviews.isEmpty {
                         ProgressView()
                             .progressViewStyle(.circular)
@@ -35,7 +35,7 @@ struct ReviewListView: View {
                             .scaleEffect(1.2)
                     }
                 }
-                
+
                 Button {
                     viewState.postButtonTapped()
                 } label: {
@@ -51,7 +51,7 @@ struct ReviewListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding(12)
                 }
-                
+
             }
             .onAppear {
                 viewState.onAppear()
@@ -62,7 +62,7 @@ struct ReviewListView: View {
                      AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
-                        .toolbar(.hidden, for: .tabBar)
+                         .toolbar(.hidden, for: .tabBar)
                 }
             }
             .fullScreenCover(item: $viewState.fullScreenCover, onDismiss: {
@@ -96,9 +96,9 @@ struct ReviewListView: View {
             }, message: { presenting in
                 Text("\(presenting.review.comment)")
             })
-            .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { review in
+            .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { _ in
                 Button("投稿を削除", role: .destructive) {
-                    viewState.deleteReview(review: review)
+                    // viewState.deleteReview(review: review)
                 }
                 Button("キャンセル", role: .cancel) {}
             }, message: { review in

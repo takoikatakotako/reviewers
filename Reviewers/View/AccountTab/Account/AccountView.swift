@@ -118,7 +118,8 @@ struct AccountView: View {
             case .account(profile: let profile):
                 AccountView(viewState: AccountViewState(profile: profile))
             case .reviewDetail(review: let review):
-                ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+                // ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+                Text("この画面が見えたらおかしいよ")
             }
         }
         .fullScreenCover(item: $viewState.fullScreenCover) { item in

@@ -5,5 +5,5 @@ enum ReviewDetailViewDestination: Hashable, Identifiable {
         return self.hashValue
     }
     case account(profile: Profile)
-    case reviewDetail(review: Review)
+    case reviewDetail(review: ReviewProfile)
 }

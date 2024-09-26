@@ -192,7 +192,7 @@ struct ReviewDetailView: View {
                         .padding(.top, 12)
                     }
 
-                    if let merchandise = viewState.review.merchandise {
+                    if let merchandise = viewState.merchandise {
                         CommonText(
                             text: "商品名: \(merchandise.name)",
                             font: .mPlus2Regular(size: 14),
@@ -211,7 +211,6 @@ struct ReviewDetailView: View {
                         .foregroundStyle(Color(.appMainText))
                         .padding(.top, 12)
                     }
-
 
                     // アフリアエイト
                     HStack(spacing: 8) {
@@ -261,20 +260,20 @@ struct ReviewDetailView: View {
                     }
                     .padding(.top, 12)
 
-                    Divider()
-                        .padding(.top, 12)
+//                    Divider()
+//                        .padding(.top, 12)
 
-                    // 
-                    if viewState.loading {
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
-                                .scaleEffect(1.2)
-                            Spacer()
-                        }
-                        .frame(height: 44)
-                    }
+//                    // 
+//                    if viewState.loading {
+//                        HStack {
+//                            Spacer()
+//                            ProgressView()
+//                                .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+//                                .scaleEffect(1.2)
+//                            Spacer()
+//                        }
+//                        .frame(height: 44)
+//                    }
                 }
                 .padding(.top, 12)
                 .padding(.leading, 12)
@@ -297,9 +296,10 @@ struct ReviewDetailView: View {
             switch item {
             case .account(profile: let profile):
                 // AccountView(viewState: AccountViewState(profile: profile))
-                Text("SSSS")
+                Text("この画面が見えたらおかしいよ")
             case .reviewDetail(review: let review):
-                ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+                // ReviewDetailView(viewState: ReviewDetailViewState(review: review))
+                Text("この画面が見えたらおかしいよ")
             }
         }
         .fullScreenCover(item: $viewState.fullScreenCover) { item in
