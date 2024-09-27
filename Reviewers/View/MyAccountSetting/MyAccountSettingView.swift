@@ -12,54 +12,74 @@ struct MyAccountSettingView: View {
                         .foregroundStyle(Color(.appMainText))
                 }
 
-                Section("ニックネーム") {
-                    Button {
-                        viewState.nicknameTapped()
-                    } label: {
-                        Text(viewState.nickname)
-                            .foregroundStyle(Color(.appMainText))
-                    }
-                }
-
-                Section("プロフィール") {
-                    Button {
-                        viewState.profileTapped()
-                    } label: {
-                        if viewState.profile.isNotEmpty {
-                            CommonText(text: viewState.profile, font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
+                if !viewState.isAnonymousUser {
+                    Section("メールアドレス") {
+                        NavigationLink {
+                            Text("ssss")
+                        } label: {
+                            Text(viewState.email)
                                 .foregroundStyle(Color(.appMainText))
-                        } else {
-                            CommonText(text: "プロフィールを入力", font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
-                                .foregroundStyle(Color(.appBackground))
+                        }
+                    }
+
+                    Section("パスワード") {
+                        NavigationLink {
+                            Text("password")
+                        } label: {
+                            Text("************")
+                                .foregroundStyle(Color(.appMainText))
                         }
                     }
                 }
 
-                Section("プロフィール画像") {
-                    Button {
-                        viewState.updateProfileImage()
-                    } label: {
-                        if let image = viewState.profileImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 64, height: 64)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        } else {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(Color(.appBlueBackground))
-                                    .frame(width: 64, height: 64)
-
-                                Image(systemName: "person.fill")
-                                    .resizable()
-                                    .foregroundStyle(Color.white)
-                                    .frame(width: 52, height: 52)
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        }
-                    }
-                }
+//                Section("ニックネーム") {
+//                    Button {
+//                        viewState.nicknameTapped()
+//                    } label: {
+//                        Text(viewState.nickname)
+//                            .foregroundStyle(Color(.appMainText))
+//                    }
+//                }
+//
+//                Section("プロフィール") {
+//                    Button {
+//                        viewState.profileTapped()
+//                    } label: {
+//                        if viewState.profile.isNotEmpty {
+//                            CommonText(text: viewState.profile, font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
+//                                .foregroundStyle(Color(.appMainText))
+//                        } else {
+//                            CommonText(text: "プロフィールを入力", font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
+//                                .foregroundStyle(Color(.appBackground))
+//                        }
+//                    }
+//                }
+//
+//                Section("プロフィール画像") {
+//                    Button {
+//                        viewState.updateProfileImage()
+//                    } label: {
+//                        if let image = viewState.profileImage {
+//                            Image(uiImage: image)
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(width: 64, height: 64)
+//                                .clipShape(RoundedRectangle(cornerRadius: 8))
+//                        } else {
+//                            ZStack {
+//                                RoundedRectangle(cornerRadius: 8)
+//                                    .foregroundStyle(Color(.appBlueBackground))
+//                                    .frame(width: 64, height: 64)
+//
+//                                Image(systemName: "person.fill")
+//                                    .resizable()
+//                                    .foregroundStyle(Color.white)
+//                                    .frame(width: 52, height: 52)
+//                            }
+//                            .clipShape(RoundedRectangle(cornerRadius: 8))
+//                        }
+//                    }
+//                }
             }
 
             if viewState.showingIndicator {
@@ -124,14 +144,14 @@ struct MyAccountSettingView: View {
                     .foregroundStyle(Color.white)
             }
 
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    viewState.update()
-                } label: {
-                    CommonText(text: "更新", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
-                        .foregroundStyle(Color.white)
-                }
-            }
+//            ToolbarItem(placement: .topBarTrailing) {
+//                Button {
+//                    viewState.update()
+//                } label: {
+//                    CommonText(text: "更新", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
+//                        .foregroundStyle(Color.white)
+//                }
+//            }
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)

@@ -5,9 +5,9 @@ class ReviewListViewState: ObservableObject {
 
     // Alert
     @Published var showingReviewAlert = false
-    @Published var showingReviewAlertPresenting: (review: ReviewProfile, isMyReview: Bool)?
+    @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
-    @Published var showingReviewDeleteConfirmAlertPresenting: ReviewProfile?
+    @Published var showingReviewDeleteConfirmAlertPresenting: Review?
     @Published var showingSignInAlert = false
 
     // FullScreenCover
@@ -97,32 +97,32 @@ class ReviewListViewState: ObservableObject {
     }
 
     func menuTapped(review: Review) {
-        // sheet = .myReview
-//        guard let user = authRepository.getUser() else {
-//            // TODO: 未ログイン時の処理
-//            return
-//        }
-//
-//        showingReviewAlertPresenting = (review: review, review.uid == user.uid)
-//        showingReviewAlert = true
+        guard let user = authRepository.getUser() else {
+            // TODO: 未ログイン時の処理
+            return
+        }
+        let myUid = authRepository.getUser()?.uid ?? ""
+
+        showingReviewAlertPresenting = (review: review, review.uid == myUid)
+        showingReviewAlert = true
     }
 
-    func deleteReviewTapped(review: ReviewProfile) {
+    func deleteReviewTapped(review: Review) {
         showingReviewDeleteConfirmAlertPresenting = review
         showingReviewDeleteConfirmAlert = true
     }
 
     func deleteReview(review: Review) {
-//        Task { @MainActor in
-//            do {
-//                try await firestoreRepository.deleteReview(reviewId: review.id)
-//                if let index = reviewProfiles.firstIndex(of: review) {
-//                    reviewProfiles.remove(at: index)
-//                }
-//            } catch {
-//                print(error)
-//            }
-//        }
+        Task { @MainActor in
+            do {
+                try await firestoreRepository.deleteReview(reviewId: review.id)
+                if let index = reviews.firstIndex(of: review) {
+                    reviews.remove(at: index)
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 
     func pullToRefresh() async {

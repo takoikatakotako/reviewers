@@ -5,6 +5,7 @@ import SDWebImage
 class MyAccountSettingViewState: ObservableObject {
     @Published var uid: String = ""
     @Published var isAnonymousUser = true
+    @Published var email: String = ""
     @Published var nickname: String = ""
     @Published var newNickname: String = ""
     @Published var profile: String = ""
@@ -39,11 +40,12 @@ class MyAccountSettingViewState: ObservableObject {
                 let uid = try authUseCase.getUserId()
                 self.uid = uid
                 self.isAnonymousUser = try authUseCase.isAnonymousUser()
-                let profile: Profile = try await profileUseCase.fetchProfile(uid: uid)
-                self.nickname = profile.nickname
-                self.profile = profile.profile
-                let image = try? await storageRepository.fetchProfileImage(uid: uid)
-                self.profileImage = image
+                self.email = authUseCase.getEmail() ?? "unknown"
+//                let profile: Profile = try await profileUseCase.fetchProfile(uid: uid)
+//                self.nickname = profile.nickname
+//                self.profile = profile.profile
+//                let image = try? await storageRepository.fetchProfileImage(uid: uid)
+//                self.profileImage = image
             } catch {
                 print(error)
                 errorAlert = true
@@ -71,6 +73,26 @@ class MyAccountSettingViewState: ObservableObject {
     // MARK: - Profile Image
     func updateProfileImage() {
         imagePickerSheet = true
+    }
+
+    // MARK: - Email
+    func emailTapped() {
+        // newNickname = nickname
+        // nicknameAlert = true
+    }
+
+    func updateEmail() {
+        // nickname = newNickname
+    }
+
+    // MARK: - Password
+    func passwordTapped() {
+        // newNickname = nickname
+        // nicknameAlert = true
+    }
+
+    func updatePassword() {
+        // nickname = newNickname
     }
 
     func selectProfileImageComplete() {

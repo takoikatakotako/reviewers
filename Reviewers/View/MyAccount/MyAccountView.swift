@@ -8,63 +8,11 @@ struct MyAccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("") {
-                    Button {
-                        viewState.accountTapped()
-                    } label: {
-                        HStack(spacing: 12) {
-                            WebImage(url: viewState.profileImageUrl) { image in
-                                image.resizable()
-                            } placeholder: {
-                                CommonAccountImageHolder()
-                            }
-                            .transition(.fade(duration: 0.5))
-                            .scaledToFill()
-                                .frame(width: 60, height: 60)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                CommonText(text: viewState.profile?.nickname ?? "", font: .mPlus2Medium(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "ID: \(viewState.uid)", font: .mPlus2Regular(size: 14), lineHeight: 18)
-                                    .foregroundStyle(Color(.appMainText))
-                            }
-
-                            Spacer()
-                        }
-                        .padding(.top, 8)
-                        .padding(.horizontal, 8)
-                        .padding(.bottom, 8)
-                    }
-                    .listRowInsets(EdgeInsets())
-                }
-
                 Section("ユーザー情報") {
                     NavigationLink {
                         MyAccountSettingView(viewState: MyAccountSettingViewState())
                     } label: {
-                        Text("プロフィール変更")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    NavigationLink {
-                        BlockedUsersView(viewState: BlockedUsersViewState())
-                    } label: {
-                        Text("ブロックユーザー一覧")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    NavigationLink {
-                        Text("メールアドレス変更")
-                    } label: {
-                        Text("メールアドレス変更")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    NavigationLink {
-                        Text("パスワード変更")
-                    } label: {
-                        Text("パスワード変更")
+                        Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
                     }
                 }
@@ -74,22 +22,6 @@ struct MyAccountView: View {
 
                     } label: {
                         Text("お問い合わせ")
-                    }
-                }
-
-                Section("開発者情報") {
-                    Button {
-
-                    } label: {
-                        Text("公式Discord")
-                            .foregroundStyle(Color(.appMainText))
-                    }
-
-                    Button {
-
-                    } label: {
-                        Text("開発者のXアカウント")
-                            .foregroundStyle(Color(.appMainText))
                     }
                 }
 
