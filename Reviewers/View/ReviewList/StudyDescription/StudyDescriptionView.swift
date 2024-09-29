@@ -152,6 +152,6 @@ struct StudyDescriptionView: View {
     }
 }
 
-#Preview {
-    StudyDescriptionView(viewState: StudyDescriptionViewState())
-}
+//#Preview {
+//    StudyDescriptionView(viewState: StudyDescriptionViewState())
+//}

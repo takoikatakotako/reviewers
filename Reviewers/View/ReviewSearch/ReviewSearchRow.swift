@@ -7,7 +7,7 @@ struct ReviewSearchRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
-                CommonText(text: "ポッキーチョコレート", font: .mPlus2SemiBold(size: 16), lineHeight: 24, alignment: .leading)
+                CommonText(text: merchandise.name, font: .mPlus2SemiBold(size: 16), lineHeight: 24, alignment: .leading)
                     .foregroundStyle(.appMainText)
 
                 Spacer()

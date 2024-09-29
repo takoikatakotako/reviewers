@@ -225,6 +225,21 @@ struct FirestoreRepository {
     }
 
     // MARK: - Merchandise Collection
+    func fetchMerchandises(limit: Int = 20) async throws -> [FirestoreMerchandise] {
+        let db = Firestore.firestore()
+        let querySnapshot = try await db
+            .collection(FirestoreMerchandise.collectionName)
+            .limit(to: limit)
+            .getDocuments()
+        
+        var firestoreMerchandises: [FirestoreMerchandise] = []
+        for document in querySnapshot.documents {
+            let firestoreMerchandise = try FirestoreMerchandise(document: document)
+            firestoreMerchandises.append(firestoreMerchandise)
+        }
+        return firestoreMerchandises
+    }
+    
     func fetchMerchandise(code: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()
         let querySnapshot = try? await db

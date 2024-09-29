@@ -4,19 +4,23 @@ import VisionKit
 struct ReviewSearchView: View {
     @StateObject var viewState: ReviewSearchViewState
     @Environment(\.dismiss) var dismiss
-
+    
     @State var isShowingScanner = true
     @State private var scannedText = ""
-
+    
     @State var text = ""
-
+    
+    //    @FocusState private var keyboardFocused: Bool
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
-
                 VStack(spacing: 0) {
                     HStack {
-                        TextField("商品名を入力 または バーコードをスキャン", text: $text)
+                        TextField("商品名を入力 または バーコードをスキャン", text: $text, onEditingChanged: {isEditing in
+                            viewState.onEditingChanged(isEditing: isEditing)
+                        })
                         Spacer()
                         Image(systemName: "barcode.viewfinder")
                             .resizable()
@@ -30,46 +34,39 @@ struct ReviewSearchView: View {
                     .padding(.top, 16)
                     .padding(.horizontal, 8)
                     .padding(.bottom, 12)
-
-                    List {
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
+                    
+                    //
+                    //                    if keyboardFocused {
+                    //                        Button {
+                    //
+                    //                        } label: {
+                    
+                    //                        }
+                    //                    } else {
+                    //
+                    //                    }
+                    
+                    ZStack {
+                        List(viewState.merchandise) { mesechandise in
+                            Button {
+                                print("xxx")
+                            } label: {
+                                ReviewSearchRow(merchandise: mesechandise)
+                            }
                         }
 
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
-                        }
-
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
-                        }
-
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
-                        }
-
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
-                        }
-
-                        Button {
-                            print("xxx")
-                        } label: {
-                            ReviewSearchRow(merchandise: Merchandise(id: "xx", name: "name"))
+                        if viewState.isEditing {
+                            Button {
+                                print("xx")
+                            } label: {
+                                Color.black
+                                    .opacity(0.1)
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            }
                         }
                     }
                 }
-
+                
                 if viewState.loading {
                     ProgressView()
                         .progressViewStyle(.circular)
@@ -79,138 +76,11 @@ struct ReviewSearchView: View {
                         .cornerRadius(8)
                         .scaleEffect(1.2)
                 }
-
-                //                List {
-
-                //
-
-                //
-
-                //
-
-                //
-                //                        // XXX
-                //                        HStack(spacing: 0) {
-                //                            Spacer()
-                //
-                //                            HStack(spacing: 8) {
-                //    //                            Button {
-                //    //
-                //    //                            } label: {
-                //    //                                Image(systemName: "bookmark")
-                //    //                                    .resizable()
-                //    //                                    .scaledToFit()
-                //    //                                    .frame(width: 24, height: 24)
-                //    //                                    .foregroundStyle(Color(.appMainText))
-                //    //                                    .padding(8)
-                //    //                            }
-                //
-                //                                Button {
-                //
-                //                                } label: {
-                //                                    Image(systemName: "ellipsis")
-                //                                        .resizable()
-                //                                        .scaledToFit()
-                //                                        .frame(width: 24, height: 24)
-                //                                        .foregroundStyle(Color(.appMainText))
-                //                                        .padding(8)
-                //                                }
-                //                            }
-                //                        }
-                //                        .padding(.top, 12)
-                //
-                //                        // アフリアエイト
-                //                        HStack(spacing: 8) {
-                //                            // Amazon
-                //                            Button {
-                //
-                //                            } label: {
-                //                                VStack(spacing: 0) {
-                //                                    CommonText(text: "Amazon", font: .mPlus2Medium(size: 18), lineHeight: 20)
-                //                                        .foregroundStyle(Color(.appMainText))
-                //                                    CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
-                //                                        .foregroundStyle(Color(.appSubText))
-                //                                }
-                //                                .frame(minWidth: 0, maxWidth: .infinity)
-                //                                .frame(height: 60)
-                //                                .overlay {
-                //                                    RoundedRectangle(cornerRadius: 8)
-                //                                        .stroke(lineWidth: 1)
-                //                                        .fill(Color(.appBackground))
-                //                                }
-                //                                .mask {
-                //                                    RoundedRectangle(cornerRadius: 8)
-                //                                }
-                //                            }
-                //
-                //                            // 楽天市場
-                //                            Button {
-                //
-                //                            } label: {
-                //                                VStack(spacing: 0) {
-                //                                    CommonText(text: "楽天市場", font: .mPlus2Medium(size: 18), lineHeight: 20)
-                //                                        .foregroundStyle(Color(.appMainText))
-                //                                    CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
-                //                                        .foregroundStyle(Color(.appSubText))
-                //                                }
-                //                                .frame(minWidth: 0, maxWidth: .infinity)
-                //                                .frame(height: 60)
-                //                                .overlay {
-                //                                    RoundedRectangle(cornerRadius: 8)
-                //                                        .stroke(lineWidth: 1)
-                //                                        .fill(Color(.appBackground))
-                //                                }
-                //                                .mask {
-                //                                    RoundedRectangle(cornerRadius: 8)
-                //                                }
-                //                            }
-                //                        }
-                //                        .padding(.top, 12)
-                //
-                //                    }
-                //                    .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
-                //
-                //                    ForEach(viewState.reviews) { review in
-                //                        Button {
-                //                            // viewState.reviewTapped(review: review)
-                //                        } label: {
-                //                            CommonReviewRow(review: review) { _ in
-                //                                // viewState.accountTapped(profile: profile)
-                //                            } imageTapAction: { _ in
-                //                                // viewState.imageTapped(urlString: imageUrlString)
-                //                            } menuTapAction: { _ in
-                //                                // viewState.menuTapped(review: review)
-                //                            }
-                //                        }
-                //                        .listRowInsets(EdgeInsets())
-                //                    }
-                //                }
-
-                //
-                //                // バーコード
-                //                if viewState.code == nil {
-                //                    BarcodeScannerView { code in
-                //                        viewState.codeSccaned(code: code)
-                //                    }
-                //                }
-
-                //
-                //                if DataScannerViewController.isSupported && DataScannerViewController.isAvailable {
-                //                    BarcodeScannerView { code in
-                //                        // self.code = code
-                //                        // dismiss()
-                //                    }
-                //                } else if !DataScannerViewController.isSupported {
-                //                    Text("It looks like this device doesn't support the DataScannerViewController")
-                //                } else {
-                //                    Text("It appears your camera may not be available")
-                //                }
-
             }
             .background(Color(.appBackground))
             .tint(Color(.appMainText))
             .onAppear {
-                viewState.xxxxx()
+                viewState.onAppear()
             }
             //            .navigationDestination(item: $viewState.navigationDestination) { item in
             //                switch item {
@@ -230,7 +100,7 @@ struct ReviewSearchView: View {
             }
             .toolbarBackground(Color(.appMain), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-
+            
         }
     }
 }
