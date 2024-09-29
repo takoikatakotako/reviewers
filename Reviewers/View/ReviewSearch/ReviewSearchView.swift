@@ -13,6 +13,8 @@ struct ReviewSearchView: View {
     //    @FocusState private var keyboardFocused: Bool
     
     
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -35,26 +37,16 @@ struct ReviewSearchView: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 12)
                     
-                    //
-                    //                    if keyboardFocused {
-                    //                        Button {
-                    //
-                    //                        } label: {
-                    
-                    //                        }
-                    //                    } else {
-                    //
-                    //                    }
                     
                     ZStack {
                         List(viewState.merchandise) { mesechandise in
                             Button {
-                                print("xxx")
+                                viewState.xxx(merchandise: mesechandise)
                             } label: {
                                 ReviewSearchRow(merchandise: mesechandise)
                             }
                         }
-
+                        
                         if viewState.isEditing {
                             Button {
                                 print("xx")
@@ -82,12 +74,12 @@ struct ReviewSearchView: View {
             .onAppear {
                 viewState.onAppear()
             }
-            //            .navigationDestination(item: $viewState.navigationDestination) { item in
-            //                switch item {
-            //                case .account(profile: let profile):
-            //                    AccountView(viewState: AccountViewState(profile: profile))
-            //                }
-            //            }
+            .navigationDestination(item: $viewState.navigationDestination) { item in
+                switch item {
+                case .reviewSearchDetail(merchandise: let merchandise):
+                    ReviewSearchDetailView(viewState: ReviewSearchDetailViewState(merchandise: merchandise))
+                }
+            }
             .listStyle(.inset)
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)

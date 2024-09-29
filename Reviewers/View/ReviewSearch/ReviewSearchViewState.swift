@@ -7,6 +7,9 @@ class ReviewSearchViewState: ObservableObject {
     @Published var loading: Bool = false
     @Published var isEditing: Bool = false
     
+    
+    @Published var navigationDestination: ReviewSearchNavigationDestination?
+    
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
     private let authRepository = AuthRepository()
@@ -55,6 +58,10 @@ class ReviewSearchViewState: ObservableObject {
         //                print("error")
         //            }
         //        }
+    }
+    
+    func xxx(merchandise: Merchandise) {
+        navigationDestination = .reviewSearchDetail(merchandise: merchandise)
     }
     
     

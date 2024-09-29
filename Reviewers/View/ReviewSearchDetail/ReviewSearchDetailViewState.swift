@@ -2,7 +2,7 @@ import SwiftUI
 
 class ReviewSearchDetailViewState: ObservableObject {
     @Published var code: String?
-    @Published var merchandise: Merchandise?
+    @Published var merchandise: Merchandise
     @Published var reviews: [ReviewProfile] = []
     @Published var loading: Bool = false
 
@@ -10,6 +10,10 @@ class ReviewSearchDetailViewState: ObservableObject {
     private let reviewUseCase = ReviewProfileUseCase()
     private let authRepository = AuthRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
+    
+    init(merchandise: Merchandise) {
+        self.merchandise = merchandise
+    }
 
     func xxxxx() {
 //        Task { @MainActor in

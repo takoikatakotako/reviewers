@@ -209,7 +209,7 @@ struct ReviewSearchDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("商品検索")
+                    Text(viewState.merchandise.name)
                         .font(.system(size: 16).bold())
                         .foregroundStyle(Color.white)
                 }
