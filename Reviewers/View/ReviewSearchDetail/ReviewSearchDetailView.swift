@@ -9,7 +9,6 @@ struct ReviewSearchDetailView: View {
     @State private var scannedText = ""
 
     var body: some View {
-        NavigationStack {
             ZStack {
                 List {
                     VStack(alignment: .leading, spacing: 0) {
@@ -63,39 +62,11 @@ struct ReviewSearchDetailView: View {
                             .frame(height: 100)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .clipped()
+                            .padding(.top, 12)
 
                         CommonText(text: "JANコード: 123445", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
                             .foregroundStyle(.appMainText)
-
-                        // XXX
-                        HStack(spacing: 0) {
-                            Spacer()
-
-                            HStack(spacing: 8) {
-    //                            Button {
-    //
-    //                            } label: {
-    //                                Image(systemName: "bookmark")
-    //                                    .resizable()
-    //                                    .scaledToFit()
-    //                                    .frame(width: 24, height: 24)
-    //                                    .foregroundStyle(Color(.appMainText))
-    //                                    .padding(8)
-    //                            }
-
-                                Button {
-
-                                } label: {
-                                    Image(systemName: "ellipsis")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 24, height: 24)
-                                        .foregroundStyle(Color(.appMainText))
-                                        .padding(8)
-                                }
-                            }
-                        }
-                        .padding(.top, 12)
+                            .padding(.top, 12)
 
                         // アフリアエイト
                         HStack(spacing: 8) {
@@ -146,7 +117,7 @@ struct ReviewSearchDetailView: View {
                         .padding(.top, 12)
 
                     }
-                    .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 8, trailing: 12))
+                    .listRowInsets(EdgeInsets(top: 16, leading: 12, bottom: 12, trailing: 12))
 
                     ForEach(viewState.reviews) { review in
                         Button {
@@ -174,12 +145,6 @@ struct ReviewSearchDetailView: View {
                         .scaleEffect(1.2)
                 }
 
-                // バーコード
-                if viewState.code == nil {
-                    BarcodeScannerView { code in
-                        viewState.codeSccaned(code: code)
-                    }
-                }
 
 //
 //                if DataScannerViewController.isSupported && DataScannerViewController.isAvailable {
@@ -207,7 +172,19 @@ struct ReviewSearchDetailView: View {
             .listStyle(.inset)
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(Color.white)
+                            .padding(.vertical, 8)
+                            .padding(.trailing, 8)
+                    }
+                }
+                
                 ToolbarItem(placement: .principal) {
                     Text(viewState.merchandise.name)
                         .font(.system(size: 16).bold())
@@ -218,5 +195,5 @@ struct ReviewSearchDetailView: View {
             .toolbarBackground(.visible, for: .navigationBar)
 
         }
-    }
+
 }

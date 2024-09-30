@@ -10,10 +10,7 @@ struct ReviewSearchView: View {
     
     @State var text = ""
     
-    //    @FocusState private var keyboardFocused: Bool
-    
-    
-    
+    @FocusState private var keyboardFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -23,20 +20,32 @@ struct ReviewSearchView: View {
                         TextField("商品名を入力 または バーコードをスキャン", text: $text, onEditingChanged: {isEditing in
                             viewState.onEditingChanged(isEditing: isEditing)
                         })
+                        .focused($keyboardFocused)
+                        
                         Spacer()
-                        Image(systemName: "barcode.viewfinder")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(Color(.appSubText))
+                        
+                        Button {
+                            print("barcode")
+                        } label: {
+                            Image(systemName: "barcode.viewfinder")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(Color(.appSubText))
+                        }
+
                     }
                     .padding(8)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white)
+                            .stroke(Color(.appBackground), lineWidth: 1)
+                    }
                     .padding(.top, 16)
                     .padding(.horizontal, 8)
                     .padding(.bottom, 12)
                     
+                    Divider()
                     
                     ZStack {
                         List(viewState.merchandise) { mesechandise in
@@ -49,7 +58,7 @@ struct ReviewSearchView: View {
                         
                         if viewState.isEditing {
                             Button {
-                                print("xx")
+                                keyboardFocused = false
                             } label: {
                                 Color.black
                                     .opacity(0.1)
@@ -69,7 +78,7 @@ struct ReviewSearchView: View {
                         .scaleEffect(1.2)
                 }
             }
-            .background(Color(.appBackground))
+            .background(Color.white)
             .tint(Color(.appMainText))
             .onAppear {
                 viewState.onAppear()

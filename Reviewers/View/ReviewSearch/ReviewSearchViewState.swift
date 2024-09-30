@@ -39,6 +39,14 @@ class ReviewSearchViewState: ObservableObject {
     ////        }
     //    }
     
+    func onEditingStarted() {
+        
+    }
+    
+    func onEdittingEnded() {
+        
+    }
+    
     func onEditingChanged(isEditing: Bool) {
         self.isEditing = isEditing
     }
