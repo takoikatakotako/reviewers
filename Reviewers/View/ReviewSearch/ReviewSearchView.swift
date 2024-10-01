@@ -17,15 +17,15 @@ struct ReviewSearchView: View {
             ZStack {
                 VStack(spacing: 0) {
                     HStack {
-                        TextField("商品名を入力 または バーコードをスキャン", text: $text, onEditingChanged: {isEditing in
+                        TextField("商品名を入力 または バーコードをスキャン", text: $text) {isEditing in
                             viewState.onEditingChanged(isEditing: isEditing)
-                        })
+                        }
                         .focused($keyboardFocused)
                         
                         Spacer()
                         
                         Button {
-                            print("barcode")
+                            viewState.barcodeButtonTapped()
                         } label: {
                             Image(systemName: "barcode.viewfinder")
                                 .resizable()
@@ -78,10 +78,14 @@ struct ReviewSearchView: View {
                         .scaleEffect(1.2)
                 }
             }
-            .background(Color.white)
-            .tint(Color(.appMainText))
             .onAppear {
                 viewState.onAppear()
+            }
+            .sheet(isPresented: $viewState.showingBarcodeView) {
+                BarcodeScannerView { code in
+                    viewState.codeSccaned(code: code)
+                    dismiss()
+                }
             }
             .navigationDestination(item: $viewState.navigationDestination) { item in
                 switch item {
@@ -89,6 +93,8 @@ struct ReviewSearchView: View {
                     ReviewSearchDetailView(viewState: ReviewSearchDetailViewState(merchandise: merchandise))
                 }
             }
+            .background(Color.white)
+            .tint(Color(.appMainText))
             .listStyle(.inset)
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)

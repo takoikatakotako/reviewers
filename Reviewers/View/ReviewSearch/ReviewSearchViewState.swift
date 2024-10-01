@@ -7,7 +7,7 @@ class ReviewSearchViewState: ObservableObject {
     @Published var loading: Bool = false
     @Published var isEditing: Bool = false
     
-    
+    @Published var showingBarcodeView: Bool = false
     @Published var navigationDestination: ReviewSearchNavigationDestination?
     
     private let profileUseCase = ProfileUseCase()
@@ -39,33 +39,29 @@ class ReviewSearchViewState: ObservableObject {
     ////        }
     //    }
     
-    func onEditingStarted() {
-        
-    }
-    
-    func onEdittingEnded() {
-        
-    }
-    
+
     func onEditingChanged(isEditing: Bool) {
+        if isEditing {
+            // 開始の場合
+        } else {
+            // 終了の場合
+        }
+        
+        // 更新
         self.isEditing = isEditing
     }
     
+    func barcodeButtonTapped() {
+        showingBarcodeView = true
+    }
+    
+    func barcodeScaned(code: String) {
+        print(code)
+    }
+    
     func codeSccaned(code: String) {
-        //        self.loading = true
-        //        self.code = code
-        //
-        //        Task { @MainActor in
-        //            do {
-        //                // 商品を取得
-        //                let merchandise = try await merchandiseUseCase.fetchMerchandise(code: code)
-        //                //let reviews = try await reviewUseCase.fetchMerchandiseReviews(merchandise: merchandise)
-        //                self.merchandise = merchandise
-        //            } catch {
-        //                // 商品が見つかりませんでした
-        //                print("error")
-        //            }
-        //        }
+        print(code)
+        showingBarcodeView = false
     }
     
     func xxx(merchandise: Merchandise) {
