@@ -6,15 +6,18 @@ class ReviewSearchViewState: ObservableObject {
     @Published var reviews: [ReviewProfile] = []
     @Published var loading: Bool = false
     @Published var isEditing: Bool = false
-    
+
+    @Published var text = ""
+
     @Published var showingBarcodeView: Bool = false
     @Published var navigationDestination: ReviewSearchNavigationDestination?
-    
+    @Published var showingNotFoundMerchandiseAlert = false
+
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
     private let authRepository = AuthRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
-    
+
     func onAppear() {
         Task { @MainActor in
             do {
@@ -27,7 +30,7 @@ class ReviewSearchViewState: ObservableObject {
             }
         }
     }
-    
+
     //    func xxxxx() {
     ////        Task { @MainActor in
     ////            do {
@@ -38,7 +41,6 @@ class ReviewSearchViewState: ObservableObject {
     //////            loading = false
     ////        }
     //    }
-    
 
     func onEditingChanged(isEditing: Bool) {
         if isEditing {
@@ -46,30 +48,51 @@ class ReviewSearchViewState: ObservableObject {
         } else {
             // 終了の場合
         }
-        
+
         // 更新
         self.isEditing = isEditing
     }
-    
+
     func barcodeButtonTapped() {
-        showingBarcodeView = true
+        withAnimation {
+            showingBarcodeView = true
+        }
     }
-    
-    func barcodeScaned(code: String) {
-        print(code)
+
+    func barodeHideButtonTapped() {
+        withAnimation {
+            showingBarcodeView = false
+        }
     }
-    
+
     func codeSccaned(code: String) {
+        // 今までのコードと同じか確認、同じなら何もしない
         print(code)
-        showingBarcodeView = false
+
+        Task { @MainActor in
+            loading = true
+            do {
+               let merchandise = try await searchByCode(code: code)
+                navigationDestination = .reviewSearchDetail(merchandise: merchandise)
+                showingBarcodeView = false
+                loading = false
+            } catch {
+                print(error)
+                loading = false
+                showingNotFoundMerchandiseAlert = true
+            }
+        }
     }
-    
+
     func xxx(merchandise: Merchandise) {
         navigationDestination = .reviewSearchDetail(merchandise: merchandise)
     }
-    
-    
-    
+
+    @MainActor
+    private func searchByCode(code: String) async throws -> Merchandise {
+        return try await merchandiseUseCase.fetchMerchandise(code: code)
+    }
+
     @MainActor
     private func updateUserReviews(uid: String) async throws {
         let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)

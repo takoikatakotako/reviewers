@@ -13,7 +13,7 @@ struct ReviewSearchDetailView: View {
                 List {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 8) {
-                            CommonText(text: "ポッキーチョコレート", font: .mPlus2SemiBold(size: 16), lineHeight: 24, alignment: .leading)
+                            CommonText(text: viewState.merchandise.name, font: .mPlus2SemiBold(size: 16), lineHeight: 24, alignment: .leading)
                                 .foregroundStyle(.appMainText)
 
                             Spacer()
@@ -64,7 +64,7 @@ struct ReviewSearchDetailView: View {
                             .clipped()
                             .padding(.top, 12)
 
-                        CommonText(text: "JANコード: 123445", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
+                        CommonText(text: "JANコード: \(viewState.merchandise.code)", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
                             .foregroundStyle(.appMainText)
                             .padding(.top, 12)
 
@@ -145,7 +145,6 @@ struct ReviewSearchDetailView: View {
                         .scaleEffect(1.2)
                 }
 
-
 //
 //                if DataScannerViewController.isSupported && DataScannerViewController.isAvailable {
 //                    BarcodeScannerView { code in
@@ -184,9 +183,9 @@ struct ReviewSearchDetailView: View {
                             .padding(.trailing, 8)
                     }
                 }
-                
+
                 ToolbarItem(placement: .principal) {
-                    Text(viewState.merchandise.name)
+                    Text("商品詳細")
                         .font(.system(size: 16).bold())
                         .foregroundStyle(Color.white)
                 }
