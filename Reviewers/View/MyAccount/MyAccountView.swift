@@ -17,6 +17,15 @@ struct MyAccountView: View {
                     }
                 }
 
+                Section("レビュー") {
+                    NavigationLink {
+                        MyReviewListView(viewState: MyReviewListViewState())
+                    } label: {
+                        Text("マイレビュー")
+                            .foregroundStyle(Color(.appMainText))
+                    }
+                }
+
                 Section("お問い合わせ") {
                     NavigationLink {
 
@@ -65,13 +74,13 @@ struct MyAccountView: View {
             .onAppear {
                 viewState.onAppear()
             }
-            .navigationDestination(item: $viewState.navigationDestination) { item in
-                switch item {
-                case .account(profile: let profile):
-                    // AccountView(viewState: AccountViewState(profile: profile))
-                    Text("temp")
-                }
-            }
+//            .navigationDestination(item: $viewState.navigationDestination) { item in
+//                switch item {
+//                case .account(profile: let profile):
+//                    // AccountView(viewState: AccountViewState(profile: profile))
+//                    Text("temp")
+//                }
+//            }
             .fullScreenCover(isPresented: $viewState.showingFullscreenCover) {
                 SignUpView(viewState: SignUpViewState())
             }
