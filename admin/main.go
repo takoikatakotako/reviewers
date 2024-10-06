@@ -12,17 +12,17 @@ import (
 
 func main() {
 	var credential []byte
-	credential, err := os.ReadFile("sdfs")
+	credential, err := os.ReadFile("reviewers-develop-firebase-adminsdk-7qe7x-54469c07aa.json")
 	if err != nil {
 		log.Fatal("credential file not found")
 	}
 
 	// Repository
-	repository := repository.Firestore{
+	repo := repository.Firestore{
 		Credential: credential,
 	}
 
-	reviews, err := repository.FetchReview()
+	reviews, err := repo.FetchReview()
 	if err != nil {
 		log.Fatal("credential file not found")
 	}

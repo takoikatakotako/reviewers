@@ -17,7 +17,7 @@ func (f *Firestore) FetchReview() ([]database.Review, error) {
 		return []database.Review{}, err
 	}
 	reviews := make([]database.Review, 0)
-	iter := client.Collection("review").Limit(20).Documents(context.Background())
+	iter := client.Collection("reviews").Limit(20).Documents(context.Background())
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {
