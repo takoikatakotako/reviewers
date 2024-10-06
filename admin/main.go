@@ -39,11 +39,15 @@ func main() {
 	index := handler.Index{}
 	healthcheck := handler.Healthcheck{}
 	review := handler.Review{}
+	merchandise := handler.Merchandise{}
+	report := handler.Report{}
 
 	// Routes
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
 	e.GET("/review/", review.ReviewGet)
+	e.GET("/merchandise/", merchandise.MerchandiseGet)
+	e.GET("/report/", report.ReportGet)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8888"))
