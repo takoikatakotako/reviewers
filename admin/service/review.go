@@ -1,19 +1,28 @@
 package service
 
 import (
+	"admin/entity/template_data"
 	"admin/repository"
-	"fmt"
 )
 
 type Review struct {
-	Repository repository.Firestore
+	Environment repository.Environment
+	Firestore   repository.Firestore
 }
 
-func (r *Review) ReviewGet() error {
-	reviews, err := r.Repository.FetchReview()
+func (r *Review) ReviewGet() ([]template_data.ReviewData, error) {
+	// fetch reviews
+	reviews, err := r.Firestore.FetchReviews()
 	if err != nil {
-		return err
+		return []template_data.ReviewData{}, err
 	}
-	fmt.Print(reviews)
-	return nil
+
+	// get image base url
+	imageBaseUrl, err := r.Environment.GetImageBaseUrlString()
+	if err != nil {
+		return []template_data.ReviewData{}, err
+	}
+
+	reviewDataList := convertReviews(reviews, imageBaseUrl)
+	return reviewDataList, nil
 }

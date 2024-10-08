@@ -3,7 +3,7 @@ package main
 import (
 	"admin/handler"
 	"admin/repository"
-	"fmt"
+	"admin/service"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
@@ -11,22 +11,40 @@ import (
 )
 
 func main() {
-	var credential []byte
-	credential, err := os.ReadFile("reviewers-develop-firebase-adminsdk-7qe7x-54469c07aa.json")
+	// Firebase
+	var credential, err = os.ReadFile("reviewers-develop-firebase-adminsdk-7qe7x-54469c07aa.json")
 	if err != nil {
 		log.Fatal("credential file not found")
 	}
 
-	// Repository
-	repo := repository.Firestore{
+	// Firestore
+	environmentRepository := repository.Environment{
+		FileName: "config.json",
+	}
+	firestoreRepository := repository.Firestore{
 		Credential: credential,
 	}
 
-	reviews, err := repo.FetchReview()
-	if err != nil {
-		log.Fatal("credential file not found")
+	// Service
+	reviewService := service.Review{
+		Environment: environmentRepository,
+		Firestore:   firestoreRepository,
 	}
-	fmt.Print(reviews)
+	merchandiseService := service.Merchandise{
+		Environment: environmentRepository,
+		Firestore:   firestoreRepository,
+	}
+
+	// Handler
+	index := handler.Index{}
+	healthcheck := handler.Healthcheck{}
+	review := handler.Review{
+		Service: reviewService,
+	}
+	merchandise := handler.Merchandise{
+		Service: merchandiseService,
+	}
+	report := handler.Report{}
 
 	// Echo instance
 	e := echo.New()
@@ -35,19 +53,14 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// Handler
-	index := handler.Index{}
-	healthcheck := handler.Healthcheck{}
-	review := handler.Review{}
-	merchandise := handler.Merchandise{}
-	report := handler.Report{}
-
 	// Routes
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
-	e.GET("/review/", review.ReviewGet)
 	e.GET("/merchandise/", merchandise.MerchandiseGet)
+	e.GET("/merchandise/:id/review/", merchandise.MerchandiseReviewGet)
+
 	e.GET("/report/", report.ReportGet)
+	e.GET("/review/", review.ReviewGet)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8888"))
