@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Review</title>
+    <!--    <link rel="stylesheet" type="text/css" href="style.css">-->
+    <!--    <script type="text/javascript" src="script.js"></script>-->
+</head>
+<body>
+<p>Review</p>
+<hr>
+
+{{ range .Reviews }}
+<a href="/review/{{ .Id }}/"><p>{{ .Id }}</p>
+    <div>
+        <p>{{ .Comment }}</p>
+        {{ range .ImageUrls }}
+        <img src="{{ . }}" width="300">
+        {{ end }}
+    </div>
+</a>
+<hr>
+{{ end }}
+</body>
+</html>

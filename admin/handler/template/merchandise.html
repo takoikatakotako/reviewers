@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merchandise</title>
+</head>
+<body>
+<p>Merchandise</p>
+
+{{ range .Merchandises }}
+<a href="/merchandise/{{ .Id  }}/review/"><p>{{ .Name }}</p></a>
+{{ end }}
+</body>
+</html>
