@@ -25,6 +25,7 @@ func convertReview(databaseReview database.Review, imageBaseUrl string) (templat
 		Id:        databaseReview.Id,
 		Code:      databaseReview.Code,
 		Comment:   databaseReview.Comment,
+		CreatedAt: databaseReview.CreatedAt,
 		Deleted:   databaseReview.Deleted,
 		ImageUrls: imageUrls,
 		Rate:      databaseReview.Rate,
@@ -44,7 +45,11 @@ func convertMerchandises(databaseMerchandises []database.Merchandise) []template
 
 func convertMerchandise(databaseMerchandise database.Merchandise) (templateReview template_data.MerchandiseData) {
 	return template_data.MerchandiseData{
-		Id:   databaseMerchandise.Id,
-		Name: databaseMerchandise.Name,
+		Id:        databaseMerchandise.Id,
+		CreatedAt: databaseMerchandise.CreatedAt,
+		Enable:    databaseMerchandise.Enable,
+		Name:      databaseMerchandise.Name,
+		Status:    databaseMerchandise.Status,
+		UpdatedAt: databaseMerchandise.UpdatedAt,
 	}
 }

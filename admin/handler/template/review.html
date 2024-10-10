@@ -8,11 +8,28 @@
 </head>
 <body>
 <p>Review</p>
+
+<hr>
+
+<div style="display: flex">
+    <a href="/review/?page=1" style="padding: 8px"><p>1</p></a>
+    <a href="/review/?page=2" style="padding: 8px"><p>2</p></a>
+    <a href="/review/?page=3" style="padding: 8px"><p>3</p></a>
+    <a href="/review/?page=4" style="padding: 8px"><p>4</p></a>
+    <a href="/review/?page=5" style="padding: 8px"><p>5</p></a>
+    <a href="/review/?page=6" style="padding: 8px"><p>6</p></a>
+    <a href="/review/?page=7" style="padding: 8px"><p>7</p></a>
+    <a href="/review/?page=8" style="padding: 8px"><p>8</p></a>
+    <a href="/review/?page=9" style="padding: 8px"><p>9</p></a>
+    <a href="/review/?page=10" style="padding: 8px"><p>10</p></a>
+</div>
+
 <hr>
 
 {{ range .Reviews }}
-<a href="/review/{{ .Id }}/"><p>{{ .Id }}</p>
+<a href="/review/{{ .Id }}/">
     <div>
+        <p>{{ .CreatedAt }}</p>
         <p>{{ .Comment }}</p>
         {{ range .ImageUrls }}
         <img src="{{ . }}" width="300">

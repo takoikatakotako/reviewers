@@ -7,8 +7,32 @@
 <body>
 <p>Merchandise</p>
 
+<hr>
+
+<div style="display: flex">
+    <a href="/merchandise/?page=1" style="padding: 8px"><p>1</p></a>
+    <a href="/merchandise/?page=2" style="padding: 8px"><p>2</p></a>
+    <a href="/merchandise/?page=3" style="padding: 8px"><p>3</p></a>
+    <a href="/merchandise/?page=4" style="padding: 8px"><p>4</p></a>
+    <a href="/merchandise/?page=5" style="padding: 8px"><p>5</p></a>
+    <a href="/merchandise/?page=6" style="padding: 8px"><p>6</p></a>
+    <a href="/merchandise/?page=7" style="padding: 8px"><p>7</p></a>
+    <a href="/merchandise/?page=8" style="padding: 8px"><p>8</p></a>
+    <a href="/merchandise/?page=9" style="padding: 8px"><p>9</p></a>
+    <a href="/merchandise/?page=10" style="padding: 8px"><p>10</p></a>
+</div>
+
+<hr>
+
 {{ range .Merchandises }}
-<a href="/merchandise/{{ .Id  }}/review/"><p>{{ .Name }}</p></a>
+<a href="/merchandise/{{ .Id  }}/review/">
+    <div>
+        <p>{{ .CreatedAt }}</p>
+        <p>{{ .Name }}</p>
+    </div>
+</a>
+<hr>
 {{ end }}
+
 </body>
 </html>

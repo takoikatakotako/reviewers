@@ -10,9 +10,9 @@ type Review struct {
 	Firestore   repository.Firestore
 }
 
-func (r *Review) ReviewGet() ([]template_data.ReviewData, error) {
+func (r *Review) ReviewGet(page int) ([]template_data.ReviewData, error) {
 	// fetch reviews
-	reviews, err := r.Firestore.FetchReviews()
+	reviews, err := r.Firestore.FetchReviews(10, page)
 	if err != nil {
 		return []template_data.ReviewData{}, err
 	}

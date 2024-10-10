@@ -10,8 +10,8 @@ type Merchandise struct {
 	Firestore   repository.Firestore
 }
 
-func (m *Merchandise) MerchandiseGet() ([]template_data.MerchandiseData, error) {
-	merchandises, err := m.Firestore.FetchMerchandises()
+func (m *Merchandise) MerchandiseGet(page int) ([]template_data.MerchandiseData, error) {
+	merchandises, err := m.Firestore.FetchMerchandises(10, page)
 	if err != nil {
 		return []template_data.MerchandiseData{}, err
 	}
