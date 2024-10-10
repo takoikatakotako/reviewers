@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 type Review struct {
@@ -14,7 +15,12 @@ type Review struct {
 }
 
 func (r *Review) ReviewGet(c echo.Context) error {
-	reviews, err := r.Service.ReviewGet()
+	page, err := strconv.Atoi(c.FormValue("page"))
+	if err != nil {
+		page = 1
+	}
+
+	reviews, err := r.Service.ReviewGet(page)
 	if err != nil {
 		return err
 	}

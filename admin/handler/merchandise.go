@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 type Merchandise struct {
@@ -14,7 +15,11 @@ type Merchandise struct {
 }
 
 func (m *Merchandise) MerchandiseGet(c echo.Context) error {
-	merchandises, err := m.Service.MerchandiseGet()
+	page, err := strconv.Atoi(c.FormValue("page"))
+	if err != nil {
+		page = 1
+	}
+	merchandises, err := m.Service.MerchandiseGet(page)
 	if err != nil {
 		return err
 	}
