@@ -70,6 +70,8 @@ Reviewsのデータベースには Firestore を利用しています。
 
 ### status: string
 ステータス。以下の値が入る。
+- WaitingForReview
+- ReviewCompleted
 
 ### updatedAt: timestamp
 更新時の時間
