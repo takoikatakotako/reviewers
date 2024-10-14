@@ -122,11 +122,11 @@ struct PostReviewView: View {
                                     CommonText(text: "コメント", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
 
-                                    if viewState.text.isEmpty {
+                                    if viewState.comment.isEmpty {
                                         CommonText(text: "コメントを入力してください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                             .foregroundStyle(Color(.appSubText))
                                     } else {
-                                        CommonText(text: viewState.text, font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
+                                        CommonText(text: viewState.comment, font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                             .foregroundStyle(Color(.appMainText))
                                     }
                                 }
@@ -255,7 +255,7 @@ struct PostReviewView: View {
                 Text("投稿完了！")
             })
             .navigationDestination(isPresented: $destinationTextInputView) {
-                ReviewInputView(text: $viewState.text)
+                ReviewInputView(text: $viewState.comment)
             }
             .sheet(item: $viewState.sheet, onDismiss: {
 
@@ -266,7 +266,7 @@ struct PostReviewView: View {
                 case .showImageViewerSheet(let image):
                     PostImageViewer(image: image, images: $viewState.images)
                 case .showBarcodeScannerSheet:
-                    PostBarcodeScannerView(code: $viewState.code)
+                    PostBarcodeScannerView(code: $viewState.code, codeType: $viewState.codeType)
                 case .showCameraSheet:
                     PostReviewCameraView(images: $viewState.images).ignoresSafeArea(.all)
                 }

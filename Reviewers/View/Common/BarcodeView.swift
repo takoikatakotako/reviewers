@@ -23,15 +23,15 @@ class BarcodeScannerPreview: UIView {
 import SwiftUI
 
 struct BarcodeScannerView: UIViewRepresentable {
-    let foundCode: (_ code: String) -> Void
+    let foundCode: (_ code: String, _ codeType: CodeType) -> Void
 
     private let session = AVCaptureSession()
     private let metadataOutput = AVCaptureMetadataOutput()
 
     class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
-        let foundCode: (_ code: String) -> Void
+        let foundCode: (_ code: String, _ codeType: CodeType) -> Void
 
-        init(_ foundCode: @escaping (_ code: String) -> Void) {
+        init(_ foundCode: @escaping (_ code: String, _ codeType: CodeType) -> Void) {
             self.foundCode = foundCode
         }
 
@@ -39,7 +39,18 @@ struct BarcodeScannerView: UIViewRepresentable {
             if let metadataObject = metadataObjects.first {
                 guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
                 guard let value = readableObject.stringValue else { return }
-                foundCode(value)
+
+                let codeType: CodeType
+                switch readableObject.type {
+                   case .ean13:
+                    codeType = .ean13
+                case .ean8:
+                    codeType = .ean8
+                default:
+                    return
+                }
+                
+                foundCode(value, codeType)
             }
         }
     }

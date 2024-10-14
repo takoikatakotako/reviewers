@@ -8,7 +8,7 @@ struct CommonBarcodeScannerView: View {
         NavigationStack {
             VStack {
                 VStack {
-                    BarcodeScannerView { code in
+                    BarcodeScannerView { code, type  in
                         self.code = code
                         dismiss()
                     }

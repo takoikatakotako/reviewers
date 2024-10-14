@@ -1,8 +1,9 @@
 import SwiftUI
 
 class PostReviewViewState: ObservableObject {
-    @Published var text = ""
+    @Published var comment = ""
     @Published var code = ""
+    @Published var codeType: CodeType?
     @Published var rate = 5
     @Published var images: [UIImage] = []
 
@@ -58,6 +59,13 @@ class PostReviewViewState: ObservableObject {
             showingMessageAlert = true
             return
         }
+        
+        // コードタイプが空の場合はアラート
+        guard let codeType = codeType else {
+            alertMessage = "バーコードをスキャンしてください"
+            showingMessageAlert = true
+            return
+        }
 
         // レートを検証
         guard 1 <= rate && rate <= 5 else {
@@ -67,7 +75,7 @@ class PostReviewViewState: ObservableObject {
         }
 
         // コメントを検証
-        if 200 < text.count {
+        if 200 < comment.count {
             alertMessage = "200文字以内で入力してください"
             showingMessageAlert = true
             return
@@ -84,7 +92,14 @@ class PostReviewViewState: ObservableObject {
                     try await storageRepository.uploadImage(uid: user.uid, image: image, fileName: fileName)
                     fileNames.append(fileName)
                 }
-                try await firestoreRepository.addReview(uid: user.uid, code: code, rate: rate, comment: text, images: fileNames)
+                try await firestoreRepository.addReview(
+                    uid: user.uid,
+                    code: code,
+                    codeType: codeType,
+                    comment: comment,
+                    images: fileNames,
+                    rate: rate
+                )
 
                 // すでに商品があるか調査
                 let merchandise = try? await merchandiseUseCase.fetchMerchandise(code: code)

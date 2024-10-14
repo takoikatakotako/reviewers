@@ -3,13 +3,15 @@ import SwiftUI
 struct PostBarcodeScannerView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var code: String
+    @Binding var codeType: CodeType?
 
     var body: some View {
         NavigationStack {
             VStack {
                 VStack {
-                    BarcodeScannerView { code in
+                    BarcodeScannerView { code, codeType  in
                         self.code = code
+                        self.codeType = codeType
                         dismiss()
                     }
                 }

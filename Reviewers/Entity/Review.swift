@@ -3,11 +3,12 @@ import Foundation
 struct Review: Identifiable, Hashable {
     let id: String
     let uid: String
+    let deleted: Bool
     let code: String
-    let rate: Int
+    let codeType: CodeType
     let comment: String
-
-    let imageUrls: [URL?]
+    let imageUrls: [URL]
+    let rate: Int
     let createdAt: Date
     let updatedAt: Date
 
