@@ -2,6 +2,7 @@ import Foundation
 
 struct ReviewProfileUseCase {
     private let firestoreRepository = FirestoreRepository()
+    private let convertUseCaseUtils = ConvertUseCaseUtils()
 
     func fetchNewReviews() async throws -> [ReviewProfile] {
         let firestoreReviews = try await firestoreRepository.fetchReviews(limit: 20)
@@ -122,6 +123,6 @@ struct ReviewProfileUseCase {
         guard let firestoreMerchandise = firestoreMerchandise else {
             return nil
         }
-        return Merchandise(id: firestoreMerchandise.id, name: firestoreMerchandise.name)
+        return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise)
     }
 }

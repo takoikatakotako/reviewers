@@ -120,9 +120,13 @@ class PostReviewViewState: ObservableObject {
     }
 
     func registerMerchandise() {
+        guard let codeType = codeType else {
+            return
+        }
+        
         Task { @MainActor in
             do {
-                try await merchandiseUseCase.createMerchandise(code: code, name: merchandiseName)
+                try await merchandiseUseCase.createMerchandise(code: code, codeType: codeType, name: merchandiseName)
                 showingRegisterMerchandiseCompleteAlert = true
             } catch {
                 print(error)

@@ -41,7 +41,7 @@ struct DebugMerchandiseAddView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $viewState.navigationDestination) {
-            CommonBarcodeScannerView(code: $viewState.code)
+            CommonBarcodeScannerView(code: $viewState.code, codeType: $viewState.codeType)
         }
         .alert("商品名入力", isPresented: $viewState.showingNameAlert) {
             TextField("商品名", text: $viewState.name)

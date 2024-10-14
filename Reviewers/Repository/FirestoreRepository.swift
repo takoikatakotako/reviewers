@@ -254,19 +254,21 @@ struct FirestoreRepository {
         return try FirestoreMerchandise(document: querySnapshot)
     }
     
-    func createMerchandise(code: String, name: String) async throws {
+    func createMerchandise(code: String, codeType: CodeType, name: String) async throws {
         let db = Firestore.firestore()
         try await db
             .collection(FirestoreMerchandise.collectionName)
-            .document(code)
-            .setData(
-                [
-                    FirestoreMerchandise.enableField: true,
-                    FirestoreMerchandise.statusField: FirestoreMerchandiseStatus.waitingForReview.rawValue,
-                    FirestoreMerchandise.nameField: name,
-                    FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
-                    FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp()
-                ]
-            )
+            .addDocument(data: [
+                FirestoreMerchandise.enableField: true,
+                FirestoreMerchandise.statusField: FirestoreMerchandiseStatus.waitingForReview.rawValue,
+                FirestoreMerchandise.nameField: name,
+                FirestoreMerchandise.codeField: code,
+                FirestoreMerchandise.codeTypeField: codeType.rawValue,
+                FirestoreMerchandise.imageField: "",
+                FirestoreMerchandise.imageRefarenceReviewIdField: "",
+                FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
+                FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp()
+            ]
+        )
     }
 }

@@ -3,6 +3,7 @@ import Foundation
 class DebugMerchandiseAddViewState: ObservableObject {
     @Published var name: String = ""
     @Published var code: String = ""
+    @Published var codeType: CodeType? = nil
 
     @Published var indicator = false
 
@@ -31,18 +32,19 @@ class DebugMerchandiseAddViewState: ObservableObject {
 
             do {
                 // すでに登録されているか調べる
-                do {
-                    _ = try await merchandiseUseCase.fetchMerchandise(code: code)
+                if let merchandise = try? await merchandiseUseCase.fetchMerchandise(code: code) {
                     // すでに登録されている
                     showingAlreadyRegisterdAlert = true
                     indicator = false
                     return
-                } catch {
-                    print(error)
+                }
+
+                guard let codeType = codeType else {
+                    return
                 }
 
                 // 登録する
-                try await merchandiseUseCase.createMerchandise(code: code, name: name)
+                try await merchandiseUseCase.createMerchandise(code: code, codeType: codeType, name: name)
                 showingSuccessAlert = true
             } catch {
                 print(error)

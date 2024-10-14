@@ -3,13 +3,15 @@ import SwiftUI
 struct CommonBarcodeScannerView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var code: String
+    @Binding var codeType: CodeType?
 
     var body: some View {
         NavigationStack {
             VStack {
                 VStack {
-                    BarcodeScannerView { code, type  in
+                    BarcodeScannerView { code, codeType  in
                         self.code = code
+                        self.codeType = codeType
                         dismiss()
                     }
                 }
