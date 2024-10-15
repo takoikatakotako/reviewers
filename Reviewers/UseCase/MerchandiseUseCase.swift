@@ -19,6 +19,5 @@ struct MerchandiseUseCase {
     func createMerchandise(code: String, codeType: CodeType, name: String) async throws {
         try await firestoreRepository.createMerchandise(code: code, codeType: codeType, name: name)
     }
-    
 
 }

@@ -2,7 +2,7 @@ import FirebaseFirestore
 
 struct FirestoreReview: Hashable {
     static let collectionName = "reviews"
-    
+
     static let uidField = "uid"
     static let deletedField = "deleted"
     static let codeField = "code"

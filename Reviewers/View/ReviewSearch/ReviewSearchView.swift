@@ -84,7 +84,7 @@ struct ReviewSearchView: View {
 
                 if viewState.showingBarcodeView {
                     ZStack(alignment: .topLeading) {
-                        BarcodeScannerView { code, type  in
+                        BarcodeScannerView { code, _  in
                             viewState.codeSccaned(code: code)
                         }
 

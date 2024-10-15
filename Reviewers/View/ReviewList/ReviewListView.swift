@@ -74,7 +74,7 @@ struct ReviewListView: View {
                 case .image(imageURL: let imageURL):
                     CommonImageViewer(url: imageURL)
                 case .signUp:
-                    SignUpView(viewState: SignUpViewState())
+                    AuthView(viewState: AuthViewState())
                 }
             })
             .alert("", isPresented: $viewState.showingSignInAlert, actions: {

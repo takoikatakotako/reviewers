@@ -82,7 +82,8 @@ struct MyAccountView: View {
 //                }
 //            }
             .fullScreenCover(isPresented: $viewState.showingFullscreenCover) {
-                SignUpView(viewState: SignUpViewState())
+                // SignUpView(viewState: SignUpViewState())
+                AuthView(viewState: AuthViewState())
             }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)

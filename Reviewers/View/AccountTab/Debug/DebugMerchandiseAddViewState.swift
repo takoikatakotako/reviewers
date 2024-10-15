@@ -3,7 +3,7 @@ import Foundation
 class DebugMerchandiseAddViewState: ObservableObject {
     @Published var name: String = ""
     @Published var code: String = ""
-    @Published var codeType: CodeType? = nil
+    @Published var codeType: CodeType?
 
     @Published var indicator = false
 

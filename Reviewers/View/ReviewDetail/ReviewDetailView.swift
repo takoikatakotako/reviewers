@@ -307,7 +307,8 @@ struct ReviewDetailView: View {
             case .image(imageUrl: let url):
                 CommonImageViewer(url: url)
             case .signUp:
-                SignUpView(viewState: SignUpViewState())
+                AuthView(viewState: AuthViewState())
+                // SignUpView(viewState: SignUpViewState())
             }
         }
         .scrollIndicators(.hidden)

@@ -13,7 +13,6 @@ struct Merchandise: Identifiable, Hashable {
     let updatedAt: Date
 }
 
-
 enum MerchandiseStatus: String {
     case waitingForReview = "WaitingForReview"
     case reviewComplete = "ReviewCompleted"

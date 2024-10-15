@@ -49,7 +49,7 @@ struct BarcodeScannerView: UIViewRepresentable {
                 default:
                     return
                 }
-                
+
                 foundCode(value, codeType)
             }
         }

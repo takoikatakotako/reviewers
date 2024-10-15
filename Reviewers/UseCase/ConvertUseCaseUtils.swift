@@ -1,4 +1,3 @@
-
 struct ConvertUseCaseUtils {
     func firestoreMerchandiseToMerchandise(firestoreMerchandise: FirestoreMerchandise) -> Merchandise {
         let status: MerchandiseStatus
@@ -8,7 +7,7 @@ struct ConvertUseCaseUtils {
         case .reviewComplete:
             status = .reviewComplete
         }
-        
+
         let codeType: CodeType
         switch firestoreMerchandise.codeType {
         case .ean13:
@@ -16,7 +15,7 @@ struct ConvertUseCaseUtils {
         case .ean8:
             codeType = .ean8
         }
-        
+
         return Merchandise(
             id: firestoreMerchandise.id,
             enable: firestoreMerchandise.enable,

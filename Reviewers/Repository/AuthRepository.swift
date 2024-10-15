@@ -38,6 +38,10 @@ struct AuthRepository {
         try await user.sendEmailVerification()
     }
 
+    func sendPasswordReset(email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+    }
+
     func signOut() async throws {
         try Auth.auth().signOut()
     }

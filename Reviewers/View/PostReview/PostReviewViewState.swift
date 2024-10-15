@@ -59,7 +59,7 @@ class PostReviewViewState: ObservableObject {
             showingMessageAlert = true
             return
         }
-        
+
         // コードタイプが空の場合はアラート
         guard let codeType = codeType else {
             alertMessage = "バーコードをスキャンしてください"
@@ -123,7 +123,7 @@ class PostReviewViewState: ObservableObject {
         guard let codeType = codeType else {
             return
         }
-        
+
         Task { @MainActor in
             do {
                 try await merchandiseUseCase.createMerchandise(code: code, codeType: codeType, name: merchandiseName)

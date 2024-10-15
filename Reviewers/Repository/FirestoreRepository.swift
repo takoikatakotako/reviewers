@@ -17,7 +17,7 @@ struct FirestoreRepository {
         ]
         )
     }
-    
+
     func addReviewComments(reviewId: String, uid: String, comment: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -33,7 +33,7 @@ struct FirestoreRepository {
                 ]
             )
     }
-    
+
     func fetchReviews(limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -42,7 +42,7 @@ struct FirestoreRepository {
             .order(by: FirestoreReview.createdAtField)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreReviews: [FirestoreReview] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
@@ -50,7 +50,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchNewUserReviews(uid: String, limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -60,7 +60,7 @@ struct FirestoreRepository {
             .order(by: FirestoreReview.createdAtField)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreReviews: [FirestoreReview] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
@@ -68,7 +68,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchMerchandiseReviews(merchandise: Merchandise, limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -78,7 +78,7 @@ struct FirestoreRepository {
             .order(by: FirestoreReview.createdAtField)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreReviews: [FirestoreReview] = []
         for document in querySnapshot.documents {
             let firestoreReview = try FirestoreReview(document: document)
@@ -86,7 +86,7 @@ struct FirestoreRepository {
         }
         return firestoreReviews
     }
-    
+
     func fetchComments(reviewId: String) async throws -> [FirestoreComment] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -95,7 +95,7 @@ struct FirestoreRepository {
             .collection(FirestoreComment.collectionName)
             .limit(to: 30)
             .getDocuments()
-        
+
         var comments: [FirestoreComment] = []
         for document in querySnapshot.documents {
             let firestoreComment = try FirestoreComment(document: document)
@@ -103,7 +103,7 @@ struct FirestoreRepository {
         }
         return comments
     }
-    
+
     func deleteReview(reviewId: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -114,7 +114,7 @@ struct FirestoreRepository {
                 FirestoreReview.updatedAtField: FieldValue.serverTimestamp()
             ], merge: true)
     }
-    
+
     // MARK: - Profile Collection
     func fetchProfile(uid: String) async throws -> FirestoreProfile {
         let db = Firestore.firestore()
@@ -122,13 +122,13 @@ struct FirestoreRepository {
             .collection(FirestoreProfile.collectionName)
             .document(uid)
             .getDocument()
-        
+
         guard let querySnapshot = querySnapshot else {
             throw ReviewersError.temp
         }
         return try FirestoreProfile(document: querySnapshot)
     }
-    
+
     func createProfile(uid: String, nickname: String, profile: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -143,7 +143,7 @@ struct FirestoreRepository {
                 ]
             )
     }
-    
+
     func profileDocumentExists(uid: String) async throws -> Bool {
         let db = Firestore.firestore()
         let querySnapshot = try? await db
@@ -155,7 +155,7 @@ struct FirestoreRepository {
         }
         return document.exists
     }
-    
+
     func setNickname(uid: String, nickname: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -169,29 +169,29 @@ struct FirestoreRepository {
                 , merge: true
             )
     }
-    
+
     func setProfile(uid: String, nickname: String? = nil, profile: String? = nil) async throws {
         if nickname == nil && profile == nil {
             throw ReviewersError.temp
         }
-        
+
         var data: [String: Any] = [:]
-        
+
         if let nickname = nickname {
             data[FirestoreProfile.nicknameField] = nickname
         }
-        
+
         if let profile = profile {
             data[FirestoreProfile.profileField] = profile
         }
-        
+
         let db = Firestore.firestore()
         try await db
             .collection(FirestoreProfile.collectionName)
             .document(uid)
             .setData(data, merge: true)
     }
-    
+
     // MARK: - Blocks Collection
     func fetchBlockedUsers(uid: String) async throws -> [FirestoreBlockedUser] {
         let db = Firestore.firestore()
@@ -203,7 +203,7 @@ struct FirestoreRepository {
         guard let querySnapshot = querySnapshot else {
             throw ReviewersError.temp
         }
-        
+
         var firestoreBlockedUsers: [FirestoreBlockedUser] = []
         for document in querySnapshot.documents {
             let firestoreBlockedUser = try FirestoreBlockedUser(document: document)
@@ -211,7 +211,7 @@ struct FirestoreRepository {
         }
         return firestoreBlockedUsers
     }
-    
+
     func createBlockedUser(uid: String, blockedUserId: String) async throws {
         let db = Firestore.firestore()
         try await db
@@ -224,7 +224,7 @@ struct FirestoreRepository {
                 FirestoreProfile.updatedAtField: FieldValue.serverTimestamp()
             ])
     }
-    
+
     // MARK: - Merchandise Collection
     func fetchMerchandises(limit: Int = 20) async throws -> [FirestoreMerchandise] {
         let db = Firestore.firestore()
@@ -232,7 +232,7 @@ struct FirestoreRepository {
             .collection(FirestoreMerchandise.collectionName)
             .limit(to: limit)
             .getDocuments()
-        
+
         var firestoreMerchandises: [FirestoreMerchandise] = []
         for document in querySnapshot.documents {
             let firestoreMerchandise = try FirestoreMerchandise(document: document)
@@ -240,20 +240,20 @@ struct FirestoreRepository {
         }
         return firestoreMerchandises
     }
-    
+
     func fetchMerchandise(code: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()
         let querySnapshot = try? await db
             .collection(FirestoreMerchandise.collectionName)
             .document(code)
             .getDocument()
-        
+
         guard let querySnapshot = querySnapshot else {
             throw ReviewersError.temp
         }
         return try FirestoreMerchandise(document: querySnapshot)
     }
-    
+
     func createMerchandise(code: String, codeType: CodeType, name: String) async throws {
         let db = Firestore.firestore()
         try await db
