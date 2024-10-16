@@ -47,4 +47,44 @@ struct AuthUseCase {
         }
         return isAnonymous
     }
+
+    func signUp(email: String, password: String) async throws {
+        // ユーザーを取得
+        guard let user = Auth.auth().currentUser else {
+            throw ReviewersError.clientError
+        }
+
+        // EmailAuthProvider とリンクさせる
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        try await user.link(with: credential)
+
+        // SignInを試みる
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
+
+    // SignIn
+    func signIn(email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
+
+    func isEmailVerified() throws -> Bool {
+        guard let user = Auth.auth().currentUser else {
+            throw ReviewersError.clientError
+        }
+        return user.isEmailVerified
+    }
+
+    func sendEmailVerification() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw ReviewersError.clientError
+        }
+        try await user.sendEmailVerification()
+    }
+
+    func reloadUser() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw ReviewersError.clientError
+        }
+        try await user.reload()
+    }
 }
