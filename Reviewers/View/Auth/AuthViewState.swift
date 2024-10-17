@@ -105,19 +105,17 @@ class AuthViewState: ObservableObject {
                 try await authUseCase.reloadUser()
 
                 // すでに認証されているか確認する
-                if try authUseCase.isEmailVerified() {
-                    // メールアドレス認証済みのユーザー
-                } else {
+                guard try authUseCase.isEmailVerified() else {
                     // メールアドレス認証されていないユーザー
-
                     // メール認証を行う
-                    try await authRepository.sendEmailVerification()
+                    try await authUseCase.sendEmailVerification()
 
                     errorAlertMessage = "メール認証おなしゃす。認証がおわりましたら「アカウントをお持ちの方」からログインしてみてください。"
                     showingErrorAlert = true
+                    return
                 }
 
-                // SignIn完了
+                // メールアドレス認証済みのユーザー, SignIn完了
                 inprogress = false
                 showingSignInCompleteAlert = true
             } catch {
@@ -142,7 +140,7 @@ class AuthViewState: ObservableObject {
 
         Task { @MainActor in
             do {
-                try await authRepository.sendPasswordReset(email: email)
+                try await authUseCase.sendPasswordReset(email: email)
 
                 // パスワードリセット完了
                 showingPasswordResetCompleteAlert = true

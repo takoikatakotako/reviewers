@@ -8,6 +8,8 @@ class MyAccountViewState: ObservableObject {
 //    // Navigation Destination
 //    @Published var navigationDestination: MyAccountNavigationDestination?
 
+    @Published var isAnonymousUser = true
+
     // Fullscreen Cover
     @Published var showingFullscreenCover = false
 
@@ -23,43 +25,23 @@ class MyAccountViewState: ObservableObject {
 //    }
 
     func onAppear() {
-//        Task { @MainActor in
-//            do {
-//                let uid = try authUseCase.getUserId()
-//                self.uid = uid
-//                let profile = try await profileUseCase.fetchProfile(uid: uid)
-//                self.profile = profile
-//            } catch {
-//                print(error)
-//            }
-//        }
-    }
-
-//    func accountTapped() {
-//        guard let profile = profile else {
-//            return
-//        }
-//        navigationDestination = .account(profile: profile)
-//    }
-
-    func signIn() {
         Task { @MainActor in
             do {
-                if try authUseCase.isAnonymousUser() {
-                    showingFullscreenCover = true
-                } else {
-                    print("error")
-                }
+                isAnonymousUser = try authUseCase.isAnonymousUser()
             } catch {
                 print(error)
             }
         }
     }
 
+    func signIn() {
+        showingFullscreenCover = true
+    }
+
     func signOut() {
         Task { @MainActor in
             do {
-                try await authRepository.signOut()
+                try await authUseCase.signOut()
                 NotificationCenter.default.post(name: NSNotification.signOut, object: self, userInfo: nil)
             } catch {
                 print(error)

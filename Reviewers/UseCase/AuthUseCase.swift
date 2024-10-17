@@ -5,6 +5,10 @@ struct AuthUseCase {
     private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
 
+        func getUser() -> User? {
+            return  Auth.auth().currentUser
+        }
+
     // 匿名ログイン
     func signInAnonymously() async throws {
         try await Auth.auth().signInAnonymously()
@@ -86,5 +90,13 @@ struct AuthUseCase {
             throw ReviewersError.clientError
         }
         try await user.reload()
+    }
+
+    func sendPasswordReset(email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+    }
+
+    func signOut() async throws {
+        try Auth.auth().signOut()
     }
 }

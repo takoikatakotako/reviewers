@@ -39,7 +39,7 @@ class AccountViewState: ObservableObject {
     init(profile: Profile) {
         print(profile)
         self.profile = profile
-        self.isMe = (profile.id == authRepository.getUser()?.uid ?? "")
+        self.isMe = (profile.id == authUseCase.getUser()?.uid ?? "")
     }
 
     func onAppear() {
@@ -82,7 +82,7 @@ class AccountViewState: ObservableObject {
 
     func menuTapped(review: ReviewProfile) {
         // sheet = .myReview
-        guard let user = authRepository.getUser() else {
+        guard let user = authUseCase.getUser() else {
             // TODO: 未ログイン時の処理
             return
         }

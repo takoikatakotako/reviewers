@@ -79,17 +79,6 @@ class MyReviewListViewState: ObservableObject {
         }
     }
 
-    func signOut() {
-        Task { @MainActor in
-            do {
-                try await authRepository.signOut()
-                NotificationCenter.default.post(name: NSNotification.signOut, object: self, userInfo: nil)
-            } catch {
-                print(error)
-            }
-        }
-    }
-
     @MainActor
     private func updateReviews() async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewReviews()

@@ -25,6 +25,7 @@ class PostReviewViewState: ObservableObject {
     // Repository
     private let firestoreRepository = FirestoreRepository()
     private let authRepository = AuthRepository()
+    private let authUseCase = AuthUseCase()
     private let storageRepository = StorageRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
 
@@ -49,7 +50,7 @@ class PostReviewViewState: ObservableObject {
     }
 
     func post() {
-        guard let user = authRepository.getUser() else {
+        guard let user = authUseCase.getUser() else {
             return
         }
 

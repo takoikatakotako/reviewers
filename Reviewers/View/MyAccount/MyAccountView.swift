@@ -49,10 +49,12 @@ struct MyAccountView: View {
                 }
 
                 Section("アカウント") {
-                    Button {
-                        viewState.signIn()
-                    } label: {
-                        Text("サインイン")
+                    if viewState.isAnonymousUser {
+                        Button {
+                            viewState.signIn()
+                        } label: {
+                            Text("サインイン")
+                        }
                     }
 
                     Button {

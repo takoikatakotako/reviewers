@@ -20,6 +20,7 @@ class ReviewListViewState: ObservableObject {
     private let firestoreRepository = FirestoreRepository()
     private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
+    private let authUseCase = AuthUseCase()
 
     func onAppear() {
         Task { @MainActor in
@@ -54,7 +55,7 @@ class ReviewListViewState: ObservableObject {
     }
 
     func postButtonTapped() {
-        guard let user = authRepository.getUser() else {
+        guard let user = authUseCase.getUser() else {
             return
         }
 
@@ -74,8 +75,8 @@ class ReviewListViewState: ObservableObject {
         // メール認証が終わっていない場合、最新情報を取得
         Task { @MainActor in
             do {
-                try await authRepository.reloadUser()
-                guard let user = authRepository.getUser() else {
+                try await authUseCase.reloadUser()
+                guard let user = authUseCase.getUser() else {
                     throw ReviewersError.temp
                 }
                 if user.isEmailVerified {
@@ -84,8 +85,6 @@ class ReviewListViewState: ObservableObject {
                     return
                 }
 
-                // 確認メールを送る
-                try await authRepository.sendEmailVerification()
             } catch {
                 print(error)
             }
@@ -97,11 +96,11 @@ class ReviewListViewState: ObservableObject {
     }
 
     func menuTapped(review: Review) {
-        guard let user = authRepository.getUser() else {
+        guard let user = authUseCase.getUser() else {
             // TODO: 未ログイン時の処理
             return
         }
-        let myUid = authRepository.getUser()?.uid ?? ""
+        let myUid = authUseCase.getUser()?.uid ?? ""
 
         showingReviewAlertPresenting = (review: review, review.uid == myUid)
         showingReviewAlert = true

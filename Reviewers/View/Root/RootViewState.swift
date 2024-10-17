@@ -3,6 +3,8 @@ import SwiftUI
 class RootViewState: ObservableObject {
     @Published var type: RootViewType = .loading
 
+    private let authUseCase = AuthUseCase()
+
     func onAppear() {
         Task { @MainActor in
             do {
@@ -33,7 +35,7 @@ class RootViewState: ObservableObject {
 
                 // アカウントは存在するかチェック
                 let authRepo = AuthRepository()
-                if let user = authRepo.getUser() {
+                if let user = authUseCase.getUser() {
                     // ログインしている
                     withAnimation(.linear(duration: 1)) {
                         type = .main
@@ -56,7 +58,7 @@ class RootViewState: ObservableObject {
     func doneTutorial() {
         // アカウントは存在するかチェック
         let authRepo = AuthRepository()
-        if let user = authRepo.getUser() {
+        if let user = authUseCase.getUser() {
             // ログインしている
             withAnimation(.linear(duration: 1)) {
                 type = .main
