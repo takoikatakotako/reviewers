@@ -8,7 +8,6 @@ class ReviewSearchDetailViewState: ObservableObject {
 
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
-    private let authRepository = AuthRepository()
     private let merchandiseUseCase = MerchandiseUseCase()
 
     init(merchandise: Merchandise) {

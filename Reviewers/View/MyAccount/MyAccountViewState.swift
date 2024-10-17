@@ -13,7 +13,6 @@ class MyAccountViewState: ObservableObject {
     // Fullscreen Cover
     @Published var showingFullscreenCover = false
 
-    private let authRepository = AuthRepository()
     private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
 

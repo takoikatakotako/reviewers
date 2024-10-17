@@ -25,7 +25,6 @@ class MyAccountSettingViewState: ObservableObject {
     // Sheet
     @Published var imagePickerSheet = false
 
-    private let authRepository = AuthRepository()
     private let storageRepository = StorageRepository()
     private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()

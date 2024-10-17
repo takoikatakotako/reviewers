@@ -24,7 +24,6 @@ class PostReviewViewState: ObservableObject {
 
     // Repository
     private let firestoreRepository = FirestoreRepository()
-    private let authRepository = AuthRepository()
     private let authUseCase = AuthUseCase()
     private let storageRepository = StorageRepository()
     private let merchandiseUseCase = MerchandiseUseCase()

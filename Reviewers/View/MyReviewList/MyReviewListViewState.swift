@@ -16,7 +16,6 @@ class MyReviewListViewState: ObservableObject {
     // FullScreenCover
     @Published var fullScreenCover: MyReviewListViewFullScreenCover?
 
-    private let authRepository = AuthRepository()
     private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
     private let firestoreRepository = FirestoreRepository()

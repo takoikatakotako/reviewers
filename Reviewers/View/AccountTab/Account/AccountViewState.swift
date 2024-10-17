@@ -32,7 +32,6 @@ class AccountViewState: ObservableObject {
 
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
-    private let authRepository = AuthRepository()
     private let authUseCase = AuthUseCase()
     private let blockedUserUseCase = BlockedUserUseCase()
 

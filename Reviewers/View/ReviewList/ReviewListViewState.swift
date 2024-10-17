@@ -16,7 +16,6 @@ class ReviewListViewState: ObservableObject {
     // NavigationPath
     @Published var path: [ReviewListViewPath] = []
 
-    private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
     private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()

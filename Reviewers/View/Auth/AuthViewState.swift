@@ -20,7 +20,6 @@ class AuthViewState: ObservableObject {
     @Published var showingErrorAlert = false
     @Published var errorAlertMessage = ""
 
-    private let authRepository = AuthRepository()
     private let authUseCase = AuthUseCase()
 
     var title: String {

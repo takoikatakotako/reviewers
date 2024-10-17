@@ -2,7 +2,6 @@ import Foundation
 import FirebaseAuth
 
 struct AuthUseCase {
-    private let authRepository = AuthRepository()
     private let firestoreRepository = FirestoreRepository()
 
         func getUser() -> User? {
