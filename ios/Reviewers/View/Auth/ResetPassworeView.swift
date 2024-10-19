@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ResetPassworeView2: View {
+struct ResetPassworeView: View {
     @Binding var mail: String
     let disabled: Bool
     var resetPassowrd: () -> Void

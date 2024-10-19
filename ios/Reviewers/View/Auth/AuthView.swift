@@ -33,7 +33,7 @@ struct AuthView: View {
                                 viewState.selectViewType(viewType: .resetPassword)
                             })
                     case .resetPassword:
-                        ResetPassworeView2(
+                        ResetPassworeView(
                             mail: $viewState.email,
                             disabled: false,
                             resetPassowrd: {
