@@ -16,6 +16,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
     // Navigation Destination
     @Published var navigationDestination = false
 
+    private let authUseCase = AuthUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
 
     func nameTapped() {
@@ -43,8 +44,10 @@ class DebugMerchandiseAddViewState: ObservableObject {
                     return
                 }
 
+                let uid = try authUseCase.getUserId()
+                
                 // 登録する
-                try await merchandiseUseCase.createMerchandise(code: code, codeType: codeType, name: name)
+                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: name)
                 showingSuccessAlert = true
             } catch {
                 print(error)

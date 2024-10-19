@@ -254,7 +254,7 @@ struct FirestoreRepository {
         return try FirestoreMerchandise(document: querySnapshot)
     }
 
-    func createMerchandise(code: String, codeType: CodeType, name: String) async throws {
+    func createMerchandise(uid: String, code: String, codeType: CodeType, name: String) async throws {
         let db = Firestore.firestore()
         try await db
             .collection(FirestoreMerchandise.collectionName)
@@ -267,7 +267,9 @@ struct FirestoreRepository {
                 FirestoreMerchandise.imageField: "",
                 FirestoreMerchandise.imageRefarenceReviewIdField: "",
                 FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
-                FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp()
+                FirestoreMerchandise.createdUid: uid,
+                FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp(),
+                FirestoreMerchandise.updatedUid: uid,
             ]
         )
     }

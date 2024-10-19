@@ -123,10 +123,11 @@ class PostReviewViewState: ObservableObject {
         guard let codeType = codeType else {
             return
         }
-
+        
         Task { @MainActor in
             do {
-                try await merchandiseUseCase.createMerchandise(code: code, codeType: codeType, name: merchandiseName)
+                let uid = try authUseCase.getUserId()
+                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName)
                 showingRegisterMerchandiseCompleteAlert = true
             } catch {
                 print(error)
