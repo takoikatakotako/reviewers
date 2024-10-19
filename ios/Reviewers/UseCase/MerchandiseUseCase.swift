@@ -16,8 +16,8 @@ struct MerchandiseUseCase {
         return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise)
     }
 
-    func createMerchandise(code: String, codeType: CodeType, name: String) async throws {
-        try await firestoreRepository.createMerchandise(code: code, codeType: codeType, name: name)
+    func createMerchandise(uid: String, code: String, codeType: CodeType, name: String) async throws {
+        try await firestoreRepository.createMerchandise(uid: uid, code: code, codeType: codeType, name: name)
     }
 
 }

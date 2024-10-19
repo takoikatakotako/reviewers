@@ -48,6 +48,9 @@ Reviewsのデータベースには Firestore を利用しています。
 ### createdAt: timestamp
 ドキュメント生成時間
 
+### createdUid: String
+作成したユーザーのID、管理者の場合は `ADMIN` が入る
+
 ### code: string
 スキャンしたバーコードの文字列
 
@@ -75,3 +78,6 @@ Reviewsのデータベースには Firestore を利用しています。
 
 ### updatedAt: timestamp
 更新時の時間
+
+### updatedUid: String
+更新したユーザーのID、管理者の場合は `ADMIN` が入る。
