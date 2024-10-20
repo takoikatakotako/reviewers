@@ -8,6 +8,7 @@ import (
 type Merchandise struct {
 	Environment repository.Environment
 	Firestore   repository.Firestore
+	Storage     repository.FirebaseStorage
 }
 
 func (m *Merchandise) MerchandiseGet(page int) ([]template_data.MerchandiseData, error) {
@@ -67,7 +68,20 @@ func (m *Merchandise) MerchandiseReviewImageRegisterGet(merchandiseId string, re
 }
 
 func (m *Merchandise) MerchandiseReviewImageRegisterPost(merchandiseId string, reviewId string, image string) (template_data.MerchandiseReviewImageRegisterPost, error) {
-	err := m.Firestore.UpdateMerchandiseImage(merchandiseId, reviewId, image)
+	review, err := m.Firestore.FetchReview(reviewId)
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegisterPost{}, err
+	}
+	// 画像をコピー
+	sourcePath := "image/user/" + review.Uid + "/" + image
+	destinationPath := "image/merchandise/" + image
+	err = m.Storage.CopyImage(sourcePath, destinationPath)
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegisterPost{}, err
+	}
+
+	// 更新
+	err = m.Firestore.UpdateMerchandiseImage(merchandiseId, reviewId, image)
 	if err != nil {
 		return template_data.MerchandiseReviewImageRegisterPost{}, err
 	}

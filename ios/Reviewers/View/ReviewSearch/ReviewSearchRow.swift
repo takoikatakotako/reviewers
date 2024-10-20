@@ -5,7 +5,7 @@ struct ReviewSearchRow: View {
     let merchandise: Merchandise
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
                 CommonText(text: merchandise.name, font: .mPlus2SemiBold(size: 16), lineHeight: 24, alignment: .leading)
                     .foregroundStyle(.appMainText)
@@ -48,19 +48,19 @@ struct ReviewSearchRow: View {
                 }
             }
 
-            CommonText(text: "ブランド: 江崎グリコ", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
-                .foregroundStyle(.appMainText)
+//            CommonText(text: "ブランド: 江崎グリコ", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
+//                .foregroundStyle(.appMainText)
 
-            ReviewListRowImage(url: URL(string: "https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/mf-649509-pocky-hero-amazon-new-1ec72242df10b2fbc24617e702b8bd97.jpg"))
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 100)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .clipped()
-                .padding(.top, 12)
-
-            CommonText(text: "JANコード: 123445", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
+            if let imageURL = merchandise.imageURL {
+                ReviewListRowImage(url: imageURL)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipped()
+            }
+            
+            CommonText(text: "JANコード: \(merchandise.code)", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
                 .foregroundStyle(.appMainText)
-                .padding(.top, 12)
         }
         .listRowInsets(EdgeInsets(top: 16, leading: 12, bottom: 12, trailing: 12))
     }

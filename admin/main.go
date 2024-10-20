@@ -24,6 +24,9 @@ func main() {
 	firestoreRepository := repository.Firestore{
 		Credential: credential,
 	}
+	storageRepository := repository.FirebaseStorage{
+		Credential: credential,
+	}
 
 	// Service
 	reviewService := service.Review{
@@ -33,6 +36,7 @@ func main() {
 	merchandiseService := service.Merchandise{
 		Environment: environmentRepository,
 		Firestore:   firestoreRepository,
+		Storage:     storageRepository,
 	}
 
 	// Handler

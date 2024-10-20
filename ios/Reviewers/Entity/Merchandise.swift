@@ -8,6 +8,7 @@ struct Merchandise: Identifiable, Hashable {
     let code: String
     let codeType: CodeType
     let image: String
+    let imageURL: URL?
     let imageReferenceReviewId: String
     let createdAt: Date
     let updatedAt: Date
