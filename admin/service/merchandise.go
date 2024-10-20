@@ -19,8 +19,13 @@ func (m *Merchandise) MerchandiseGet(page int) ([]template_data.MerchandiseData,
 	return merchandiseDataList, nil
 }
 
-func (m *Merchandise) MerchandiseReviewGet(merchandiseCode string) (template_data.MerchandiseReview, error) {
-	reviews, err := m.Firestore.FetchMerchandiseReviews(merchandiseCode)
+func (m *Merchandise) MerchandiseReviewGet(merchandiseId string) (template_data.MerchandiseReview, error) {
+	merchandise, err := m.Firestore.FetchMerchandise(merchandiseId)
+	if err != nil {
+		return template_data.MerchandiseReview{}, err
+	}
+
+	reviews, err := m.Firestore.FetchMerchandiseReviews(merchandise.Code)
 	if err != nil {
 		return template_data.MerchandiseReview{}, err
 	}
@@ -31,8 +36,41 @@ func (m *Merchandise) MerchandiseReviewGet(merchandiseCode string) (template_dat
 	}
 	reviewDataList := convertReviews(reviews, imageBaseUrl)
 	return template_data.MerchandiseReview{
-		MerchandiseCode: merchandiseCode,
-		Reviews:         &reviewDataList,
-		ImageBaseUrl:    imageBaseUrl,
+		Merchandise: convertMerchandise(merchandise),
+		Reviews:     &reviewDataList,
 	}, nil
+}
+
+func (m *Merchandise) MerchandiseReviewImageRegisterGet(merchandiseId string, reviewId string, image string) (template_data.MerchandiseReviewImageRegister, error) {
+	merchandise, err := m.Firestore.FetchMerchandise(merchandiseId)
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegister{}, err
+	}
+
+	review, err := m.Firestore.FetchReview(reviewId)
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegister{}, err
+	}
+
+	imageBaseUrl, err := m.Environment.GetImageBaseUrlString()
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegister{}, err
+	}
+	return template_data.MerchandiseReviewImageRegister{
+		Merchandise: convertMerchandise(merchandise),
+		Review:      convertReview(review, imageBaseUrl),
+		Image: template_data.Image{
+			Name: image,
+			Url:  createReviewImageUrl(imageBaseUrl, review.Uid, image),
+		},
+	}, nil
+}
+
+func (m *Merchandise) MerchandiseReviewImageRegisterPost(merchandiseId string, reviewId string, image string) (template_data.MerchandiseReviewImageRegisterPost, error) {
+	err := m.Firestore.UpdateMerchandiseImage(merchandiseId, reviewId, image)
+	if err != nil {
+		return template_data.MerchandiseReviewImageRegisterPost{}, err
+	}
+
+	return template_data.MerchandiseReviewImageRegisterPost{}, nil
 }

@@ -9,7 +9,7 @@ struct FirestoreMerchandise: Hashable {
     static let codeField = "code"
     static let codeTypeField = "codeType"
     static let imageField = "image"
-    static let imageRefarenceReviewIdField = "imageRefarenceReviewId"
+    static let imageRefarenceReviewIdField = "imageReferenceReviewId"
     static let createdAtField = "createdAt"
     static let createdUid = "createdUid"
     static let updatedAtField = "updatedAt"

@@ -7,19 +7,17 @@
 <body>
 <p>Merchandise Review</p>
 
+{{ $merchandise := .Merchandise }}
 
-{{ $merchandiseCode := .MerchandiseCode }}
-{{ $imageBaseUrl := .ImageBaseUrl }}
 <hr>
 {{ range .Reviews }}
 <div>
     <a href="/review/{{ .Id }}/"><p>{{ .Id }}</p></a>
     {{ $reviewId := .Id }}
-    {{ $reviewUid := .Uid }}
     <p>{{ .Comment }}</p>
     {{ range .Images }}
-    <img src="{{ $imageBaseUrl }}user/{{ $reviewUid }}/{{ . }}" width="300" alt="">
-    <a href="/merchandise/{{ $merchandiseCode }}/review/{{ $reviewId }}/image/{{ . }}/register/">Register</a>
+    <img src="{{ .Url }}" width="300" alt="" />
+    <a href="/merchandise/{{ $merchandise.Id }}/review/{{ $reviewId }}/image/{{ .Name }}/register/">Register</a>
     {{ end }}
 </div>
 <hr>
