@@ -19,8 +19,8 @@ func (m *Merchandise) MerchandiseGet(page int) ([]template_data.MerchandiseData,
 	return merchandiseDataList, nil
 }
 
-func (m *Merchandise) MerchandiseReviewGet(merchandiseId string) (template_data.MerchandiseReview, error) {
-	reviews, err := m.Firestore.FetchMerchandiseReviews(merchandiseId)
+func (m *Merchandise) MerchandiseReviewGet(merchandiseCode string) (template_data.MerchandiseReview, error) {
+	reviews, err := m.Firestore.FetchMerchandiseReviews(merchandiseCode)
 	if err != nil {
 		return template_data.MerchandiseReview{}, err
 	}
@@ -31,6 +31,8 @@ func (m *Merchandise) MerchandiseReviewGet(merchandiseId string) (template_data.
 	}
 	reviewDataList := convertReviews(reviews, imageBaseUrl)
 	return template_data.MerchandiseReview{
-		Reviews: &reviewDataList,
+		MerchandiseCode: merchandiseCode,
+		Reviews:         &reviewDataList,
+		ImageBaseUrl:    imageBaseUrl,
 	}, nil
 }

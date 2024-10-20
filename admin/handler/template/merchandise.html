@@ -25,10 +25,11 @@
 <hr>
 
 {{ range .Merchandises }}
-<a href="/merchandise/{{ .Id  }}/review/">
+<a href="/merchandise/{{ .Code  }}/review/">
     <div>
         <p>{{ .CreatedAt }}</p>
         <p>{{ .Name }}</p>
+        <p>{{ .Code }}</p>
     </div>
 </a>
 <hr>

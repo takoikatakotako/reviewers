@@ -42,8 +42,8 @@ func (m *Merchandise) MerchandiseGet(c echo.Context) error {
 }
 
 func (m *Merchandise) MerchandiseReviewGet(c echo.Context) error {
-	merchandiseId := c.Param("id")
-	templateData, err := m.Service.MerchandiseReviewGet(merchandiseId)
+	merchandiseCode := c.Param("code")
+	templateData, err := m.Service.MerchandiseReviewGet(merchandiseCode)
 	if err != nil {
 		return err
 	}

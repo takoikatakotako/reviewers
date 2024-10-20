@@ -41,7 +41,7 @@ func (f *Firestore) FetchReviews(limit int, page int) ([]database.Review, error)
 	return reviews, nil
 }
 
-func (f *Firestore) FetchMerchandiseReviews(merchandiseId string) ([]database.Review, error) {
+func (f *Firestore) FetchMerchandiseReviews(merchandiseCode string) ([]database.Review, error) {
 	app, err := f.createApp()
 	if err != nil {
 		return []database.Review{}, err
@@ -52,7 +52,7 @@ func (f *Firestore) FetchMerchandiseReviews(merchandiseId string) ([]database.Re
 		return []database.Review{}, err
 	}
 	reviews := make([]database.Review, 0)
-	iter := client.Collection("reviews").Where("code", "==", merchandiseId).Limit(20).Documents(context.Background())
+	iter := client.Collection("reviews").Where("code", "==", merchandiseCode).Limit(20).Documents(context.Background())
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {

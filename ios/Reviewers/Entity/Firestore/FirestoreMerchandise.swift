@@ -24,9 +24,9 @@ struct FirestoreMerchandise: Hashable {
     let image: String
     let imageReferenceReviewId: String
     let createdAt: Date
-    let createdUid: String
+    let createdUid: String?
     let updatedAt: Date
-    let updatedUid: String
+    let updatedUid: String?
 
     init(document: DocumentSnapshot) throws {
         guard
@@ -41,9 +41,9 @@ struct FirestoreMerchandise: Hashable {
             let image = data[Self.imageField] as? String,
             let imageReferenceReviewId = data[Self.imageRefarenceReviewIdField] as? String,
             let createdAt = (data[Self.createdAtField] as? Timestamp)?.dateValue(),
-            let createdUid = data[Self.createdUid] as? String,
+            let createdUid = data[Self.createdUid] as? String?,
             let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue(),
-            let updatedUid = data[Self.updatedUid] as? String else {
+            let updatedUid = data[Self.updatedUid] as? String? else {
             throw ReviewersError.temp
         }
         self.id = document.documentID
@@ -69,9 +69,9 @@ struct FirestoreMerchandise: Hashable {
         codeType: FirestoreCodeType,
         image: String, imageReferenceReviewId: String,
         createdAt: Date,
-        createdUid: String,
+        createdUid: String?,
         updatedAt: Date,
-        updatedUid: String
+        updatedUid: String?
     ) {
         self.id = id
         self.enable = enable

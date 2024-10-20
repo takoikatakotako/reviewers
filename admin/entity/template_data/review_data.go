@@ -8,6 +8,7 @@ type ReviewData struct {
 	Comment   string
 	CreatedAt time.Time
 	Deleted   bool
+	Images    []string
 	ImageUrls []string
 	Rate      int
 	Uid       string

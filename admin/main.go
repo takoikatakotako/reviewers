@@ -57,7 +57,7 @@ func main() {
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
 	e.GET("/merchandise/", merchandise.MerchandiseGet)
-	e.GET("/merchandise/:id/review/", merchandise.MerchandiseReviewGet)
+	e.GET("/merchandise/:code/review/", merchandise.MerchandiseReviewGet)
 
 	e.GET("/report/", report.ReportGet)
 	e.GET("/review/", review.ReviewGet)

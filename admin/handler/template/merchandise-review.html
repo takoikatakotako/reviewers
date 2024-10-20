@@ -7,20 +7,23 @@
 <body>
 <p>Merchandise Review</p>
 
+
+{{ $merchandiseCode := .MerchandiseCode }}
+{{ $imageBaseUrl := .ImageBaseUrl }}
 <hr>
 {{ range .Reviews }}
-<a href="/review/{{ .Id }}/"><p>{{ .Id }}</p>
-    <div>
-        <p>{{ .Comment }}</p>
-        {{ range .ImageUrls }}
-        <img src="{{ . }}" width="300">
-        <!--        <img src="https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png">-->
-        {{ end }}
-    </div>
-</a>
+<div>
+    <a href="/review/{{ .Id }}/"><p>{{ .Id }}</p></a>
+    {{ $reviewId := .Id }}
+    {{ $reviewUid := .Uid }}
+    <p>{{ .Comment }}</p>
+    {{ range .Images }}
+    <img src="{{ $imageBaseUrl }}user/{{ $reviewUid }}/{{ . }}" width="300" alt="">
+    <a href="/merchandise/{{ $merchandiseCode }}/review/{{ $reviewId }}/image/{{ . }}/register/">Register</a>
+    {{ end }}
+</div>
 <hr>
 {{ end }}
-
 
 
 </body>
