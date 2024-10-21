@@ -15,10 +15,14 @@ func convertReviews(databaseReviews []database.Review, imageBaseUrl string) []te
 }
 
 func convertReview(databaseReview database.Review, imageBaseUrl string) (templateReview template_data.ReviewData) {
-	var imageUrls = make([]string, 0)
-	for _, v := range databaseReview.Images {
-		imageUrl := imageBaseUrl + "user/" + databaseReview.Uid + "/" + v
-		imageUrls = append(imageUrls, imageUrl)
+	var images = make([]template_data.Image, 0)
+	for _, name := range databaseReview.Images {
+		imageUrl := createReviewImageUrl(imageBaseUrl, databaseReview.Uid, name)
+		image := template_data.Image{
+			Name: name,
+			Url:  imageUrl,
+		}
+		images = append(images, image)
 	}
 
 	return template_data.ReviewData{
@@ -27,7 +31,7 @@ func convertReview(databaseReview database.Review, imageBaseUrl string) (templat
 		Comment:   databaseReview.Comment,
 		CreatedAt: databaseReview.CreatedAt,
 		Deleted:   databaseReview.Deleted,
-		ImageUrls: imageUrls,
+		Images:    images,
 		Rate:      databaseReview.Rate,
 		Uid:       databaseReview.Uid,
 		UpdatedAt: databaseReview.UpdatedAt,
@@ -43,13 +47,19 @@ func convertMerchandises(databaseMerchandises []database.Merchandise) []template
 	return merchandiseDataList
 }
 
-func convertMerchandise(databaseMerchandise database.Merchandise) (templateReview template_data.MerchandiseData) {
+func convertMerchandise(databaseMerchandise database.Merchandise) (templateMerchandise template_data.MerchandiseData) {
 	return template_data.MerchandiseData{
 		Id:        databaseMerchandise.Id,
+		Code:      databaseMerchandise.Code,
+		CodeType:  databaseMerchandise.CodeType,
 		CreatedAt: databaseMerchandise.CreatedAt,
 		Enable:    databaseMerchandise.Enable,
 		Name:      databaseMerchandise.Name,
 		Status:    databaseMerchandise.Status,
 		UpdatedAt: databaseMerchandise.UpdatedAt,
 	}
+}
+
+func createReviewImageUrl(imageBaseUrl string, uid string, image string) string {
+	return imageBaseUrl + "user/" + uid + "/" + image
 }

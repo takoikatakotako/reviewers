@@ -65,7 +65,7 @@ Reviewsのデータベースには Firestore を利用しています。
 ### image: string
 画像のファイル名。無い場合は空文字となる。
 
-### imageRefarenceReviewId: string
+### imageReferenceReviewId: string
 画像の参照先のレビューのID。無い場合は空文字。
 
 ### name: string

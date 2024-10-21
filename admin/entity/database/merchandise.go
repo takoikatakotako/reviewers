@@ -4,6 +4,8 @@ import "time"
 
 type Merchandise struct {
 	Id        string
+	Code      string    `firestore:"code"`
+	CodeType  string    `firestore:"codeType"`
 	CreatedAt time.Time `firestore:"createdAt,serverTimestamp"`
 	Enable    bool      `firestore:"enable"`
 	Name      string    `firestore:"name"`

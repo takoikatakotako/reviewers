@@ -31,7 +31,8 @@ class MyReviewListViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
-                try await updateReviews()
+                let uid = try authUseCase.getUserId()
+                try await updateReviews(uid: uid)
             } catch {
                 print(error)
             }
@@ -79,8 +80,8 @@ class MyReviewListViewState: ObservableObject {
     }
 
     @MainActor
-    private func updateReviews() async throws {
-        let newReviews: [Review] = try await reviewUseCase.fetchNewReviews()
+    private func updateReviews(uid: String) async throws {
+        let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
         let margedReviews: [Review] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
         let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })

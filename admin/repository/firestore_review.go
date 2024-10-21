@@ -7,6 +7,28 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+func (f *Firestore) FetchReview(reviewId string) (database.Review, error) {
+	app, err := f.createApp()
+	if err != nil {
+		return database.Review{}, err
+	}
+
+	client, err := app.Firestore(context.Background())
+	if err != nil {
+		return database.Review{}, err
+	}
+
+	documentRef := client.Collection("reviews").Doc(reviewId)
+	doc, err := documentRef.Get(context.Background())
+	var review = database.Review{}
+	err = doc.DataTo(&review)
+	if err != nil {
+		return database.Review{}, err
+	}
+	review.Id = doc.Ref.ID
+	return review, nil
+}
+
 func (f *Firestore) FetchReviews(limit int, page int) ([]database.Review, error) {
 	app, err := f.createApp()
 	if err != nil {
@@ -41,7 +63,7 @@ func (f *Firestore) FetchReviews(limit int, page int) ([]database.Review, error)
 	return reviews, nil
 }
 
-func (f *Firestore) FetchMerchandiseReviews(merchandiseId string) ([]database.Review, error) {
+func (f *Firestore) FetchMerchandiseReviews(merchandiseCode string) ([]database.Review, error) {
 	app, err := f.createApp()
 	if err != nil {
 		return []database.Review{}, err
@@ -52,7 +74,7 @@ func (f *Firestore) FetchMerchandiseReviews(merchandiseId string) ([]database.Re
 		return []database.Review{}, err
 	}
 	reviews := make([]database.Review, 0)
-	iter := client.Collection("reviews").Where("code", "==", merchandiseId).Limit(20).Documents(context.Background())
+	iter := client.Collection("reviews").Where("code", "==", merchandiseCode).Limit(20).Documents(context.Background())
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {

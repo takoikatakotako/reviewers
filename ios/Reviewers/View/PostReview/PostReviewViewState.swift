@@ -123,7 +123,7 @@ class PostReviewViewState: ObservableObject {
         guard let codeType = codeType else {
             return
         }
-        
+
         Task { @MainActor in
             do {
                 let uid = try authUseCase.getUserId()

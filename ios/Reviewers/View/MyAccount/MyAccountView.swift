@@ -17,12 +17,14 @@ struct MyAccountView: View {
                     }
                 }
 
-                Section("レビュー") {
-                    NavigationLink {
-                        MyReviewListView(viewState: MyReviewListViewState())
-                    } label: {
-                        Text("マイレビュー")
-                            .foregroundStyle(Color(.appMainText))
+                if !viewState.isAnonymousUser {
+                    Section("レビュー") {
+                        NavigationLink {
+                            MyReviewListView(viewState: MyReviewListViewState())
+                        } label: {
+                            Text("マイレビュー")
+                                .foregroundStyle(Color(.appMainText))
+                        }
                     }
                 }
 

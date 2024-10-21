@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merchandise Review Image Register</title>
+</head>
+<body>
+<p>Merchandise Review Image Register</p>
+
+<div>
+    <p>{{ .Merchandise.Name }}</p>
+    <p>{{ .Merchandise.Code }}</p>
+
+    <img src="{{ .Image.Url}}" width="300" alt=""/>
+
+    <form method="POST" action="/merchandise/{{ .Merchandise.Id }}/review/{{ .Review.Id }}/image/{{ .Image.Name }}/register/">
+        <input type="submit" name="submit" value="決定">
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package template_data
 
 type MerchandiseReview struct {
-	Reviews *[]ReviewData
+	Merchandise MerchandiseData
+	Reviews     *[]ReviewData
 }

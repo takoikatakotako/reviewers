@@ -24,6 +24,9 @@ func main() {
 	firestoreRepository := repository.Firestore{
 		Credential: credential,
 	}
+	storageRepository := repository.FirebaseStorage{
+		Credential: credential,
+	}
 
 	// Service
 	reviewService := service.Review{
@@ -33,6 +36,7 @@ func main() {
 	merchandiseService := service.Merchandise{
 		Environment: environmentRepository,
 		Firestore:   firestoreRepository,
+		Storage:     storageRepository,
 	}
 
 	// Handler
@@ -57,7 +61,9 @@ func main() {
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
 	e.GET("/merchandise/", merchandise.MerchandiseGet)
-	e.GET("/merchandise/:id/review/", merchandise.MerchandiseReviewGet)
+	e.GET("/merchandise/:merchandiseId/review/", merchandise.MerchandiseReviewGet)
+	e.GET("/merchandise/:merchandiseId/review/:reviewId/image/:image/register/", merchandise.MerchandiseReviewImageRegisterGet)
+	e.POST("/merchandise/:merchandiseId/review/:reviewId/image/:image/register/", merchandise.MerchandiseReviewImageRegisterPost)
 
 	e.GET("/report/", report.ReportGet)
 	e.GET("/review/", review.ReviewGet)
