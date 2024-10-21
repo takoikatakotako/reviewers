@@ -54,11 +54,11 @@ struct ReviewSearchRow: View {
             if let imageURL = merchandise.imageURL {
                 ReviewListRowImage(url: imageURL)
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 100)
+                    .frame(height: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .clipped()
             }
-            
+
             CommonText(text: "JANコード: \(merchandise.code)", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)
                 .foregroundStyle(.appMainText)
         }

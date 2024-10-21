@@ -269,7 +269,7 @@ struct FirestoreRepository {
                 FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
                 FirestoreMerchandise.createdUid: uid,
                 FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp(),
-                FirestoreMerchandise.updatedUid: uid,
+                FirestoreMerchandise.updatedUid: uid
             ]
         )
     }

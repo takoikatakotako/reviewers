@@ -45,7 +45,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
                 }
 
                 let uid = try authUseCase.getUserId()
-                
+
                 // 登録する
                 try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: name)
                 showingSuccessAlert = true

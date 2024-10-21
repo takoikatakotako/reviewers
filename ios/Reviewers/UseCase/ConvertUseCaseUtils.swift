@@ -17,7 +17,7 @@ struct ConvertUseCaseUtils {
         case .ean8:
             codeType = .ean8
         }
-        
+
         let imageURL: URL?
         if firestoreMerchandise.image.isNotEmpty {
             imageURL = URL(string: baseImageUrlString + "image/merchandise/" + firestoreMerchandise.image)

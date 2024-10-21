@@ -63,7 +63,7 @@ struct MyReviewListView: View {
             }
 
             ToolbarItem(placement: .principal) {
-                Text("設定")
+                Text("マイレビュー")
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
