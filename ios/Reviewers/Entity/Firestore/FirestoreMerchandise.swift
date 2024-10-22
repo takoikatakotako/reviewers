@@ -9,7 +9,7 @@ struct FirestoreMerchandise: Hashable {
     static let codeField = "code"
     static let codeTypeField = "codeType"
     static let imageField = "image"
-    static let imageRefarenceReviewIdField = "imageReferenceReviewId"
+    static let imageRefarenceReviewIdField = "imageRefarenceReviewId"
     static let createdAtField = "createdAt"
     static let createdUid = "createdUid"
     static let updatedAtField = "updatedAt"
@@ -44,7 +44,7 @@ struct FirestoreMerchandise: Hashable {
             let createdUid = data[Self.createdUid] as? String?,
             let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue(),
             let updatedUid = data[Self.updatedUid] as? String? else {
-            throw ReviewersError.temp
+            throw ReviewersError.failedToDecode(message: document.documentID)
         }
         self.id = document.documentID
         self.enable = enable
