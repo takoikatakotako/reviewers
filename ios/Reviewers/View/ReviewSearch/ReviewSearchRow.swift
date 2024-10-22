@@ -11,41 +11,41 @@ struct ReviewSearchRow: View {
                     .foregroundStyle(.appMainText)
 
                 Spacer()
-
-                CommonText(text: "4.2", font: .mPlus2Regular(size: 14), lineHeight: 18)
-                    .foregroundStyle(.appMainText)
-
-                HStack(spacing: 4) {
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundColor(.appMain)
-
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundColor(.appMain)
-
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundColor(.appMain)
-
-                    Image(systemName: "star.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundColor(.appMain)
-
-                    Image(systemName: "star")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundColor(.appMain)
-                }
+//
+//                CommonText(text: "4.2", font: .mPlus2Regular(size: 14), lineHeight: 18)
+//                    .foregroundStyle(.appMainText)
+//
+//                HStack(spacing: 4) {
+//                    Image(systemName: "star.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 18, height: 18)
+//                        .foregroundColor(.appMain)
+//
+//                    Image(systemName: "star.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 18, height: 18)
+//                        .foregroundColor(.appMain)
+//
+//                    Image(systemName: "star.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 18, height: 18)
+//                        .foregroundColor(.appMain)
+//
+//                    Image(systemName: "star.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 18, height: 18)
+//                        .foregroundColor(.appMain)
+//
+//                    Image(systemName: "star")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 18, height: 18)
+//                        .foregroundColor(.appMain)
+//                }
             }
 
 //            CommonText(text: "ブランド: 江崎グリコ", font: .mPlus2Regular(size: 14), lineHeight: 24, alignment: .leading)

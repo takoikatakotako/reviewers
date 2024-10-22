@@ -7,6 +7,7 @@ enum ReviewersError: Error {
     case encode
     case temp
     case temp2(xxx: String)
+    case failedToDecode(message: String)
 }
 
 extension ReviewersError: LocalizedError {
@@ -17,7 +18,7 @@ extension ReviewersError: LocalizedError {
         case .serverError:
             return "サーバーエラー。サーバーからのデータ取得に失敗しました。"
         case .decode:
-            return "クライアントエラー。データのデコードに失敗しました。"
+            return "failed to decode"
         case .encode:
             return "クライアントエラー。データのエンコードに失敗しました。"
         case .temp:
@@ -25,6 +26,8 @@ extension ReviewersError: LocalizedError {
 
         case .temp2(let xxx):
             return "\(xxx)"
+        case .failedToDecode(message: let message):
+            return "Failed to Decode: \(message)"
         }
     }
 }

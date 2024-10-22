@@ -25,7 +25,7 @@ class ReviewSearchViewState: ObservableObject {
                 self.merchandise = merchandises
             } catch {
                 // 商品が見つかりませんでした
-                print("error")
+                print(error)
             }
         }
     }
