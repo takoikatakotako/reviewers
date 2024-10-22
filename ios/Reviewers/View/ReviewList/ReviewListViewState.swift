@@ -2,6 +2,7 @@ import Foundation
 
 class ReviewListViewState: ObservableObject {
     @Published var reviews: [Review] = []
+    @Published var uid: String = ""
 
     // Alert
     @Published var showingReviewAlert = false
@@ -24,6 +25,7 @@ class ReviewListViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
+                uid = try authUseCase.getUserId()
                 try await updateReviews()
             } catch {
                 print(error)

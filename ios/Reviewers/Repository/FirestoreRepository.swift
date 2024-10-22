@@ -240,7 +240,7 @@ struct FirestoreRepository {
         }
         return firestoreMerchandises
     }
-    
+
     func fetchMerchandise(id: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()
         let querySnapshot = try? await db

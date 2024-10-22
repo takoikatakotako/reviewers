@@ -2,9 +2,11 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct CommonSimpleReviewRow: View {
+    let uid: String
     let review: Review
     let imageTapAction: (_ url: URL?) -> Void
-    let menuTapAction: (_ review: Review) -> Void
+    let deleteReviewAction: (_ review: Review) -> Void
+    let reportReviewAction: (_ review: Review) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -49,15 +51,45 @@ struct CommonSimpleReviewRow: View {
 
                 HStack(spacing: 0) {
                     Spacer()
-                    Button {
-                        menuTapAction(review)
+
+                    Menu {
+                        if uid == review.uid {
+                            Button(role: .destructive) {
+                                deleteReviewAction(review)
+                            } label: {
+                                HStack {
+                                    Text("投稿を削除")
+                                    Spacer()
+                                    Image(systemName: "trash")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                }
+                            }
+                        }
+                        Button(role: .none) {
+                            reportReviewAction(review)
+                        } label: {
+                            HStack {
+                                Text("投稿を報告")
+                                    .foregroundStyle(Color(.appMainText))
+
+                                Spacer()
+                                Image(systemName: "flag")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                            }
+                        }
                     } label: {
                         Image(systemName: "ellipsis")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .foregroundStyle(Color(.appSubText))
+
                     }
+
                 }
             }
 
@@ -191,25 +223,25 @@ struct CommonSimpleReviewRow: View {
                 .padding(.top, 12)
             }
 
-//            if let merchandise = review.merchandise {
-//                CommonText(
-//                    text: "商品名: \(merchandise.name)",
-//                    font: .mPlus2Regular(size: 14),
-//                    lineHeight: 20,
-//                    alignment: .leading
-//                )
-//                .foregroundStyle(Color(.appMainText))
-//                .padding(.top, 12)
-//            } else {
-//                CommonText(
-//                    text: "JANコード: \(review.code)",
-//                    font: .mPlus2Regular(size: 14),
-//                    lineHeight: 20,
-//                    alignment: .leading
-//                )
-//                .foregroundStyle(Color(.appMainText))
-//                .padding(.top, 12)
-//            }
+            //            if let merchandise = review.merchandise {
+            //                CommonText(
+            //                    text: "商品名: \(merchandise.name)",
+            //                    font: .mPlus2Regular(size: 14),
+            //                    lineHeight: 20,
+            //                    alignment: .leading
+            //                )
+            //                .foregroundStyle(Color(.appMainText))
+            //                .padding(.top, 12)
+            //            } else {
+            //                CommonText(
+            //                    text: "JANコード: \(review.code)",
+            //                    font: .mPlus2Regular(size: 14),
+            //                    lineHeight: 20,
+            //                    alignment: .leading
+            //                )
+            //                .foregroundStyle(Color(.appMainText))
+            //                .padding(.top, 12)
+            //            }
         }
         .padding(.top, 12)
         .padding(.leading, 12)

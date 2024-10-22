@@ -11,12 +11,18 @@ struct ReviewListView: View {
                         Button {
                             viewState.reviewTapped(review: review)
                         } label: {
-                            CommonSimpleReviewRow(review: review,
-                                                  imageTapAction: { imageUrl in
-                                viewState.imageTapped(imageURL: imageUrl)
-                            }, menuTapAction: { review in
-                                viewState.menuTapped(review: review)
-                            })
+                            CommonSimpleReviewRow(
+                                uid: viewState.uid,
+                                review: review,
+                                imageTapAction: { imageUrl in
+                                    viewState.imageTapped(imageURL: imageUrl)
+                                },
+                                deleteReviewAction: { _ in
+
+                                },
+                                reportReviewAction: { _ in
+
+                                })
                         }
                         .listRowInsets(EdgeInsets())
                     }
@@ -59,10 +65,10 @@ struct ReviewListView: View {
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
                 case .account(profile: let profile):
-                     AccountView(viewState: AccountViewState(profile: profile))
+                    AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
-                         .toolbar(.hidden, for: .tabBar)
+                        .toolbar(.hidden, for: .tabBar)
                 }
             }
             .fullScreenCover(item: $viewState.fullScreenCover, onDismiss: {
