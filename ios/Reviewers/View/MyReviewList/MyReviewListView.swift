@@ -12,12 +12,19 @@ struct MyReviewListView: View {
                 Button {
                     viewState.reviewTapped(review: review)
                 } label: {
-                    CommonSimpleReviewRow(review: review,
-                                          imageTapAction: { imageUrl in
-                        viewState.imageTapped(imageURL: imageUrl)
-                    }, menuTapAction: { review in
-                        viewState.menuTapped(review: review)
-                    })
+                    CommonSimpleReviewRow(
+                        uid: viewState.uid,
+                        review: review,
+                        imageTapAction: { imageUrl in
+                            viewState.imageTapped(imageURL: imageUrl)
+                        },
+                        deleteReviewAction: { _ in
+
+                        },
+                        reportReviewAction: { _ in
+
+                        }
+                    )
                 }
                 .listRowInsets(EdgeInsets())
                 .listStyle(.grouped)

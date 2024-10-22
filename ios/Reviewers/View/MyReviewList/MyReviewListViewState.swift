@@ -3,6 +3,7 @@ import FirebaseAuth
 
 class MyReviewListViewState: ObservableObject {
     @Published var reviews: [Review] = []
+    @Published var uid: String = ""
 
     //    @Published var uid: String = ""
     //    @Published var profile: Profile?
@@ -31,7 +32,7 @@ class MyReviewListViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
-                let uid = try authUseCase.getUserId()
+                uid = try authUseCase.getUserId()
                 try await updateReviews(uid: uid)
             } catch {
                 print(error)
