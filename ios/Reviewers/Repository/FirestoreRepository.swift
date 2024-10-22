@@ -240,18 +240,32 @@ struct FirestoreRepository {
         }
         return firestoreMerchandises
     }
+    
+    func fetchMerchandise(id: String) async throws -> FirestoreMerchandise {
+        let db = Firestore.firestore()
+        let querySnapshot = try? await db
+            .collection(FirestoreMerchandise.collectionName)
+            .document(id)
+            .getDocument()
+        guard let querySnapshot = querySnapshot else {
+            throw ReviewersError.temp
+        }
+
+        return try FirestoreMerchandise(document: querySnapshot)
+    }
 
     func fetchMerchandise(code: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()
         let querySnapshot = try? await db
             .collection(FirestoreMerchandise.collectionName)
-            .document(code)
-            .getDocument()
-
-        guard let querySnapshot = querySnapshot else {
+            .whereField(FirestoreMerchandise.codeField, isEqualTo: code)
+            .limit(to: 1)
+            .getDocuments()
+        guard let querySnapshot = querySnapshot, let document = querySnapshot.documents.first else {
             throw ReviewersError.temp
         }
-        return try FirestoreMerchandise(document: querySnapshot)
+
+        return try FirestoreMerchandise(document: document)
     }
 
     func createMerchandise(uid: String, code: String, codeType: CodeType, name: String) async throws {
