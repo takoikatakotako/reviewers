@@ -22,12 +22,6 @@ class MyReviewListViewState: ObservableObject {
     private let firestoreRepository = FirestoreRepository()
     private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
-    //    var profileImageUrl: URL? {
-    //        guard let uid = try? authUseCase.getUserId() else {
-    //            return nil
-    //        }
-    //        return URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png")
-    //    }
 
     func onAppear() {
         Task { @MainActor in
@@ -37,6 +31,17 @@ class MyReviewListViewState: ObservableObject {
             } catch {
                 print(error)
             }
+        }
+    }
+
+    func refresh() async {
+        do {
+//            uid = try authUseCase.getUserId()
+//            try await updateReviews(uid: uid)
+            let duration = UInt64(3 * 1_000_000_000)
+            try await Task.sleep(nanoseconds: duration)
+        } catch {
+
         }
     }
 

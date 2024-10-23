@@ -31,7 +31,7 @@ struct MyReviewListView: View {
                 .scrollIndicators(.hidden)
             }
             .refreshable {
-                // await viewState.pullToRefresh()
+                await viewState.refresh()
             }
             .listStyle(.inset)
 

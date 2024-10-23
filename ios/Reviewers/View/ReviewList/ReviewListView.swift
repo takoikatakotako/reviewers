@@ -7,27 +7,43 @@ struct ReviewListView: View {
         NavigationStack(path: $viewState.path) {
             ZStack(alignment: .bottomTrailing) {
                 ZStack {
-                    List(viewState.reviews) {review in
-                        Button {
-                            viewState.reviewTapped(review: review)
-                        } label: {
-                            CommonSimpleReviewRow(
-                                uid: viewState.uid,
-                                review: review,
-                                imageTapAction: { imageUrl in
-                                    viewState.imageTapped(imageURL: imageUrl)
-                                },
-                                deleteReviewAction: { _ in
+                    List {
+                        ForEach(viewState.reviews) { review in
+                            Button {
+                                viewState.reviewTapped(review: review)
+                            } label: {
+                                CommonSimpleReviewRow(
+                                    uid: viewState.uid,
+                                    review: review,
+                                    imageTapAction: { imageUrl in
+                                        viewState.imageTapped(imageURL: imageUrl)
+                                    },
+                                    deleteReviewAction: { review in
+                                        viewState.deleteReviewTapped(review: review)
+                                    },
+                                    reportReviewAction: { _ in
 
-                                },
-                                reportReviewAction: { _ in
-
-                                })
+                                    })
+                            }
+                            .onAppear {
+                                if viewState.reviews.last == review {
+                                    viewState.xxxx()
+                                }
+                            }
+                            .listRowInsets(EdgeInsets())
                         }
-                        .listRowInsets(EdgeInsets())
+
+                        HStack {
+                            if viewState.isFetching {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
+                        }
+
                     }
                     .refreshable {
-                        await viewState.pullToRefresh()
+                        await viewState.refresh()
                     }
                     .listStyle(.inset)
 
@@ -91,25 +107,23 @@ struct ReviewListView: View {
             }, message: {
                 Text("レビューを投稿するにはログイン、アカウント作成が必要です。")
             })
-            .alert("", isPresented: $viewState.showingReviewAlert, presenting: viewState.showingReviewAlertPresenting, actions: { presenting in
-                if presenting.isMyReview {
-                    Button("投稿を削除", role: .destructive) {
-                        viewState.deleteReviewTapped(review: presenting.review)
-                    }
-                }
-                Button("投稿を報告") {}
-                Button("とじる", role: .cancel) {}
-            }, message: { presenting in
-                Text("\(presenting.review.comment)")
-            })
-            .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { _ in
+            .alert("", isPresented: $viewState.showingReviewDeleteConfirmAlert, presenting: viewState.showingReviewDeleteConfirmAlertPresenting, actions: { review in
                 Button("投稿を削除", role: .destructive) {
-                    // viewState.deleteReview(review: review)
+                    viewState.deleteReview(review: review)
                 }
                 Button("キャンセル", role: .cancel) {}
             }, message: { review in
                 Text("投稿「\(review.comment)」を削除してもよろしいですか？")
             })
+            .alert(
+                "",
+                isPresented: $viewState.showingErrorAlert,
+                presenting: viewState.showingErrorAlertPresenting,
+                actions: { _ in
+                    Button("とじる", role: .none) {}
+                }, message: { message in
+                    Text(message)
+                })
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

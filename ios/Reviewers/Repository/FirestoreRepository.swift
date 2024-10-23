@@ -34,12 +34,13 @@ struct FirestoreRepository {
             )
     }
 
-    func fetchReviews(limit: Int = 20) async throws -> [FirestoreReview] {
+    func fetchReviews(offsetDate: Date = Date.now, limit: Int = 20) async throws -> [FirestoreReview] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
             .collection(FirestoreReview.collectionName)
             .whereField(FirestoreReview.deletedField, isEqualTo: false)
-            .order(by: FirestoreReview.createdAtField)
+            .whereField(FirestoreReview.createdAtField, isLessThan: offsetDate)
+            .order(by: FirestoreReview.createdAtField, descending: true)
             .limit(to: limit)
             .getDocuments()
 

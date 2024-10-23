@@ -3,8 +3,8 @@ import Foundation
 struct ReviewUseCase {
     private let firestoreRepository = FirestoreRepository()
 
-    func fetchNewReviews() async throws -> [Review] {
-        let firestoreReviews = try await firestoreRepository.fetchReviews(limit: 20)
+    func fetchNewReviews(offsetDate: Date = Date.now, limit: Int = 10) async throws -> [Review] {
+        let firestoreReviews = try await firestoreRepository.fetchReviews(offsetDate: offsetDate, limit: limit)
         return firestoreReviews.map { firestoreReview in
             let imageUrls = firestoreReview.images.compactMap { URL(string: "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(firestoreReview.uid)/\($0)") }
             return Review(
