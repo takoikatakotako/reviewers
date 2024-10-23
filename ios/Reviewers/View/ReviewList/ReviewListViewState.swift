@@ -3,13 +3,14 @@ import Foundation
 class ReviewListViewState: ObservableObject {
     @Published var reviews: [Review] = []
     @Published var uid: String = ""
+    @Published var isFetching = false
 
     // Alert
-    @Published var showingReviewAlert = false
-    @Published var showingReviewAlertPresenting: (review: Review, isMyReview: Bool)?
     @Published var showingReviewDeleteConfirmAlert = false
     @Published var showingReviewDeleteConfirmAlertPresenting: Review?
     @Published var showingSignInAlert = false
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting: String?
 
     // FullScreenCover
     @Published var fullScreenCover: ReviewListFullScreenCover?
@@ -22,6 +23,7 @@ class ReviewListViewState: ObservableObject {
     private let reviewUseCase = ReviewUseCase()
     private let authUseCase = AuthUseCase()
 
+    // MARK: - Action
     func onAppear() {
         Task { @MainActor in
             do {
@@ -29,6 +31,39 @@ class ReviewListViewState: ObservableObject {
                 try await updateReviews()
             } catch {
                 print(error)
+            }
+        }
+    }
+
+    @MainActor
+    func refresh() async {
+        do {
+            let duration = UInt64(3 * 1_000_000_000)
+            try await Task.sleep(nanoseconds: duration)
+            try await updateReviews()
+        } catch {
+            showingErrorAlertPresenting = "エラーメッセージ"
+            showingErrorAlert = true
+        }
+    }
+
+    @MainActor
+    func xxxx() {
+        Task { @MainActor in
+            do {
+                isFetching = true
+                let duration = UInt64(3 * 1_000_000_000)
+                try await Task.sleep(nanoseconds: duration)
+                guard let xx = reviews.last else {
+                    throw ReviewersError.clientError
+                }
+
+                try await updateReviews(offsetDate: xx.createdAt)
+                isFetching = false
+            } catch {
+                isFetching = false
+                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlert = true
             }
         }
     }
@@ -96,17 +131,7 @@ class ReviewListViewState: ObservableObject {
         fullScreenCover = .signUp
     }
 
-    func menuTapped(review: Review) {
-        guard let user = authUseCase.getUser() else {
-            // TODO: 未ログイン時の処理
-            return
-        }
-        let myUid = authUseCase.getUser()?.uid ?? ""
-
-        showingReviewAlertPresenting = (review: review, review.uid == myUid)
-        showingReviewAlert = true
-    }
-
+    // MARK: - DeleteReview
     func deleteReviewTapped(review: Review) {
         showingReviewDeleteConfirmAlertPresenting = review
         showingReviewDeleteConfirmAlert = true
@@ -125,19 +150,9 @@ class ReviewListViewState: ObservableObject {
         }
     }
 
-    func pullToRefresh() async {
-        do {
-            try await updateReviews()
-            print("finish1")
-        } catch {
-            print(error)
-        }
-        print("finish")
-    }
-
     @MainActor
-    private func updateReviews() async throws {
-        let newReviews: [Review] = try await reviewUseCase.fetchNewReviews()
+    private func updateReviews(offsetDate: Date = Date.now, limit: Int = 3) async throws {
+        let newReviews: [Review] = try await reviewUseCase.fetchNewReviews(offsetDate: offsetDate, limit: limit)
         let margedReviews: [Review] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
         let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
