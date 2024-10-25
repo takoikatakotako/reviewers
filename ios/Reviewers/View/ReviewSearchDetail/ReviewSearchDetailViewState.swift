@@ -1,53 +1,32 @@
 import SwiftUI
 
 class ReviewSearchDetailViewState: ObservableObject {
+    @Published var uid: String = ""
     @Published var code: String?
     @Published var merchandise: Merchandise
-    @Published var reviews: [ReviewProfile] = []
+    @Published var reviews: [Review] = []
     @Published var loading: Bool = false
 
     private let profileUseCase = ProfileUseCase()
-    private let reviewUseCase = ReviewProfileUseCase()
+    private let reviewUseCase = ReviewUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
+
+    // Alert
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting = ""
 
     init(merchandise: Merchandise) {
         self.merchandise = merchandise
     }
 
-    func xxxxx() {
-//        Task { @MainActor in
-//            do {
-//                self.reviews = try await reviewUseCase.fetchNewReviews()
-//            } catch {
-//                print(error)
-//            }
-////            loading = false
-//        }
-    }
-
-    func codeSccaned(code: String) {
-        self.loading = true
-        self.code = code
-
+    func onAppear() {
         Task { @MainActor in
             do {
-                // 商品を取得
-                let merchandise = try await merchandiseUseCase.fetchMerchandise(code: code)
-                let reviews = try await reviewUseCase.fetchMerchandiseReviews(merchandise: merchandise)
-                self.merchandise = merchandise
+                self.reviews = try await reviewUseCase.fetchMerchandiseReviews(merchandiseCode: merchandise.code)
             } catch {
-                // 商品が見つかりませんでした
-                print("error")
+                self.showingErrorAlertPresenting = ""
+                self.showingErrorAlert = true
             }
         }
-    }
-
-    @MainActor
-    private func updateUserReviews(uid: String) async throws {
-        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
-        let margedReviews: [ReviewProfile] = newReviews + self.reviews
-        let uniqueReviews = Set(margedReviews)
-        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
-        self.reviews = sortedReviews
     }
 }

@@ -27,20 +27,21 @@ struct ReviewListView: View {
                             }
                             .onAppear {
                                 if viewState.reviews.last == review {
-                                    viewState.xxxx()
+                                    viewState.fetchNewReview()
                                 }
                             }
                             .listRowInsets(EdgeInsets())
                         }
 
-                        HStack {
-                            if viewState.isFetching {
-                                Spacer()
-                                ProgressView()
-                                Spacer()
+                        if viewState.reviews.isNotEmpty {
+                            HStack {
+                                if viewState.isFetching {
+                                    Spacer()
+                                    ProgressView()
+                                    Spacer()
+                                }
                             }
                         }
-
                     }
                     .refreshable {
                         await viewState.refresh()
@@ -123,7 +124,8 @@ struct ReviewListView: View {
                     Button("とじる", role: .none) {}
                 }, message: { message in
                     Text(message)
-                })
+                }
+            )
             .scrollIndicators(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

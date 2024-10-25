@@ -212,53 +212,53 @@ struct ReviewDetailView: View {
                         .padding(.top, 12)
                     }
 
-                    // アフリアエイト
-                    HStack(spacing: 8) {
-                        // Amazon
-                        Button {
-
-                        } label: {
-                            VStack(spacing: 0) {
-                                CommonText(text: "Amazon", font: .mPlus2Medium(size: 18), lineHeight: 20)
-                                    .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
-                                    .foregroundStyle(Color(.appSubText))
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 60)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(lineWidth: 1)
-                                    .fill(Color(.appBackground))
-                            }
-                            .mask {
-                                RoundedRectangle(cornerRadius: 8)
-                            }
-                        }
-
-                        // 楽天市場
-                        Button {
-
-                        } label: {
-                            VStack(spacing: 0) {
-                                CommonText(text: "楽天市場", font: .mPlus2Medium(size: 18), lineHeight: 20)
-                                    .foregroundStyle(Color(.appMainText))
-                                CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
-                                    .foregroundStyle(Color(.appSubText))
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 60)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(lineWidth: 1)
-                                    .fill(Color(.appBackground))
-                            }
-                            .mask {
-                                RoundedRectangle(cornerRadius: 8)
-                            }
-                        }
-                    }
-                    .padding(.top, 12)
+//                    // アフリアエイト
+//                    HStack(spacing: 8) {
+//                        // Amazon
+//                        Button {
+//
+//                        } label: {
+//                            VStack(spacing: 0) {
+//                                CommonText(text: "Amazon", font: .mPlus2Medium(size: 18), lineHeight: 20)
+//                                    .foregroundStyle(Color(.appMainText))
+//                                CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
+//                                    .foregroundStyle(Color(.appSubText))
+//                            }
+//                            .frame(minWidth: 0, maxWidth: .infinity)
+//                            .frame(height: 60)
+//                            .overlay {
+//                                RoundedRectangle(cornerRadius: 8)
+//                                    .stroke(lineWidth: 1)
+//                                    .fill(Color(.appBackground))
+//                            }
+//                            .mask {
+//                                RoundedRectangle(cornerRadius: 8)
+//                            }
+//                        }
+//
+//                        // 楽天市場
+//                        Button {
+//
+//                        } label: {
+//                            VStack(spacing: 0) {
+//                                CommonText(text: "楽天市場", font: .mPlus2Medium(size: 18), lineHeight: 20)
+//                                    .foregroundStyle(Color(.appMainText))
+//                                CommonText(text: "アフリエイト広告", font: .mPlus2Medium(size: 14), lineHeight: 20)
+//                                    .foregroundStyle(Color(.appSubText))
+//                            }
+//                            .frame(minWidth: 0, maxWidth: .infinity)
+//                            .frame(height: 60)
+//                            .overlay {
+//                                RoundedRectangle(cornerRadius: 8)
+//                                    .stroke(lineWidth: 1)
+//                                    .fill(Color(.appBackground))
+//                            }
+//                            .mask {
+//                                RoundedRectangle(cornerRadius: 8)
+//                            }
+//                        }
+//                    }
+//                    .padding(.top, 12)
 
 //                    Divider()
 //                        .padding(.top, 12)

@@ -88,6 +88,24 @@ struct FirestoreRepository {
         return firestoreReviews
     }
 
+    func fetchMerchandiseReviews(merchandiseCode: String, limit: Int = 20) async throws -> [FirestoreReview] {
+        let db = Firestore.firestore()
+        let querySnapshot = try await db
+            .collection(FirestoreReview.collectionName)
+            .whereField(FirestoreReview.codeField, isEqualTo: merchandiseCode)
+            .whereField(FirestoreReview.deletedField, isEqualTo: false)
+            .order(by: FirestoreReview.createdAtField, descending: true)
+            .limit(to: limit)
+            .getDocuments()
+
+        var firestoreReviews: [FirestoreReview] = []
+        for document in querySnapshot.documents {
+            let firestoreReview = try FirestoreReview(document: document)
+            firestoreReviews.append(firestoreReview)
+        }
+        return firestoreReviews
+    }
+
     func fetchComments(reviewId: String) async throws -> [FirestoreComment] {
         let db = Firestore.firestore()
         let querySnapshot = try await db
@@ -251,7 +269,6 @@ struct FirestoreRepository {
         guard let querySnapshot = querySnapshot else {
             throw ReviewersError.temp
         }
-
         return try FirestoreMerchandise(document: querySnapshot)
     }
 
@@ -265,7 +282,6 @@ struct FirestoreRepository {
         guard let querySnapshot = querySnapshot, let document = querySnapshot.documents.first else {
             throw ReviewersError.temp
         }
-
         return try FirestoreMerchandise(document: document)
     }
 

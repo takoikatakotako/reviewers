@@ -1,6 +1,23 @@
 import Foundation
 
 struct ConvertUseCaseUtils {
+
+    func review(firestoreReview: FirestoreReview, baseImageUrlString: String) -> Review {
+        let imageUrls = firestoreReview.images.compactMap { URL(string: "\(baseImageUrlString)/image/user/\(firestoreReview.uid)/\($0)") }
+        return Review(
+            id: firestoreReview.id,
+            uid: firestoreReview.uid,
+            deleted: firestoreReview.deleted,
+            code: firestoreReview.code,
+            codeType: .ean13,
+            comment: firestoreReview.comment,
+            imageUrls: imageUrls,
+            rate: firestoreReview.rate,
+            createdAt: firestoreReview.createdAt,
+            updatedAt: firestoreReview.updatedAt
+        )
+    }
+
     func firestoreMerchandiseToMerchandise(firestoreMerchandise: FirestoreMerchandise, baseImageUrlString: String) -> Merchandise {
         let status: MerchandiseStatus
         switch firestoreMerchandise.status {
@@ -39,4 +56,5 @@ struct ConvertUseCaseUtils {
             updatedAt: firestoreMerchandise.updatedAt
         )
     }
+
 }
