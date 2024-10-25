@@ -30,7 +30,8 @@ class ReviewListViewState: ObservableObject {
                 uid = try authUseCase.getUserId()
                 try await updateReviews()
             } catch {
-                print(error)
+                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlert = true
             }
         }
     }
@@ -38,7 +39,7 @@ class ReviewListViewState: ObservableObject {
     @MainActor
     func refresh() async {
         do {
-            let duration = UInt64(3 * 1_000_000_000)
+            let duration = UInt64(1 * 1_000_000_000)
             try await Task.sleep(nanoseconds: duration)
             try await updateReviews()
         } catch {
@@ -48,17 +49,17 @@ class ReviewListViewState: ObservableObject {
     }
 
     @MainActor
-    func xxxx() {
+    func fetchNewReview() {
         Task { @MainActor in
             do {
                 isFetching = true
-                let duration = UInt64(3 * 1_000_000_000)
+                let duration = UInt64(1 * 1_000_000_000)
                 try await Task.sleep(nanoseconds: duration)
-                guard let xx = reviews.last else {
+                guard let lastReview = reviews.last else {
                     throw ReviewersError.clientError
                 }
 
-                try await updateReviews(offsetDate: xx.createdAt)
+                try await updateReviews(offsetDate: lastReview.createdAt)
                 isFetching = false
             } catch {
                 isFetching = false
@@ -73,7 +74,8 @@ class ReviewListViewState: ObservableObject {
             do {
                 try await updateReviews()
             } catch {
-                print(error)
+                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlert = true
             }
         }
     }
@@ -122,7 +124,8 @@ class ReviewListViewState: ObservableObject {
                 }
 
             } catch {
-                print(error)
+                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlert = true
             }
         }
     }
@@ -145,7 +148,8 @@ class ReviewListViewState: ObservableObject {
                     reviews.remove(at: index)
                 }
             } catch {
-                print(error)
+                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlert = true
             }
         }
     }
