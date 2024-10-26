@@ -21,6 +21,8 @@ class MyAccountSettingViewState: ObservableObject {
     // Alert
     @Published var nicknameAlert = false
     @Published var errorAlert = false
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting = ""
 
     // Sheet
     @Published var imagePickerSheet = false

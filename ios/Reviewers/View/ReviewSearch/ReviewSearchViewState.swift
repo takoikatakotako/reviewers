@@ -13,6 +13,10 @@ class ReviewSearchViewState: ObservableObject {
     @Published var navigationDestination: ReviewSearchNavigationDestination?
     @Published var showingNotFoundMerchandiseAlert = false
 
+    // Alert
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting = ""
+    
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
