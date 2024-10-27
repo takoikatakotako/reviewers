@@ -15,7 +15,7 @@ struct MyAccountSettingView: View {
                 if !viewState.isAnonymousUser {
                     Section("メールアドレス") {
                         NavigationLink {
-                            Text("ssss")
+                            MyAccountSettingChangeEmailView(viewState: MyAccountSettingChangeEmailViewState())
                         } label: {
                             Text(viewState.email)
                                 .foregroundStyle(Color(.appMainText))
@@ -24,7 +24,7 @@ struct MyAccountSettingView: View {
 
                     Section("パスワード") {
                         NavigationLink {
-                            Text("password")
+                            MyAccountSettingChangePasswordView(viewState: MyAccountSettingChangePasswordViewState())
                         } label: {
                             Text("************")
                                 .foregroundStyle(Color(.appMainText))

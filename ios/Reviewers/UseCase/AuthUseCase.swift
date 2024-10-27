@@ -98,4 +98,14 @@ struct AuthUseCase {
     func signOut() async throws {
         try Auth.auth().signOut()
     }
+    
+//    func reAuth(email: String, password: String) async throws {
+//        try await Auth.auth().sign
+//    }
+//    
+    func changeEmail(email: String) async throws {
+        try await Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: "inferior.to.octopus@gmail.com")
+        
+        //try await Auth.auth().currentUser?.updateE
+    }
 }
