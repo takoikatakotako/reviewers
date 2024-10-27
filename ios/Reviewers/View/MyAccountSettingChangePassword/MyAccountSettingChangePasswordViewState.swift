@@ -1,7 +1,7 @@
 import SwiftUI
 import FirebaseAuth
 
-class MyAccountViewState: ObservableObject {
+class MyAccountSettingChangePasswordViewState: ObservableObject {
 //    @Published var uid: String = ""
 //    @Published var profile: Profile?
 //
@@ -30,12 +30,9 @@ class MyAccountViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             do {
-                try await authUseCase.reloadUser()
                 isAnonymousUser = try authUseCase.isAnonymousUser()
             } catch {
                 print(error)
-                showingErrorAlert = false
-                showingErrorAlertPresenting = error.localizedDescription
             }
         }
     }
@@ -51,8 +48,6 @@ class MyAccountViewState: ObservableObject {
                 NotificationCenter.default.post(name: NSNotification.signOut, object: self, userInfo: nil)
             } catch {
                 print(error)
-                showingErrorAlert = false
-                showingErrorAlertPresenting = error.localizedDescription
             }
         }
     }

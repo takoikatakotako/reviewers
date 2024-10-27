@@ -13,18 +13,27 @@ struct MyAccountSettingView: View {
                 }
 
                 if !viewState.isAnonymousUser {
-                    Section("メールアドレス") {
-                        NavigationLink {
-                            Text("ssss")
+                    Section("メールアドレス変更") {
+                        Button {
+                            viewState.navigationDestination = .changeEmail(email: viewState.email)
                         } label: {
-                            Text(viewState.email)
-                                .foregroundStyle(Color(.appMainText))
+                            HStack {
+                                Text(viewState.email)
+                                    .foregroundStyle(Color(.appMainText))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 8)
+                                    .foregroundStyle(Color(.lightGray))
+                                
+                            }
                         }
                     }
 
-                    Section("パスワード") {
+                    Section("パスワード変更") {
                         NavigationLink {
-                            Text("password")
+                            MyAccountSettingChangePasswordView(viewState: MyAccountSettingChangePasswordViewState())
                         } label: {
                             Text("************")
                                 .foregroundStyle(Color(.appMainText))
@@ -95,9 +104,17 @@ struct MyAccountSettingView: View {
         .onAppear {
             viewState.onAppear()
         }
-        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination) {
-             MyAccountSettingProfileInputView(text: $viewState.profile)
-        }
+        .navigationDestination(item: $viewState.navigationDestination, destination: { item in
+            switch item {
+            case .changeEmail(let email):
+                MyAccountSettingChangeEmailView(viewState: MyAccountSettingChangeEmailViewState(email: email))
+            case .changePassword:
+                Text("ChangePassword")
+            }
+        })
+//        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination) {
+//             MyAccountSettingProfileInputView(text: $viewState.profile)
+//        }
         .alert("アラート", isPresented: $viewState.nicknameAlert) {
             TextField("テキストフィールド", text: $viewState.newNickname)
 

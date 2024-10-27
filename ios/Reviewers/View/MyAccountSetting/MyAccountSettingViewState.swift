@@ -16,11 +16,14 @@ class MyAccountSettingViewState: ObservableObject {
     @Published var showingIndicator = false
 
     // Navigation Destination
-    @Published var changeProfileNaviagtionDestination: Bool = false
+    // @Published var changeProfileNaviagtionDestination: Bool = false
+    @Published var navigationDestination: MyAccountSettingDestination?
 
     // Alert
     @Published var nicknameAlert = false
     @Published var errorAlert = false
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting = ""
 
     // Sheet
     @Published var imagePickerSheet = false
@@ -65,9 +68,9 @@ class MyAccountSettingViewState: ObservableObject {
     }
 
     // MARK: - Profile
-    func profileTapped() {
-        changeProfileNaviagtionDestination = true
-    }
+//    func profileTapped() {
+//        changeProfileNaviagtionDestination = true
+//    }
 
     // MARK: - Profile Image
     func updateProfileImage() {

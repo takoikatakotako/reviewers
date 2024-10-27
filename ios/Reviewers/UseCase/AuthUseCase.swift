@@ -98,4 +98,16 @@ struct AuthUseCase {
     func signOut() async throws {
         try Auth.auth().signOut()
     }
+    
+//    func reAuth(email: String, password: String) async throws {
+//        try await Auth.auth().sign
+//    }
+//    
+    func changeEmail(email: String) async throws {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw ReviewersError.temp2(xxx: "not get current user")
+        }
+        try await currentUser.sendEmailVerification(beforeUpdatingEmail: email)
+        
+    }
 }
