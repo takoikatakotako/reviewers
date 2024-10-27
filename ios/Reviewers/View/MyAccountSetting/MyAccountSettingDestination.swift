@@ -5,6 +5,6 @@ enum MyAccountSettingDestination: Hashable, Identifiable {
         return self.hashValue
     }
     case changeEmail(email: String)
-    case changePassword
+    case changePassword(email: String)
 }
 

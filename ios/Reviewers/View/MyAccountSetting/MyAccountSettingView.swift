@@ -32,11 +32,19 @@ struct MyAccountSettingView: View {
                     }
 
                     Section("パスワード変更") {
-                        NavigationLink {
-                            MyAccountSettingChangePasswordView(viewState: MyAccountSettingChangePasswordViewState())
+                        Button {
+                            viewState.navigationDestination = .changePassword(email: viewState.email)
                         } label: {
-                            Text("************")
-                                .foregroundStyle(Color(.appMainText))
+                            HStack {
+                                Text("************")
+                                    .foregroundStyle(Color(.appMainText))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 8)
+                                    .foregroundStyle(Color(.lightGray))
+                            }
                         }
                     }
                 }
@@ -108,8 +116,8 @@ struct MyAccountSettingView: View {
             switch item {
             case .changeEmail(let email):
                 MyAccountSettingChangeEmailView(viewState: MyAccountSettingChangeEmailViewState(email: email))
-            case .changePassword:
-                Text("ChangePassword")
+            case .changePassword(let email):
+                MyAccountSettingChangePasswordView(viewState: MyAccountSettingChangePasswordViewState(email: email))
             }
         })
 //        .navigationDestination(isPresented: $viewState.changeProfileNaviagtionDestination) {
