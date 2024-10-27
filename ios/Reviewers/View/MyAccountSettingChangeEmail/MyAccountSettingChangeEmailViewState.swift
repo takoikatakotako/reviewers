@@ -11,8 +11,11 @@ class MyAccountSettingChangeEmailViewState: ObservableObject {
     
     @Published var email = ""
     @Published var password = ""
+    @Published var newEmail = ""
     
-    @Published var disabled = false
+//    @Published var disabled = false
+    
+    @Published var indicator = false
     
 //    @Published var isAnonymousUser = true
 //
@@ -45,22 +48,30 @@ class MyAccountSettingChangeEmailViewState: ObservableObject {
 //
     
     // Alert
+    @Published var showingFinishAlert = false
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
     
     private var authUseCase = AuthUseCase()
     
-    
-    func reAuth() {
-        
+    init(email: String) {
+        self.email = email
     }
     
     func changeEmail() {
+        indicator = true
+        
+        // TODO: メールアドレスなどのバリデーションを行う
+        
         Task { @MainActor in
             do {
                 try await authUseCase.signIn(email: email, password: password)
-                try await authUseCase.changeEmail(email: email)
+                try await authUseCase.reloadUser()
+                try await authUseCase.changeEmail(email: newEmail)
+                indicator = false
+                showingFinishAlert = true
             } catch {
+                indicator = false
                 print(error)
                 showingErrorAlertPresenting = error.localizedDescription
                 showingErrorAlert = true

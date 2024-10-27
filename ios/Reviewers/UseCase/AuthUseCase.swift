@@ -104,8 +104,10 @@ struct AuthUseCase {
 //    }
 //    
     func changeEmail(email: String) async throws {
-        try await Auth.auth().currentUser?.sendEmailVerification(beforeUpdatingEmail: "inferior.to.octopus@gmail.com")
+        guard let currentUser = Auth.auth().currentUser else {
+            throw ReviewersError.temp2(xxx: "not get current user")
+        }
+        try await currentUser.sendEmailVerification(beforeUpdatingEmail: email)
         
-        //try await Auth.auth().currentUser?.updateE
     }
 }

@@ -16,7 +16,8 @@ class MyAccountSettingViewState: ObservableObject {
     @Published var showingIndicator = false
 
     // Navigation Destination
-    @Published var changeProfileNaviagtionDestination: Bool = false
+    // @Published var changeProfileNaviagtionDestination: Bool = false
+    @Published var navigationDestination: MyAccountSettingDestination?
 
     // Alert
     @Published var nicknameAlert = false
@@ -67,9 +68,9 @@ class MyAccountSettingViewState: ObservableObject {
     }
 
     // MARK: - Profile
-    func profileTapped() {
-        changeProfileNaviagtionDestination = true
-    }
+//    func profileTapped() {
+//        changeProfileNaviagtionDestination = true
+//    }
 
     // MARK: - Profile Image
     func updateProfileImage() {
