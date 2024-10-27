@@ -96,7 +96,7 @@ struct AuthUseCase {
     }
 
     func signOut() async throws {
-        try Auth.auth().signOut()
+        try Auth.auth().signOut()        
     }
     
 //    func reAuth(email: String, password: String) async throws {
