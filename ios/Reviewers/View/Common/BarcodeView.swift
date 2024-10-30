@@ -47,7 +47,7 @@ struct BarcodeScannerView: UIViewRepresentable {
                 case .ean8:
                     codeType = .ean8
                 default:
-                    return
+                    codeType = .unknown
                 }
 
                 foundCode(value, codeType)
@@ -66,7 +66,7 @@ struct BarcodeScannerView: UIViewRepresentable {
                 if session.canAddOutput(metadataOutput) {
                     session.addOutput(metadataOutput)
 
-                    metadataOutput.metadataObjectTypes = [.ean8, .ean13]
+                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .qr, .upce, .code39]
                     metadataOutput.setMetadataObjectsDelegate(context.coordinator, queue: DispatchQueue.main)
                 }
                 let previewLayer = AVCaptureVideoPreviewLayer(session: session)

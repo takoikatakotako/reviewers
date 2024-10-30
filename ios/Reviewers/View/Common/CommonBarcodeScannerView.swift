@@ -4,19 +4,29 @@ struct CommonBarcodeScannerView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var code: String
     @Binding var codeType: CodeType?
+    @State private var showingAlert = false
 
     var body: some View {
         NavigationStack {
-            VStack {
+            ZStack {
                 VStack {
                     BarcodeScannerView { code, codeType  in
+                        if codeType == .unknown {
+                            showingAlert = true
+                            return
+                        }
                         self.code = code
                         self.codeType = codeType
                         dismiss()
                     }
                 }
+                .ignoresSafeArea(.all)
             }
-            .ignoresSafeArea(.all)
+            .alert("", isPresented: $showingAlert, actions: {
+                Button("とじる", role: .none, action: {})
+            }, message: {
+                Text("非対応のバーコードです。")
+            })
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
             .toolbar {
