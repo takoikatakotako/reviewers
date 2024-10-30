@@ -2,6 +2,8 @@ import SwiftUI
 
 class ReviewSearchViewState: ObservableObject {
     @Published var code: String?
+    @Published var codeType: CodeType?
+
     @Published var merchandise: [Merchandise] = []
     @Published var reviews: [ReviewProfile] = []
     @Published var loading: Bool = false
@@ -68,10 +70,13 @@ class ReviewSearchViewState: ObservableObject {
         }
     }
 
-    func codeSccaned(code: String) {
-        // 今までのコードと同じか確認、同じなら何もしない
-        print(code)
-
+    func dismissBarcodeView() {
+        // TODO:  今までのコードと同じか確認、同じなら何もしない
+        guard let code = code else {
+            // エラー表示
+            return
+        }
+        
         Task { @MainActor in
             loading = true
             do {

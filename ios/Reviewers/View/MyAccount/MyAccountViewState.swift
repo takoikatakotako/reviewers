@@ -28,6 +28,7 @@ class MyAccountViewState: ObservableObject {
 //    }
 
     func onAppear() {
+        isAnonymousUser = (try? authUseCase.isAnonymousUser()) ?? true
         Task { @MainActor in
             do {
                 try await authUseCase.reloadUser()

@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class BarcodeScannerPreview: UIView {
+class BarcodeScannerViewPreview: UIView {
     var previewLayer: AVCaptureVideoPreviewLayer?
     var session = AVCaptureSession()
 
@@ -22,7 +22,7 @@ class BarcodeScannerPreview: UIView {
 
 import SwiftUI
 
-struct BarcodeScannerView: UIViewRepresentable {
+struct BarcodeScannerViewRepresentable: UIViewRepresentable {
     let foundCode: (_ code: String, _ codeType: CodeType) -> Void
 
     private let session = AVCaptureSession()
@@ -47,7 +47,7 @@ struct BarcodeScannerView: UIViewRepresentable {
                 case .ean8:
                     codeType = .ean8
                 default:
-                    return
+                    codeType = .unknown
                 }
 
                 foundCode(value, codeType)
@@ -55,7 +55,7 @@ struct BarcodeScannerView: UIViewRepresentable {
         }
     }
 
-    func setupCamera(_ uiView: BarcodeScannerPreview, context: Context) {
+    func setupCamera(_ uiView: BarcodeScannerViewPreview, context: Context) {
         if let backCamera = AVCaptureDevice.default(for: AVMediaType.video) {
             if let input = try? AVCaptureDeviceInput(device: backCamera) {
                 session.sessionPreset = .photo
@@ -66,7 +66,7 @@ struct BarcodeScannerView: UIViewRepresentable {
                 if session.canAddOutput(metadataOutput) {
                     session.addOutput(metadataOutput)
 
-                    metadataOutput.metadataObjectTypes = [.ean8, .ean13]
+                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .qr, .upce, .code39]
                     metadataOutput.setMetadataObjectsDelegate(context.coordinator, queue: DispatchQueue.main)
                 }
                 let previewLayer = AVCaptureVideoPreviewLayer(session: session)
@@ -82,8 +82,8 @@ struct BarcodeScannerView: UIViewRepresentable {
         }
     }
 
-    func makeUIView(context: Context) -> BarcodeScannerPreview {
-        let cameraView = BarcodeScannerPreview(session: session)
+    func makeUIView(context: Context) -> BarcodeScannerViewPreview {
+        let cameraView = BarcodeScannerViewPreview(session: session)
 
         let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
         if cameraAuthorizationStatus == .authorized {
@@ -104,11 +104,11 @@ struct BarcodeScannerView: UIViewRepresentable {
         Coordinator(foundCode)
     }
 
-    static func dismantleUIView(_ uiView: BarcodeScannerPreview, coordinator: ()) {
+    static func dismantleUIView(_ uiView: BarcodeScannerViewPreview, coordinator: ()) {
         uiView.session.stopRunning()
     }
 
-    func updateUIView(_ uiView: BarcodeScannerPreview, context: Context) {
+    func updateUIView(_ uiView: BarcodeScannerViewPreview, context: Context) {
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
     }

@@ -2,7 +2,7 @@ import Foundation
 
 class DebugMerchandiseAddViewState: ObservableObject {
     @Published var name: String = ""
-    @Published var code: String = ""
+    @Published var code: String?
     @Published var codeType: CodeType?
 
     @Published var indicator = false
@@ -14,7 +14,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
     @Published var showingErrorAlert = false
 
     // Navigation Destination
-    @Published var navigationDestination = false
+    @Published var showingSheet = false
 
     private let authUseCase = AuthUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
@@ -24,10 +24,15 @@ class DebugMerchandiseAddViewState: ObservableObject {
     }
 
     func codeTapped() {
-        navigationDestination = true
+        showingSheet = true
     }
 
     func register() {
+        guard let code = code else {
+            // TODO: エラーハンドリング
+            return
+        }
+        
         Task { @MainActor in
             indicator = true
 

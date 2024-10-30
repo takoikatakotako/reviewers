@@ -21,7 +21,7 @@ struct DebugMerchandiseAddView: View {
                 } label: {
                     VStack(alignment: .leading) {
                         CommonText(text: "商品コード", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
-                        CommonText(text: viewState.code, font: .mPlus2Regular(size: 16), lineHeight: 18)
+                        CommonText(text: viewState.code ?? "", font: .mPlus2Regular(size: 16), lineHeight: 18)
                     }
                 }
             }
@@ -40,8 +40,11 @@ struct DebugMerchandiseAddView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        .navigationDestination(isPresented: $viewState.navigationDestination) {
-            CommonBarcodeScannerView(code: $viewState.code, codeType: $viewState.codeType)
+        .sheet(isPresented: $viewState.showingSheet) {
+            CommonBarcodeScannerView(
+                code: $viewState.code,
+                codeType: $viewState.codeType
+            )
         }
         .alert("商品名入力", isPresented: $viewState.showingNameAlert) {
             TextField("商品名", text: $viewState.name)

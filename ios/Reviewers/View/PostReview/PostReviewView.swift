@@ -8,9 +8,7 @@ struct PostReviewView: View {
 
     var body: some View {
         NavigationStack {
-
             ZStack {
-
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
 
@@ -23,11 +21,11 @@ struct PostReviewView: View {
                                     CommonText(text: "バーコード", font: .mPlus2SemiBold(size: 14), lineHeight: 18)
                                         .foregroundStyle(Color(.appMainText))
 
-                                    if viewState.code.isEmpty {
+                                    if viewState.code == nil {
                                         CommonText(text: "バーコードをスキャンしてください", font: .mPlus2Regular(size: 16), lineHeight: 20, alignment: .leading)
                                             .foregroundStyle(Color(.appSubText))
                                     } else {
-                                        CommonText(text: viewState.code, font: .mPlus2Regular(size: 16), lineHeight: 20)
+                                        CommonText(text: viewState.code ?? "", font: .mPlus2Regular(size: 16), lineHeight: 20)
                                             .foregroundStyle(Color(.appMainText))
                                     }
                                 }
@@ -266,7 +264,7 @@ struct PostReviewView: View {
                 case .showImageViewerSheet(let image):
                     PostImageViewer(image: image, images: $viewState.images)
                 case .showBarcodeScannerSheet:
-                    PostBarcodeScannerView(code: $viewState.code, codeType: $viewState.codeType)
+                    CommonBarcodeScannerView(code: $viewState.code, codeType: $viewState.codeType)
                 case .showCameraSheet:
                     PostReviewCameraView(images: $viewState.images).ignoresSafeArea(.all)
                 }

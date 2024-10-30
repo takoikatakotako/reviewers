@@ -82,28 +82,6 @@ struct ReviewSearchView: View {
                     }
                 }
 
-                if viewState.showingBarcodeView {
-                    ZStack(alignment: .topLeading) {
-                        BarcodeScannerView { code, _  in
-                            viewState.codeSccaned(code: code)
-                        }
-
-                        Button {
-                            viewState.barodeHideButtonTapped()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .tint(Color.white)
-                                .padding(8)
-                                .background(Color.gray)
-                                .cornerRadius(8)
-                                .scaleEffect(1.2)
-                                .padding(8)
-                        }
-                    }
-                }
-
                 if viewState.loading {
                     ProgressView()
                         .progressViewStyle(.circular)
@@ -129,6 +107,15 @@ struct ReviewSearchView: View {
                     ReviewSearchDetailView(viewState: ReviewSearchDetailViewState(merchandise: merchandise))
                 }
             }
+            .sheet(
+                isPresented: $viewState.showingBarcodeView,
+                onDismiss: {
+                    viewState.dismissBarcodeView()
+                }) {
+                    CommonBarcodeScannerView(
+                        code: $viewState.code,
+                        codeType: $viewState.codeType)
+                }
             .background(Color.white)
             .tint(Color(.appMainText))
             .listStyle(.inset)
