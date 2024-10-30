@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CommonBarcodeScannerView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var code: String
+    @Binding var code: String?
     @Binding var codeType: CodeType?
     @State private var showingAlert = false
 

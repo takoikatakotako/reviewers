@@ -2,7 +2,7 @@ import Foundation
 
 class DebugMerchandiseAddViewState: ObservableObject {
     @Published var name: String = ""
-    @Published var code: String = ""
+    @Published var code: String?
     @Published var codeType: CodeType?
 
     @Published var indicator = false
@@ -28,6 +28,11 @@ class DebugMerchandiseAddViewState: ObservableObject {
     }
 
     func register() {
+        guard let code = code else {
+            // TODO: エラーハンドリング
+            return
+        }
+        
         Task { @MainActor in
             indicator = true
 

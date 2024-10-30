@@ -2,7 +2,7 @@ import SwiftUI
 
 class PostReviewViewState: ObservableObject {
     @Published var comment = ""
-    @Published var code = ""
+    @Published var code: String?
     @Published var codeType: CodeType?
     @Published var rate = 5
     @Published var images: [UIImage] = []
@@ -53,15 +53,8 @@ class PostReviewViewState: ObservableObject {
             return
         }
 
-        // コードが空の場合はアラート
-        if code.isEmpty {
-            alertMessage = "バーコードをスキャンしてください"
-            showingMessageAlert = true
-            return
-        }
-
-        // コードタイプが空の場合はアラート
-        guard let codeType = codeType else {
+        // コード、コードタイプが空の場合はアラート
+        guard let codeType = codeType, let code = code else {
             alertMessage = "バーコードをスキャンしてください"
             showingMessageAlert = true
             return
@@ -120,7 +113,7 @@ class PostReviewViewState: ObservableObject {
     }
 
     func registerMerchandise() {
-        guard let codeType = codeType else {
+        guard let codeType = codeType, let code = code else {
             return
         }
 

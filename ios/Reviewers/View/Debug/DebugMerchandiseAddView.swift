@@ -21,7 +21,7 @@ struct DebugMerchandiseAddView: View {
                 } label: {
                     VStack(alignment: .leading) {
                         CommonText(text: "商品コード", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
-                        CommonText(text: viewState.code, font: .mPlus2Regular(size: 16), lineHeight: 18)
+                        CommonText(text: viewState.code ?? "", font: .mPlus2Regular(size: 16), lineHeight: 18)
                     }
                 }
             }
