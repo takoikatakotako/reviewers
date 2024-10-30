@@ -14,7 +14,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
     @Published var showingErrorAlert = false
 
     // Navigation Destination
-    @Published var navigationDestination = false
+    @Published var showingSheet = false
 
     private let authUseCase = AuthUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
@@ -24,7 +24,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
     }
 
     func codeTapped() {
-        navigationDestination = true
+        showingSheet = true
     }
 
     func register() {

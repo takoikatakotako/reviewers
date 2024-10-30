@@ -10,7 +10,7 @@ struct CommonBarcodeScannerView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    BarcodeScannerView { code, codeType  in
+                    BarcodeScannerViewRepresentable { code, codeType  in
                         if codeType == .unknown {
                             showingAlert = true
                             return
@@ -34,13 +34,13 @@ struct CommonBarcodeScannerView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "multiply")
+                        Image(systemName: "xmark")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 20, height: 20)
                             .foregroundStyle(Color.white)
                             .padding(.top, 8)
-                            .padding(.leading, 4)
+                            .padding(.leading, 0)
                             .padding(.trailing, 8)
                             .padding(.bottom, 8)
                     }

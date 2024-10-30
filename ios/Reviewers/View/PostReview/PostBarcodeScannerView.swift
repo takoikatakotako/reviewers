@@ -10,7 +10,7 @@ struct PostBarcodeScannerView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    BarcodeScannerView { code, codeType  in
+                    BarcodeScannerViewRepresentable { code, codeType  in
                         if codeType == .unknown {
                             showingAlert = true
                             return
