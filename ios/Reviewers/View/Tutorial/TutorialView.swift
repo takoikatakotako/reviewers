@@ -2,11 +2,11 @@ import SwiftUI
 
 struct TutorialView: View {
     @StateObject var viewState: TutorialViewState
-
+    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-
+            
             switch viewState.page {
             case .first:
                 TutorialContentView(
@@ -30,36 +30,51 @@ struct TutorialView: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 16)
             case .guideline:
-                TutorialGuidelineContentView()
+                TutorialGuidelineContentView(
+                    didOpenTeams: viewState.didOpenTeams,
+                    didOpenPrivacy: viewState.didOpenPrivacy,
+                    openTeams: {
+                        viewState.openTeams()
+                    },
+                    openPrivacy: {
+                        viewState.openPrivacy()
+                    }
+                )
                     .padding(.top, 24)
                     .padding(.horizontal, 16)
             }
             
             
             // Indicator
-            TutorialIndicatorView(index: viewState.index)
-            .padding(.top, 24)
-
+            TutorialIndicatorView(page: viewState.page)
+                .padding(.top, 24)
+            
             // Next
             Button {
                 viewState.tapped()
             } label: {
                 HStack {
                     Spacer()
-
-                    CommonText(text: viewState.buttonTitle, font: .mPlus2SemiBold(size: 18), lineHeight: 24)
-                        .foregroundStyle(Color.white)
-
+                    
+                    CommonText(
+                        text: viewState.page == .guideline ? "同意してはじめる" : "つぎへ",
+                        font: .mPlus2SemiBold(size: 18),
+                        lineHeight: 24
+                    )
+                    .foregroundStyle(Color.white)
+                    
                     Spacer()
                 }
                 .frame(height: 48)
-                .background(Color(.appGreenBackground))
+                .disabled(!viewState.nextButtonEnable)
+                .background(viewState.nextButtonEnable ? Color(.appGreenBackground) : Color(.appBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
             .padding(.top, 24)
             .padding(.horizontal, 16)
         }
     }
+    
 }
 
 

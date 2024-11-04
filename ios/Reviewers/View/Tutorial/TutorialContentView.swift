@@ -22,6 +22,7 @@ struct TutorialContentView: View {
                 CommonText(text: description, font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
                     .foregroundStyle(Color(.appMainText))
             }
+            .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, alignment: .leading)
         }
         .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, alignment: .leading)
     }

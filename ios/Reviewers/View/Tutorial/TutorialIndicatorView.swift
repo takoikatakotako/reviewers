@@ -1,25 +1,25 @@
 import SwiftUI
 
 struct TutorialIndicatorView: View {
-    let index: Int
+    let page: TutorialPage
     
     var body: some View {
         HStack(spacing: 24) {
             Circle()
                 .frame(width: 12, height: 12)
-                .foregroundStyle(index == 0 ? Color(.appSubText) : Color(.appBackground))
+                .foregroundStyle(page == .first ? Color(.appSubText) : Color(.appBackground))
 
             Circle()
                 .frame(width: 12, height: 12)
-                .foregroundStyle(index == 1 ? Color(.appSubText) : Color(.appBackground))
+                .foregroundStyle(page == .second ? Color(.appSubText) : Color(.appBackground))
 
             Circle()
                 .frame(width: 12, height: 12)
-                .foregroundStyle(index == 2 ? Color(.appSubText) : Color(.appBackground))
+                .foregroundStyle(page == .third ? Color(.appSubText) : Color(.appBackground))
             
             Circle()
                 .frame(width: 12, height: 12)
-                .foregroundStyle(index == 3 ? Color(.appSubText) : Color(.appBackground))
+                .foregroundStyle(page == .guideline ? Color(.appSubText) : Color(.appBackground))
         }
     }
 }
