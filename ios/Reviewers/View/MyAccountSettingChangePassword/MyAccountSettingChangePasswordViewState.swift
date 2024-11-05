@@ -7,14 +7,13 @@ class MyAccountSettingChangePasswordViewState: ObservableObject {
     //
     //    // Navigation Destination
     //    @Published var navigationDestination: MyAccountNavigationDestination?
-    
-    
+
     @Published var email = ""
-    
+
     //    @Published var disabled = false
-    
+
     @Published var indicator = false
-    
+
     //    @Published var isAnonymousUser = true
     //
     //    // Fullscreen Cover
@@ -44,23 +43,23 @@ class MyAccountSettingChangePasswordViewState: ObservableObject {
     //        }
     //    }
     //
-    
+
     // Alert
     @Published var showingFinishAlert = false
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
-    
+
     private var authUseCase = AuthUseCase()
-    
+
     init(email: String) {
         self.email = email
     }
-    
+
     func resetPassword() {
         indicator = true
-        
+
         // TODO: メールアドレスなどのバリデーションを行う
-        
+
         Task { @MainActor in
             do {
                 try await authUseCase.sendPasswordReset(email: email)
@@ -75,6 +74,5 @@ class MyAccountSettingChangePasswordViewState: ObservableObject {
             }
         }
     }
-    
-    
+
 }

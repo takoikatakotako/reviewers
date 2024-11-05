@@ -5,7 +5,7 @@ import LicenseList
 struct MyAccountSettingChangeEmailView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: MyAccountSettingChangeEmailViewState
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -18,7 +18,7 @@ struct MyAccountSettingChangeEmailView: View {
                         .textFieldStyle(.roundedBorder)
                         .font(.mPlus2Regular(size: 16))
                 }
-                
+
                 VStack(alignment: .leading, spacing: 12) {
                     CommonText(text: "パスワード", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                         .foregroundStyle(Color(.appMainText))
@@ -29,7 +29,7 @@ struct MyAccountSettingChangeEmailView: View {
                         .font(.mPlus2Regular(size: 16))
                 }
                 .padding(.top, 12)
-                
+
                 VStack(alignment: .leading, spacing: 12) {
                     CommonText(text: "新しいメールアドレス", font: .mPlus2SemiBold(size: 14), lineHeight: 20)
                         .foregroundStyle(Color(.appMainText))
@@ -40,7 +40,7 @@ struct MyAccountSettingChangeEmailView: View {
                         .font(.mPlus2Regular(size: 16))
                 }
                 .padding(.top, 12)
-                
+
                 Button {
                     viewState.changeEmail()
                 } label: {
@@ -48,7 +48,7 @@ struct MyAccountSettingChangeEmailView: View {
                         Spacer()
                         CommonText(text: "メールアドレスを変更", font: .mPlus2Bold(size: 14), lineHeight: 20)
                             .foregroundStyle(Color(.white))
-                        
+
                         Spacer()
                     }
                     .frame(height: 48)
@@ -57,11 +57,11 @@ struct MyAccountSettingChangeEmailView: View {
                 }
                 .disabled(viewState.indicator)
                 .padding(.top, 24)
-                
+
                 Spacer()
             }
             .padding(16)
-            
+
             if viewState.indicator {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -92,7 +92,7 @@ struct MyAccountSettingChangeEmailView: View {
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        
+
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -104,17 +104,17 @@ struct MyAccountSettingChangeEmailView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 Text("パスワード変更")
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-            
+
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
-        
+
     }
 }
 

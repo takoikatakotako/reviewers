@@ -7,4 +7,3 @@ enum MyAccountSettingDestination: Hashable, Identifiable {
     case changeEmail(email: String)
     case changePassword(email: String)
 }
-

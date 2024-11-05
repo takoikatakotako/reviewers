@@ -50,6 +50,20 @@ struct MyAccountView: View {
                     }
                 }
 
+                Section("利用規約・プライバシーポリシー") {
+                    NavigationLink {
+                        MyAccountGuidelineView(viewState: MyAccountGuidelineViewState(type: .teams))
+                    } label: {
+                        Text("利用規約")
+                    }
+
+                    NavigationLink {
+                        MyAccountGuidelineView(viewState: MyAccountGuidelineViewState(type: .privacy))
+                    } label: {
+                        Text("プライバシーポリシー")
+                    }
+                }
+
                 Section("アカウント") {
                     if viewState.isAnonymousUser {
                         Button {

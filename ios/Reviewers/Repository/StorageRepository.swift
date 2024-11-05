@@ -3,7 +3,6 @@ import SwiftUI
 
 struct StorageRepository {
     // MARK: - Image
-
     func uploadImage(uid: String, image: UIImage, fileName: String) async throws {
         // リサイズ
         let resizedImageData = try resizeImage(image: image)
@@ -83,5 +82,43 @@ struct StorageRepository {
             data = imageData
         }
         return data
+    }
+
+    // MARK: - Guideline
+    func fetchTeams() async throws -> String {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let teamsRef = storageRef.child("guideline/teams.md")
+        let data = try await teamsRef.getData(maxSize: 100000)
+        guard let text =  String(data: data, encoding: .utf8) else {
+            throw ReviewersError.temp
+        }
+        return text
+    }
+
+    func fetchPrivacy() async throws -> String {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let privacyRef = storageRef.child("guideline/privacy.md")
+        let data = try await privacyRef.getData(maxSize: 100000)
+        guard let text =  String(data: data, encoding: .utf8) else {
+            throw ReviewersError.temp
+        }
+        return text
+    }
+}
+
+extension StorageReference {
+    func getData(maxSize: Int64) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            self.getData(maxSize: maxSize) { result in
+                switch result {
+                case .success(let data):
+                    continuation.resume(returning: data)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 }

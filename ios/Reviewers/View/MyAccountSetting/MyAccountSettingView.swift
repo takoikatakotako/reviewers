@@ -26,7 +26,7 @@ struct MyAccountSettingView: View {
                                     .scaledToFit()
                                     .frame(width: 8)
                                     .foregroundStyle(Color(.lightGray))
-                                
+
                             }
                         }
                     }

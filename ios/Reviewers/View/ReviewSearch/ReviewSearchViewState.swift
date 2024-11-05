@@ -18,7 +18,7 @@ class ReviewSearchViewState: ObservableObject {
     // Alert
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
-    
+
     private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
@@ -76,7 +76,7 @@ class ReviewSearchViewState: ObservableObject {
             // エラー表示
             return
         }
-        
+
         Task { @MainActor in
             loading = true
             do {

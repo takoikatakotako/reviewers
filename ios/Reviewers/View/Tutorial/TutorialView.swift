@@ -4,63 +4,105 @@ struct TutorialView: View {
     @StateObject var viewState: TutorialViewState
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer()
 
-            Image(.tutorialFirst)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 220)
+                switch viewState.page {
+                case .first:
+                    TutorialContentView(
+                        screenImage: Image(.tutorialFirst),
+                        title: "レビューを読む",
+                        description: "たくさんのレビューを読んで、\n自分にぴったりの食べ物を見つけよう！")
+                    .padding(.top, 24)
+                    .padding(.horizontal, 16)
+                case .second:
+                    TutorialContentView(
+                        screenImage: Image(.tutorialSecond),
+                        title: "レビューを探す",
+                        description: "バーコードから気になる食べ物の\nレビューを簡単に探してみましょう！")
+                    .padding(.top, 24)
+                    .padding(.horizontal, 16)
+                case .third:
+                    TutorialContentView(
+                        screenImage: Image(.tutorialThird),
+                        title: "レビューを書く",
+                        description: "美味しい食べ物のレビューを書いてみよう！\nあなたのレビューが次のヒット商品を生むかも？")
+                    .padding(.top, 24)
+                    .padding(.horizontal, 16)
+                case .guideline:
+                    TutorialGuidelineContentView(
+                        didOpenTeams: viewState.didOpenTeams,
+                        didOpenPrivacy: viewState.didOpenPrivacy,
+                        openTeams: {
+                            viewState.openTeams()
+                        },
+                        openPrivacy: {
+                            viewState.openPrivacy()
+                        }
+                    )
+                        .padding(.top, 24)
+                        .padding(.horizontal, 16)
+                }
 
-            Divider()
-                .padding(.top, 36)
+                // Indicator
+                TutorialIndicatorView(page: viewState.page)
+                    .padding(.top, 24)
 
-            VStack(alignment: .leading, spacing: 12) {
-                CommonText(text: viewState.title, font: .mPlus2SemiBold(size: 24), lineHeight: 32)
-                    .foregroundStyle(Color(.appMainText))
+                // Next
+                Button {
+                    viewState.tapped()
+                } label: {
+                    HStack {
+                        Spacer()
 
-                CommonText(text: viewState.description, font: .mPlus2Regular(size: 16), lineHeight: 24, alignment: .leading)
-                    .foregroundStyle(Color(.appMainText))
-            }
-            .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 24)
-            .padding(.horizontal, 16)
-
-            //
-            HStack(spacing: 24) {
-                Circle()
-                    .frame(width: 12, height: 12)
-                    .foregroundStyle(viewState.index == 0 ? Color(.appSubText) : Color(.appBackground))
-
-                Circle()
-                    .frame(width: 12, height: 12)
-                    .foregroundStyle(viewState.index == 1 ? Color(.appSubText) : Color(.appBackground))
-
-                Circle()
-                    .frame(width: 12, height: 12)
-                    .foregroundStyle(viewState.index == 2 ? Color(.appSubText) : Color(.appBackground))
-            }
-            .padding(.top, 24)
-
-            Button {
-                viewState.tapped()
-            } label: {
-                HStack {
-                    Spacer()
-
-                    CommonText(text: viewState.buttonTitle, font: .mPlus2SemiBold(size: 18), lineHeight: 24)
+                        CommonText(
+                            text: viewState.page == .guideline ? "同意してはじめる" : "つぎへ",
+                            font: .mPlus2SemiBold(size: 18),
+                            lineHeight: 24
+                        )
                         .foregroundStyle(Color.white)
 
-                    Spacer()
+                        Spacer()
+                    }
+                    .frame(height: 48)
+                    .disabled(!viewState.nextButtonEnable)
+                    .background(viewState.nextButtonEnable ? Color(.appGreenBackground) : Color(.appBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .frame(height: 48)
-                .background(Color(.appGreenBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.top, 24)
+                .padding(.horizontal, 16)
             }
-            .padding(.top, 24)
-            .padding(.horizontal, 16)
+
+            if viewState.indicator {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
+                    .scaleEffect(1.2)
+            }
+        }
+        .onAppear {
+            viewState.onAppear()
+        }
+        .alert(
+            "",
+            isPresented: $viewState.showingErrorAlert,
+            presenting: viewState.showingErrorAlertPresenting,
+            actions: { _ in
+                Button("とじる", role: .none) {}
+            }, message: { message in
+                Text(message)
+            }
+        )
+        .sheet(item: $viewState.sheet) { item in
+            switch item {
+            case .teams(let text):
+                CommonGuidelineView(markdown: text)
+            case .privacy(let text):
+                CommonGuidelineView(markdown: text)
+            }
         }
     }
+
 }
 
 #Preview {

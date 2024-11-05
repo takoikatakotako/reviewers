@@ -5,7 +5,7 @@ import LicenseList
 struct MyAccountSettingChangePasswordView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: MyAccountSettingChangePasswordViewState
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -13,7 +13,7 @@ struct MyAccountSettingChangePasswordView: View {
                     CommonText(text: "\(viewState.email) にパスワードリセットメールを送ります。", font: .mPlus2Medium(size: 14), lineHeight: 24, alignment: .leading)
                         .foregroundStyle(Color(.appMainText))
                 }
-                
+
                 Button {
                     viewState.resetPassword()
                 } label: {
@@ -21,7 +21,7 @@ struct MyAccountSettingChangePasswordView: View {
                         Spacer()
                         CommonText(text: "パスワードをリセット", font: .mPlus2Bold(size: 14), lineHeight: 20)
                             .foregroundStyle(Color(.white))
-                        
+
                         Spacer()
                     }
                     .frame(height: 48)
@@ -30,11 +30,11 @@ struct MyAccountSettingChangePasswordView: View {
                 }
                 .disabled(viewState.indicator)
                 .padding(.top, 24)
-                
+
                 Spacer()
             }
             .padding(16)
-            
+
             if viewState.indicator {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -65,7 +65,7 @@ struct MyAccountSettingChangePasswordView: View {
         .scrollIndicators(.hidden)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        
+
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -77,17 +77,17 @@ struct MyAccountSettingChangePasswordView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 Text("パスワード変更")
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-            
+
         }
         .toolbarBackground(Color(.appMain), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
-        
+
     }
 }
 #Preview {

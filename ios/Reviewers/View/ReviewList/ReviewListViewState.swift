@@ -25,12 +25,17 @@ class ReviewListViewState: ObservableObject {
 
     // MARK: - Action
     func onAppear() {
+        // サインアウト時に実行されるため、ログイン状態では実行しない。
+        guard authUseCase.isSignIn else {
+            return
+        }
+
         Task { @MainActor in
             do {
                 uid = try authUseCase.getUserId()
                 try await updateReviews()
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlertPresenting = "エラーメッセージ1"
                 showingErrorAlert = true
             }
         }
@@ -43,7 +48,7 @@ class ReviewListViewState: ObservableObject {
             try await Task.sleep(nanoseconds: duration)
             try await updateReviews()
         } catch {
-            showingErrorAlertPresenting = "エラーメッセージ"
+            showingErrorAlertPresenting = "エラーメッセージ2"
             showingErrorAlert = true
         }
     }
@@ -63,7 +68,7 @@ class ReviewListViewState: ObservableObject {
                 isFetching = false
             } catch {
                 isFetching = false
-                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlertPresenting = "エラーメッセージ3"
                 showingErrorAlert = true
             }
         }
@@ -74,7 +79,7 @@ class ReviewListViewState: ObservableObject {
             do {
                 try await updateReviews()
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlertPresenting = "エラーメッセージ4"
                 showingErrorAlert = true
             }
         }
@@ -124,7 +129,7 @@ class ReviewListViewState: ObservableObject {
                 }
 
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlertPresenting = "エラーメッセージ6"
                 showingErrorAlert = true
             }
         }
@@ -148,7 +153,7 @@ class ReviewListViewState: ObservableObject {
                     reviews.remove(at: index)
                 }
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ"
+                showingErrorAlertPresenting = "エラーメッセージ5"
                 showingErrorAlert = true
             }
         }

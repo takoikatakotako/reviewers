@@ -32,7 +32,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
             // TODO: エラーハンドリング
             return
         }
-        
+
         Task { @MainActor in
             indicator = true
 
