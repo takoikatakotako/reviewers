@@ -4,7 +4,7 @@ struct TutorialContentView: View {
     let screenImage: Image
     let title: String
     let description: String
-    
+
     var body: some View {
         VStack(spacing: 0) {
             screenImage

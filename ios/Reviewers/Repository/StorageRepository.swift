@@ -83,8 +83,7 @@ struct StorageRepository {
         }
         return data
     }
-    
-    
+
     // MARK: - Guideline
     func fetchTeams() async throws -> String {
         let storage = Storage.storage()
@@ -96,7 +95,7 @@ struct StorageRepository {
         }
         return text
     }
-    
+
     func fetchPrivacy() async throws -> String {
         let storage = Storage.storage()
         let storageRef = storage.reference()

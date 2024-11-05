@@ -5,7 +5,7 @@ struct CommonGuidelineView: View {
     @Environment(\.dismiss) var dismiss
 
     let markdown: String
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -34,7 +34,7 @@ struct CommonGuidelineView: View {
             }
         }
     }
-    
+
     func getAttributedString(markdown: String) -> AttributedString {
         var attributedString = AttributedString()
         for block in Document(parsing: markdown).blockChildren {

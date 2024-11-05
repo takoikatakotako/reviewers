@@ -2,12 +2,12 @@ import SwiftUI
 
 struct TutorialView: View {
     @StateObject var viewState: TutorialViewState
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 Spacer()
-                
+
                 switch viewState.page {
                 case .first:
                     TutorialContentView(
@@ -44,26 +44,25 @@ struct TutorialView: View {
                         .padding(.top, 24)
                         .padding(.horizontal, 16)
                 }
-                
-                
+
                 // Indicator
                 TutorialIndicatorView(page: viewState.page)
                     .padding(.top, 24)
-                
+
                 // Next
                 Button {
                     viewState.tapped()
                 } label: {
                     HStack {
                         Spacer()
-                        
+
                         CommonText(
                             text: viewState.page == .guideline ? "同意してはじめる" : "つぎへ",
                             font: .mPlus2SemiBold(size: 18),
                             lineHeight: 24
                         )
                         .foregroundStyle(Color.white)
-                        
+
                         Spacer()
                     }
                     .frame(height: 48)
@@ -74,7 +73,7 @@ struct TutorialView: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 16)
             }
-            
+
             if viewState.indicator {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color(.appMain)))
@@ -103,9 +102,8 @@ struct TutorialView: View {
             }
         }
     }
-    
-}
 
+}
 
 #Preview {
     TutorialView(viewState: TutorialViewState())

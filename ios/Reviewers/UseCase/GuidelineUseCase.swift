@@ -7,7 +7,7 @@ struct GuidelineUseCase {
     func fetchTeams() async throws -> String {
         return try await storageRepository.fetchTeams()
     }
-    
+
     func fetchPrivacy() async throws -> String {
         return try await storageRepository.fetchPrivacy()
     }

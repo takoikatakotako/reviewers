@@ -1,21 +1,35 @@
 import SwiftUI
 import FirebaseAuth
 
-class MyAccountSettingChangeEmailViewState: ObservableObject {
-//    @Published var uid: String = ""
+class MyAccountGuidelineViewState: ObservableObject {
+    @Published var markdown: String?
+
+    private let type: MyAccountGuidelineType
+    private let storageRepository = StorageRepository()
+
+    init(type: MyAccountGuidelineType) {
+        self.type = type
+    }
+
+    func onAppear() {
+        Task { @MainActor in
+            do {
+                switch type {
+                case .teams:
+                    self.markdown = try await storageRepository.fetchTeams()
+                case .privacy:
+                    self.markdown = try await storageRepository.fetchPrivacy()
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
 //    @Published var profile: Profile?
 //
 //    // Navigation Destination
 //    @Published var navigationDestination: MyAccountNavigationDestination?
-
-    @Published var email = ""
-    @Published var password = ""
-    @Published var newEmail = ""
-
-//    @Published var disabled = false
-
-    @Published var indicator = false
-
+//
 //    @Published var isAnonymousUser = true
 //
 //    // Fullscreen Cover
@@ -36,48 +50,19 @@ class MyAccountSettingChangeEmailViewState: ObservableObject {
 ////    }
 //
 //    func onAppear() {
+//        isAnonymousUser = (try? authUseCase.isAnonymousUser()) ?? true
 //        Task { @MainActor in
 //            do {
+//                try await authUseCase.reloadUser()
 //                isAnonymousUser = try authUseCase.isAnonymousUser()
 //            } catch {
 //                print(error)
+//                showingErrorAlert = false
+//                showingErrorAlertPresenting = error.localizedDescription
 //            }
 //        }
 //    }
 //
-
-    // Alert
-    @Published var showingFinishAlert = false
-    @Published var showingErrorAlert = false
-    @Published var showingErrorAlertPresenting = ""
-
-    private var authUseCase = AuthUseCase()
-
-    init(email: String) {
-        self.email = email
-    }
-
-    func changeEmail() {
-        indicator = true
-
-        // TODO: メールアドレスなどのバリデーションを行う
-
-        Task { @MainActor in
-            do {
-                try await authUseCase.signIn(email: email, password: password)
-                try await authUseCase.reloadUser()
-                try await authUseCase.changeEmail(email: newEmail)
-                indicator = false
-                showingFinishAlert = true
-            } catch {
-                indicator = false
-                print(error)
-                showingErrorAlertPresenting = error.localizedDescription
-                showingErrorAlert = true
-            }
-        }
-    }
-
 //    func signIn() {
 //        showingFullscreenCover = true
 //    }
@@ -89,6 +74,8 @@ class MyAccountSettingChangeEmailViewState: ObservableObject {
 //                NotificationCenter.default.post(name: NSNotification.signOut, object: self, userInfo: nil)
 //            } catch {
 //                print(error)
+//                showingErrorAlert = false
+//                showingErrorAlertPresenting = error.localizedDescription
 //            }
 //        }
 //    }

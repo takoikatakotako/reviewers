@@ -4,22 +4,22 @@ class TutorialViewState: ObservableObject {
     @Published var page: TutorialPage = .first
     @Published var didOpenTeams = false
     @Published var didOpenPrivacy = false
-    
+
     @Published var indicator = false
-    
+
     // Alert
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting: String?
-    
+
     // Sheet
     @Published var sheet: TutorialGuidelineSheet?
-    
-    private var teams: String? = nil
-    private var privacy: String? = nil
-    
+
+    private var teams: String?
+    private var privacy: String?
+
     private let authUseCase = AuthUseCase()
     private let guidelineUseCase = GuidelineUseCase()
-    
+
     var nextButtonEnable: Bool {
         switch page {
         case .first:
@@ -32,7 +32,7 @@ class TutorialViewState: ObservableObject {
             return didOpenTeams && didOpenPrivacy
         }
     }
-    
+
     func onAppear() {
         Task {
             do {
@@ -50,7 +50,7 @@ class TutorialViewState: ObservableObject {
             didOpenTeams = true
             return
         }
-        
+
         Task { @MainActor in
             do {
                 let teams = try await guidelineUseCase.fetchTeams()
@@ -62,7 +62,7 @@ class TutorialViewState: ObservableObject {
             }
         }
     }
-    
+
     func openPrivacy() {
         if let privacy = privacy {
             sheet = .privacy(privacy)
@@ -81,17 +81,17 @@ class TutorialViewState: ObservableObject {
             }
         }
     }
-    
+
     func tapped() {
         guard page != .guideline else {
             if indicator {
                 return
             }
-            
+
             Task { @MainActor in
                 do {
                     indicator = true
-                    
+
                     // ユーザー作成 & 初期設定
                     try await authUseCase.signInAnonymouslyWithInitialSetting()
                     indicator = false
@@ -100,7 +100,6 @@ class TutorialViewState: ObservableObject {
                 } catch {
                     indicator = false
 
-                    
                     print(error)
                     // TODO: エラーハンドリング
                     showingErrorAlertPresenting = "あれが無理だった"
