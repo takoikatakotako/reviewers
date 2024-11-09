@@ -127,10 +127,76 @@ img {
 }
 
 
+/* --------------------------------------------------------------
+/* user-detail
+----------------------------------------------------------------- */
+.user-detail-content {
+    margin-top: 0.5rem;
+}
+
+.user-detail-content h2 {
+    color: #df5c43;
+}
+
+.user-detail-content p {
+    color: #432;
+    font-size: 1rem;
+}
+
+
+.user-detail-review {
+    margin-top: 0.5rem;
+}
+
+.user-detail-review h2 {
+    color: #df5c43;
+}
+/* 
+.user-detail p {
+    color: #432;
+    font-size: 1rem;
+}
+
+.user-detail hr {
+    margin-top: 0.3rem;
+} */
+
 
 /* --------------------------------------------------------------
 /* review
 ----------------------------------------------------------------- */
+.review-content {
+    margin-top: 0.5rem;
+}
+
+.review-content hr {
+    margin-top: 0.3rem;
+}
+
+.review-content-flexbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-content-flexbox div {
+    flex-shrink: 10;
+}
+
+.review-content-flexbox a h2 {
+    color: #df5c43;
+}
+
+.review-content-flexbox p {
+    color: #432;
+    font-size: 1rem;
+}
+
+.review-content-flexbox img {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin: auto 0px;
+}
 
 
 
@@ -146,10 +212,13 @@ img {
     margin-top: 0.3rem;
 }
 
-
 .merchandise-content-flexbox {
     display: flex;
     justify-content: space-between;
+}
+
+.merchandise-content-flexbox div {
+    flex-shrink: 10;
 }
 
 .merchandise-content-flexbox a h2 {
