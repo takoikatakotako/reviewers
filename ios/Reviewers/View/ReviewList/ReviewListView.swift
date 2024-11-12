@@ -99,7 +99,7 @@ struct ReviewListView: View {
                 case .signUp:
                     AuthView(viewState: AuthViewState())
                 case .report(review: let review):
-                    ReportReviewView(viewState: ReportReviewViewState())
+                    ReportReviewView(viewState: ReportReviewViewState(review: review))
                 }
             })
             .alert("", isPresented: $viewState.showingSignInAlert, actions: {
