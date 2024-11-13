@@ -123,7 +123,9 @@ struct ReportReviewView: View {
                 .padding(.horizontal, 12)
             }
             .alert("", isPresented: $viewState.showingCompleteAlert, actions: {
-                Button("とじる", role: .none) {}
+                Button("とじる", role: .none) {
+                    dismiss()
+                }
             }, message: {
                 Text("ご報告ありがとうございました。")
             })

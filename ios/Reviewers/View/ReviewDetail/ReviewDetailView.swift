@@ -294,10 +294,10 @@ struct ReviewDetailView: View {
         })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {
-            case .account(profile: let profile):
+            case .account:
                 // AccountView(viewState: AccountViewState(profile: profile))
                 Text("この画面が見えたらおかしいよ")
-            case .reviewDetail(review: let review):
+            case .reviewDetail:
                 // ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 Text("この画面が見えたらおかしいよ")
             }
