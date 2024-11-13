@@ -21,8 +21,8 @@ struct ReviewListView: View {
                                     deleteReviewAction: { review in
                                         viewState.deleteReviewTapped(review: review)
                                     },
-                                    reportReviewAction: { _ in
-
+                                    reportReviewAction: { review in
+                                        viewState.reportReview(review: review)
                                     })
                             }
                             .onAppear {
@@ -98,6 +98,8 @@ struct ReviewListView: View {
                     CommonImageViewer(url: imageURL)
                 case .signUp:
                     AuthView(viewState: AuthViewState())
+                case .report(review: let review):
+                    ReportReviewView(viewState: ReportReviewViewState(review: review))
                 }
             })
             .alert("", isPresented: $viewState.showingSignInAlert, actions: {

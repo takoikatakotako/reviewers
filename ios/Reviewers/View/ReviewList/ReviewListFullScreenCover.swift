@@ -7,4 +7,5 @@ enum ReviewListFullScreenCover: Hashable, Identifiable {
     case signUp
     case newPost
     case image(imageURL: URL?)
+    case report(review: Review)
 }

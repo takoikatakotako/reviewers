@@ -304,4 +304,20 @@ struct FirestoreRepository {
             ]
         )
     }
+
+    // MARK: - Report Collection
+    func createReport(uid: String, reviewId: String, message: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreReport.collectionName)
+            .addDocument(data: [
+                FirestoreReport.statusField: FirestoreReportStatus.waitingForReview.rawValue,
+                FirestoreReport.uidField: uid,
+                FirestoreReport.reviewIdField: reviewId,
+                FirestoreReport.messageField: message,
+                FirestoreReport.createdAtField: FieldValue.serverTimestamp(),
+                FirestoreReport.updatedAtField: FieldValue.serverTimestamp()
+            ]
+        )
+    }
 }

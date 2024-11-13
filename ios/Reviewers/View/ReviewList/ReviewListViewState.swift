@@ -159,6 +159,11 @@ class ReviewListViewState: ObservableObject {
         }
     }
 
+    // MARK: - ReportReview
+    func reportReview(review: Review) {
+        fullScreenCover = .report(review: review)
+    }
+
     @MainActor
     private func updateReviews(offsetDate: Date = Date.now, limit: Int = 3) async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewReviews(offsetDate: offsetDate, limit: limit)
