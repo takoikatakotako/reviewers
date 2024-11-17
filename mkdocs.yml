@@ -1,0 +1,39 @@
+site_name: 'レビュワーズ'
+
+# Documentation and theme
+docs_dir: 'documents'
+theme:
+  name: 'material'
+  language: 'ja'
+
+extra:
+  search:
+    language: 'jp' 
+  mermaid2:
+
+nav:
+  # - 'レビュワーズについて': 'index.md'
+  - 'バーコード': 'barcode.md'
+  - 'データベース': 'database.md'
+  - 'アーキテクチャについて': 'architecture.md'
+  #   - 'インフラのアーキテクチャーについて': 'infra-architecture.md'
+  #   - 'アプリケーションのアーキテクチャーについて': 'app-architecture.md'
+  #   - 'APIのエンドポイントについて': 'api-endpoint.md'
+  #   - 'Localstackについて': 'localstack.md'
+  #   - '証明書などのアップデートについて': 'update.md'
+  #   - 'DynamoDBについて': 'dynamodb.md'
+  #   - 'SQSについて': 'sqs.md'
+  # - 'キャラクターについて':
+  #   - 'キャラクターについて': 'chara.md'
+  #   - '井上結衣': 'chara-yui.md'
+  #   - '紅葉': 'chara-momiji.md'
+  #   - 'ずんだもん': 'chara-zundamon.md'
+  # - 'プライバシーポリシー': 'privacy.md'
+  # - '利用規約': 'teams.md'
+  # - 'お問い合わせ': 'contact.md'
+
+
+
+plugins:
+  - search
+  - mermaid2
