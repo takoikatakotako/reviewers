@@ -32,3 +32,8 @@ nav:
   # - '利用規約': 'teams.md'
   # - 'お問い合わせ': 'contact.md'
 
+
+
+plugins:
+  - search
+  - mermaid2
