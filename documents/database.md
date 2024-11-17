@@ -1,10 +1,26 @@
 # Database
 データベースについてのドキュメントです。
-Reviewsのデータベースには Firestore を利用しています。
+レビュワーズのデータベースには Firestore を利用しています。
 
 
 ## reviews
 レビューが格納されるコレクションです。
+
+
+
+```mermaid
+graph TD:
+    A-->B;
+```
+
+```
+---
+title: "タイトル"
+---
+erDiagram
+    users ||--o{ tweets: "コメント" }
+```
+
 
 ### id: string
 ドキュメント作成時に生成されたid
