@@ -132,10 +132,10 @@ struct ReviewListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Image(.listTitleLogo)
+                    Image(.logo)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 28)
+                        .frame(height: 16)
                 }
             }
             .toolbar(.visible, for: .tabBar)
