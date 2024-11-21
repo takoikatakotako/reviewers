@@ -6,7 +6,7 @@ struct LoadingView: View {
             Image(.logo)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 300)
+                .frame(width: 170)  // スプラッシュ画像の半分のサイズにする
         }
         .frame(
             minWidth: 0,

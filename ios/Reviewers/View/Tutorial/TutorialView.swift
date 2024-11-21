@@ -66,10 +66,10 @@ struct TutorialView: View {
                         Spacer()
                     }
                     .frame(height: 48)
-                    .disabled(!viewState.nextButtonEnable)
                     .background(viewState.nextButtonEnable ? Color(.appGreenBackground) : Color(.appBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
+                .disabled(!viewState.nextButtonEnable)
                 .padding(.top, 24)
                 .padding(.horizontal, 16)
             }

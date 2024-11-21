@@ -37,4 +37,8 @@ struct ReviewUseCase {
             )
         }
     }
+
+    func deleteReview(reviewId: String) async throws {
+        try await firestoreRepository.deleteReview(reviewId: reviewId)
+    }
 }

@@ -48,40 +48,11 @@ struct StorageRepository {
 
     // MARK: - Private Method
     private func resizeImage(image: UIImage) throws -> Data {
-        // どちらかが 1000 以上であればリサイズ
-        let originWidth = image.size.width
-        let originHeight = image.size.height
-
-        // リサイズ後のデータ
-        let data: Data
-
-        if 1000 < originWidth || 1000 < originHeight {
-            // リサイズを行う
-            let resizedSize: CGSize
-            if originWidth < originHeight {
-                // 縦長の場合
-                resizedSize = CGSize(width: 1000 * originWidth / originHeight, height: 1000)
-            } else {
-                // 横長の場合
-                resizedSize = CGSize(width: 1000, height: 1000 * originHeight / originWidth)
-            }
-            UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
-            image.draw(in: CGRect(origin: .zero, size: resizedSize))
-            let resizedImageData = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-
-            guard let resizedData = resizedImageData?.pngData() else {
-                throw ReviewersError.temp
-            }
-            data = resizedData
-        } else {
-            // リサイズしない場合
-            guard let imageData = image.pngData() else {
-                throw ReviewersError.temp
-            }
-            data = imageData
+        let resizedImageData = image.resized(maxEdgeLength: 500)
+        guard let resizedData = resizedImageData.pngData() else {
+            throw ReviewersError.temp
         }
-        return data
+        return resizedData
     }
 
     // MARK: - Guideline
@@ -89,7 +60,7 @@ struct StorageRepository {
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let teamsRef = storageRef.child("guideline/teams.md")
-        let data = try await teamsRef.getData(maxSize: 100000)
+        let data = try await teamsRef.getData(maxSize: 2 * 1024 * 1024)
         guard let text =  String(data: data, encoding: .utf8) else {
             throw ReviewersError.temp
         }
@@ -100,7 +71,7 @@ struct StorageRepository {
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let privacyRef = storageRef.child("guideline/privacy.md")
-        let data = try await privacyRef.getData(maxSize: 100000)
+        let data = try await privacyRef.getData(maxSize: 2 * 1024 * 1024)
         guard let text =  String(data: data, encoding: .utf8) else {
             throw ReviewersError.temp
         }

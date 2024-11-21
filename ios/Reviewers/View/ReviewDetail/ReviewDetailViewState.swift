@@ -6,10 +6,17 @@ class ReviewDetailViewState: ObservableObject {
     let review: Review
 
     @Published var merchandise: Merchandise?
+    @Published var uid: String = ""
     @Published var comments: [Comment] = []
     @Published var comment = ""
     @Published var loading = true
     @Published var showingSignInAlert = false
+
+    // Alert
+    @Published var showingReviewDeleteConfirmAlert = false
+    @Published var showingReviewDeleteConfirmAlertPresenting: Review?
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting: String?
 
     // FullScreen
     @Published var fullScreenCover: ReviewDetailFullScreenCover?
@@ -20,10 +27,6 @@ class ReviewDetailViewState: ObservableObject {
     private let authUseCase = AuthUseCase()
     private let reviewUseCase = ReviewProfileUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
-
-//    var profileImageURL: URL {
-//        return Profile.profileImageURL(uid: reviewProfile.uid)
-//    }
 
     init(review: Review) {
         self.review = review
@@ -76,6 +79,31 @@ class ReviewDetailViewState: ObservableObject {
     // メニュー
     func commentMenuTapped() {
 
+    }
+
+    // MARK: - DeleteReview
+    func deleteReviewTapped(review: Review) {
+        showingReviewDeleteConfirmAlertPresenting = review
+        showingReviewDeleteConfirmAlert = true
+    }
+
+    func deleteReview() {
+        Task { @MainActor in
+            do {
+                try await reviewUseCase.deleteReview(reviewId: review.id)
+
+                // 削除完了
+
+            } catch {
+                showingErrorAlertPresenting = "エラーメッセージ5"
+                showingErrorAlert = true
+            }
+        }
+    }
+
+    // MARK: - ReportReview
+    func reportReview() {
+        fullScreenCover = .report(review: review)
     }
 
 }

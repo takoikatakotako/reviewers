@@ -18,7 +18,6 @@ class ReviewListViewState: ObservableObject {
     // NavigationPath
     @Published var path: [ReviewListViewPath] = []
 
-    private let firestoreRepository = FirestoreRepository()
     private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let authUseCase = AuthUseCase()
@@ -148,7 +147,7 @@ class ReviewListViewState: ObservableObject {
     func deleteReview(review: Review) {
         Task { @MainActor in
             do {
-                try await firestoreRepository.deleteReview(reviewId: review.id)
+                try await reviewUseCase.deleteReview(reviewId: review.id)
                 if let index = reviews.firstIndex(of: review) {
                     reviews.remove(at: index)
                 }

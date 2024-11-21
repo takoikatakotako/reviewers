@@ -4,7 +4,7 @@ import SDWebImageSwiftUI
 struct ReviewDetailView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: ReviewDetailViewState
-    @FocusState var keyboardFocused: Bool
+//    @FocusState var keyboardFocused: Bool
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -49,16 +49,44 @@ struct ReviewDetailView: View {
 
                         Spacer()
 
-                        Button {
+                        Menu {
+                            if viewState.uid == viewState.review.uid {
+                                Button(role: .destructive) {
+                                    viewState.deleteReview()
+                                } label: {
+                                    HStack {
+                                        Text("投稿を削除")
+                                        Spacer()
+                                        Image(systemName: "trash")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 24, height: 24)
+                                    }
+                                }
+                            }
+                            Button(role: .none) {
+                                viewState.reportReview()
+                            } label: {
+                                HStack {
+                                    Text("投稿を報告")
+                                        .foregroundStyle(Color(.appMainText))
 
+                                    Spacer()
+                                    Image(systemName: "flag")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                }
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 24, height: 24)
-                                .foregroundStyle(Color(.appMainText))
-                                .padding(8)
+                                .foregroundStyle(Color(.appSubText))
+
                         }
+
                     }
 
                     if viewState.review.comment.isNotEmpty {
@@ -309,6 +337,8 @@ struct ReviewDetailView: View {
             case .signUp:
                 AuthView(viewState: AuthViewState())
                 // SignUpView(viewState: SignUpViewState())
+            case .report(review: let review):
+                ReportReviewView(viewState: ReportReviewViewState(review: review))
             }
         }
         .scrollIndicators(.hidden)
