@@ -164,7 +164,7 @@ class ReviewListViewState: ObservableObject {
     }
 
     @MainActor
-    private func updateReviews(offsetDate: Date = Date.now, limit: Int = 3) async throws {
+    private func updateReviews(offsetDate: Date = Date.now, limit: Int = 10) async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewReviews(offsetDate: offsetDate, limit: limit)
         let margedReviews: [Review] = newReviews + self.reviews
         let uniqueReviews = Set(margedReviews)
