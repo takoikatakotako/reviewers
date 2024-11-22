@@ -49,6 +49,7 @@ func main() {
 		Service: merchandiseService,
 	}
 	report := handler.Report{}
+	user := handler.User{}
 
 	// Echo instance
 	e := echo.New()
@@ -67,6 +68,7 @@ func main() {
 
 	e.GET("/report/", report.ReportGet)
 	e.GET("/review/", review.ReviewGet)
+	e.GET("/user/", user.UserGet)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8888"))

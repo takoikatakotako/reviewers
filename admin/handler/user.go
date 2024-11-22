@@ -1,0 +1,40 @@
+package handler
+
+import (
+	"bytes"
+	"github.com/labstack/echo/v4"
+	"html/template"
+	"net/http"
+)
+
+type User struct {
+	//Service service.Review
+}
+
+func (u *User) UserGet(c echo.Context) error {
+	//page, err := strconv.Atoi(c.FormValue("page"))
+	//if err != nil {
+	//	page = 1
+	//}
+
+	//reviews, err := r.Service.ReviewGet(page)
+	//if err != nil {
+	//	return err
+	//}
+
+	tmpl, err := template.ParseFS(f, "template/user.html")
+	if err != nil {
+		return err
+	}
+
+	//reviewTemplateData := template_data.Review{
+	//	Reviews: &reviews,
+	//}
+	var doc bytes.Buffer
+	err = tmpl.Execute(&doc, nil)
+	if err != nil {
+		return err
+	}
+
+	return c.HTML(http.StatusOK, doc.String())
+}

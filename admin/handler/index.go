@@ -21,5 +21,7 @@ func (i *Index) IndexGet(c echo.Context) error {
 		return err
 	}
 
+	c.Redirect(http.StatusTemporaryRedirect, "/user/")
+
 	return c.HTML(http.StatusOK, doc.String())
 }
