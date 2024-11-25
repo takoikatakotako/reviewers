@@ -10,7 +10,7 @@ import (
 type Report struct{}
 
 func (r *Report) ReportGet(c echo.Context) error {
-	tmpl, err := template.ParseFS(f, "template/report.html")
+	tmpl, err := template.ParseFS(f, "template/report.html", "template/header.html", "template/head.html", "template/footer.html")
 	if err != nil {
 		return err
 	}

@@ -24,7 +24,7 @@ func (m *Merchandise) MerchandiseGet(c echo.Context) error {
 		return err
 	}
 
-	tmpl, err := template.ParseFS(f, "template/merchandise.html")
+	tmpl, err := template.ParseFS(f, "template/merchandise.html", "template/header.html", "template/head.html", "template/footer.html")
 	if err != nil {
 		return err
 	}

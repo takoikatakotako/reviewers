@@ -22,7 +22,7 @@ func (u *User) UserGet(c echo.Context) error {
 	//	return err
 	//}
 
-	tmpl, err := template.ParseFS(f, "template/user.html")
+	tmpl, err := template.ParseFS(f, "template/user.html", "template/header.html", "template/head.html", "template/footer.html")
 	if err != nil {
 		return err
 	}
