@@ -58,6 +58,10 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	// Assets
+	e.Static("/css", "assets/css")
+	e.Static("/image", "assets/image")
+
 	// Routes
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
