@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"admin/entity/template_data"
 	"bytes"
 	"github.com/labstack/echo/v4"
 	"html/template"
@@ -15,8 +16,12 @@ func (r *Report) ReportGet(c echo.Context) error {
 		return err
 	}
 
+	reportTemplateData := template_data.Review{
+		Header: &template_data.Header{Title: "Reviewers管理画面", Report: true},
+	}
+
 	var doc bytes.Buffer
-	err = tmpl.Execute(&doc, nil)
+	err = tmpl.Execute(&doc, reportTemplateData)
 	if err != nil {
 		return err
 	}

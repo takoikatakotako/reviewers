@@ -27,8 +27,15 @@ func main() {
 	storageRepository := repository.FirebaseStorage{
 		Credential: credential,
 	}
+	firebaseAuthRepoaitory := repository.FirebaseAuth{
+		Credential: credential,
+	}
 
 	// Service
+	userService := service.User{
+		Environment:  environmentRepository,
+		FirebaseAuth: firebaseAuthRepoaitory,
+	}
 	reviewService := service.Review{
 		Environment: environmentRepository,
 		Firestore:   firestoreRepository,
@@ -49,7 +56,9 @@ func main() {
 		Service: merchandiseService,
 	}
 	report := handler.Report{}
-	user := handler.User{}
+	user := handler.User{
+		Service: userService,
+	}
 
 	// Echo instance
 	e := echo.New()

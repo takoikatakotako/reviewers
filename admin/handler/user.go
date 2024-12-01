@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"admin/service"
 	"bytes"
 	"github.com/labstack/echo/v4"
 	"html/template"
@@ -8,30 +9,21 @@ import (
 )
 
 type User struct {
-	//Service service.Review
+	Service service.User
 }
 
 func (u *User) UserGet(c echo.Context) error {
-	//page, err := strconv.Atoi(c.FormValue("page"))
-	//if err != nil {
-	//	page = 1
-	//}
-
-	//reviews, err := r.Service.ReviewGet(page)
-	//if err != nil {
-	//	return err
-	//}
-
+	templateData, err := u.Service.UserGet()
+	if err != nil {
+		return err
+	}
 	tmpl, err := template.ParseFS(f, "template/user.html", "template/header.html", "template/head.html", "template/footer.html")
 	if err != nil {
 		return err
 	}
 
-	//reviewTemplateData := template_data.Review{
-	//	Reviews: &reviews,
-	//}
 	var doc bytes.Buffer
-	err = tmpl.Execute(&doc, nil)
+	err = tmpl.Execute(&doc, templateData)
 	if err != nil {
 		return err
 	}

@@ -2,65 +2,39 @@
 <html lang="ja">
 {{template "head"}}
 <body>
-{{template "header"}}
+{{template "header" .Header}}
 
 <main class="wrapper">
   <h1>ユーザー</h1>
 
+  {{ range .Users }}
   <div class="user-content">
-    <a href="user-id.html">
-      <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
+    <a href="/user/{{ .Uid }}/">
+      <h2>ID: {{ .Uid }}</h2>
     </a>
-    <p>Provider: Anonymous</p>
-    <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <p>LastLoginDate: 2024-04-11 11:23:23 +0900 JST</p>
+    <p>Provider: {{ .ProviderId }}</p>
+    <p>CreationTime: {{ .CreationTime }}</p>
+    <p>LastLoginDate: {{ .LastLoginTime }}</p>
     <hr>
   </div>
+  {{ end }}
 
-  <div class="user-content">
-    <a href="user-id.html">
-      <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-    </a>
-    <p>Provider: Anonymous</p>
-    <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <p>LastLoginDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <hr>
-  </div>
+  <!-- TODO: ページネーションの実装に合わせる -->
+  <!-- <div>
+      <ul class="pagination">
+          <li class="pagination-active"><a href="user.html">1</a></li>
+          <li class="pagination-inactive"><a href="user.html">2</a></li>
+          <li class="pagination-inactive"><a href="user.html">3</a></li>
+          <li class="pagination-inactive"><a href="user.html">4</a></li>
+          <li class="pagination-inactive"><a href="user.html">5</a></li>
+          <li class="pagination-inactive"><a href="user.html">6</a></li>
+          <li class="pagination-inactive"><a href="user.html">7</a></li>
+          <li class="pagination-inactive"><a href="user.html">8</a></li>
+          <li class="pagination-inactive"><a href="user.html">9</a></li>
+          <li class="pagination-inactive"><a href="user.html">10</a></li>
+      </ul>
+  </div> -->
 
-  <div class="user-content">
-    <a href="user-id.html">
-      <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-    </a>
-    <p>Provider: Anonymous</p>
-    <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <p>LastLoginDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <hr>
-  </div>
-
-  <div class="user-content">
-    <a href="user-id.html">
-      <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-    </a>
-    <p>Provider: Anonymous</p>
-    <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <p>LastLoginDate: 2024-04-11 11:23:23 +0900 JST</p>
-    <hr>
-  </div>
-
-  <div>
-    <ul class="pagination">
-      <a href="user.html"><li class="pagination-active">1</li></a>
-      <a href="user.html"><li class="pagination-inactive">2</li></a>
-      <a href="user.html"><li class="pagination-inactive">3</li></a>
-      <a href="user.html"><li class="pagination-inactive">4</li></a>
-      <a href="user.html"><li class="pagination-inactive">5</li></a>
-      <a href="user.html"><li class="pagination-inactive">6</li></a>
-      <a href="user.html"><li class="pagination-inactive">7</li></a>
-      <a href="user.html"><li class="pagination-inactive">8</li></a>
-      <a href="user.html"><li class="pagination-inactive">9</li></a>
-      <a href="user.html"><li class="pagination-inactive">10</li></a>
-    </ul>
-  </div>
 </main>
 
 {{template "footer"}}

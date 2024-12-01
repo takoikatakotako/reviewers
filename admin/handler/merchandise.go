@@ -29,11 +29,12 @@ func (m *Merchandise) MerchandiseGet(c echo.Context) error {
 		return err
 	}
 
-	reviewTemplateData := template_data.Merchandise{
+	merchandiseTemplateData := template_data.Merchandise{
+		Header:       &template_data.Header{Title: "Reviewers管理画面", Merchandise: true},
 		Merchandises: &merchandises,
 	}
 	var doc bytes.Buffer
-	err = tmpl.Execute(&doc, reviewTemplateData)
+	err = tmpl.Execute(&doc, merchandiseTemplateData)
 	if err != nil {
 		return err
 	}

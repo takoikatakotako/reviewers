@@ -2,88 +2,68 @@
 <html lang="ja">
 {{template "head"}}
 <body>
-{{template "header"}}
+{{template "header" .Header}}
 
 <main class="wrapper">
     <h1>レビュー</h1>
 
+    {{ range .Reviews }}
     <div class="review-content">
         <div class="review-content-flexbox">
             <div>
-                <a href="/user/0de3475a-9619-4c7e-8c60-bd8bee64128b/">
-                    <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
+                <a href="/review/{{ .Id }}/">
+                    <h2>ID: {{ .Id }}</h2>
                 </a>
                 <p>Rate: ★★★★★</p>
                 <p>Code: 490105521308</p>
-                <p>Message: とてもおいしかった、おいしかった、おいしかった。！！！！！！おいしかった、おいしかった。！！！！！！おいしかった、おいしかった。！！！！！！</p>
-                <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
+                <p>Message: {{ .Comment }}</p>
+                <p>RegisterDate: {{ .CreatedAt }}</p>
             </div>
-            <img src="/image/pocky.png">
-        </div>
-        <hr>
-    </div>
 
-    <div class="review-content">
-        <div class="review-content-flexbox">
-            <div>
-                <a href="/user/0de3475a-9619-4c7e-8c60-bd8bee64128b/">
-                    <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-                </a>
-                <p>Rate: ★★★★★</p>
-                <p>Code: 490105521308</p>
-                <p>Message: とてもおいしかった、おいしかった、おいしかった。！！！！！！おいしかった、おいしかった。！！！！！！おいしかった、おいしかった。！！！！！！</p>
-                <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-            </div>
-            <img src="/image/pocky.png">
-        </div>
-        <hr>
-    </div>
+            {{ if gt (len .Images) 0 }}
+            <img src="{{ (index .Images 0).Url }}">
+            {{ end }}
 
-    <div class="review-content">
-        <div class="review-content-flexbox">
-            <div>
-                <a href="/user/0de3475a-9619-4c7e-8c60-bd8bee64128b/">
-                    <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-                </a>
-                <p>Rate: ★★★★★</p>
-                <p>Code: 490105521308</p>
-                <p>Message: とてもおいしかった、おいしかった、おいしかった。！！！！！！</p>
-                <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-            </div>
-            <img src="/image/pocky.png">
         </div>
         <hr>
     </div>
-
-    <div class="review-content">
-        <div class="review-content-flexbox">
-            <div>
-                <a href="/user/0de3475a-9619-4c7e-8c60-bd8bee64128b/">
-                    <h2>ID: 0de3475a-9619-4c7e-8c60-bd8bee64128b</h2>
-                </a>
-                <p>Rate: ★★★★★</p>
-                <p>Code: 490105521308</p>
-                <p>Message: とてもおいしかった、おいしかった、おいしかった。！！！！！！</p>
-                <p>RegisterDate: 2024-04-11 11:23:23 +0900 JST</p>
-            </div>
-            <img src="/image/pocky.png">
-        </div>
-        <hr>
-    </div>
+    {{ end }}
 
     <div>
         <ul class="pagination">
-            <a href=""><li class="pagination-active">+</li></a>
-            <a href="/user/?page=1"><li class="pagination-active">1</li></a>
-            <a href="/user/?page=2"><li class="pagination-inactive">2</li></a>
-            <a href="/user/?page=3"><li class="pagination-inactive">3</li></a>
-            <a href="/user/?page=4"><li class="pagination-inactive">4</li></a>
-            <a href="/user/?page=5"><li class="pagination-inactive">5</li></a>
-            <a href="/user/?page=6"><li class="pagination-inactive">6</li></a>
-            <a href="/user/?page=7"><li class="pagination-inactive">7</li></a>
-            <a href="/user/?page=8"><li class="pagination-inactive">8</li></a>
-            <a href="/user/?page=9"><li class="pagination-inactive">9</li></a>
-            <a href="/user/?page=10"><li class="pagination-inactive">10</li></a>
+            <a href="">
+                <li class="pagination-active">+</li>
+            </a>
+            <a href="/user/?page=1">
+                <li class="pagination-active">1</li>
+            </a>
+            <a href="/user/?page=2">
+                <li class="pagination-inactive">2</li>
+            </a>
+            <a href="/user/?page=3">
+                <li class="pagination-inactive">3</li>
+            </a>
+            <a href="/user/?page=4">
+                <li class="pagination-inactive">4</li>
+            </a>
+            <a href="/user/?page=5">
+                <li class="pagination-inactive">5</li>
+            </a>
+            <a href="/user/?page=6">
+                <li class="pagination-inactive">6</li>
+            </a>
+            <a href="/user/?page=7">
+                <li class="pagination-inactive">7</li>
+            </a>
+            <a href="/user/?page=8">
+                <li class="pagination-inactive">8</li>
+            </a>
+            <a href="/user/?page=9">
+                <li class="pagination-inactive">9</li>
+            </a>
+            <a href="/user/?page=10">
+                <li class="pagination-inactive">10</li>
+            </a>
         </ul>
     </div>
 </main>
@@ -93,47 +73,3 @@
 </body>
 </html>
 
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="ja">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Review</title>-->
-<!--    &lt;!&ndash;    <link rel="stylesheet" type="text/css" href="style.css">&ndash;&gt;-->
-<!--    &lt;!&ndash;    <script type="text/javascript" src="script.js"></script>&ndash;&gt;-->
-<!--</head>-->
-<!--<body>-->
-<!--<p>Review</p>-->
-
-<!--<hr>-->
-
-<!--<div style="display: flex">-->
-<!--    <a href="/review/?page=1" style="padding: 8px"><p>1</p></a>-->
-<!--    <a href="/review/?page=2" style="padding: 8px"><p>2</p></a>-->
-<!--    <a href="/review/?page=3" style="padding: 8px"><p>3</p></a>-->
-<!--    <a href="/review/?page=4" style="padding: 8px"><p>4</p></a>-->
-<!--    <a href="/review/?page=5" style="padding: 8px"><p>5</p></a>-->
-<!--    <a href="/review/?page=6" style="padding: 8px"><p>6</p></a>-->
-<!--    <a href="/review/?page=7" style="padding: 8px"><p>7</p></a>-->
-<!--    <a href="/review/?page=8" style="padding: 8px"><p>8</p></a>-->
-<!--    <a href="/review/?page=9" style="padding: 8px"><p>9</p></a>-->
-<!--    <a href="/review/?page=10" style="padding: 8px"><p>10</p></a>-->
-<!--</div>-->
-
-<!--<hr>-->
-
-<!--{{ range .Reviews }}-->
-<!--<a href="/review/{{ .Id }}/">-->
-<!--    <div>-->
-<!--        <p>{{ .CreatedAt }}</p>-->
-<!--        <p>{{ .Comment }}</p>-->
-<!--        {{ range .ImageUrls }}-->
-<!--        <img src="{{ . }}" width="300">-->
-<!--        {{ end }}-->
-<!--    </div>-->
-<!--</a>-->
-<!--<hr>-->
-<!--{{ end }}-->
-<!--</body>-->
-<!--</html>-->

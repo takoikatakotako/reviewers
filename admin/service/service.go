@@ -2,8 +2,27 @@ package service
 
 import (
 	"admin/entity/database"
+	"admin/entity/firesbase_auth"
 	"admin/entity/template_data"
 )
+
+func convertAuthUsers(firebaseAuthUsers []firesbase_auth.User) []template_data.UserData {
+	userDataList := make([]template_data.UserData, 0)
+	for _, v := range firebaseAuthUsers {
+		userData := convertAuthUser(v)
+		userDataList = append(userDataList, userData)
+	}
+	return userDataList
+}
+
+func convertAuthUser(firebaseAuthUser firesbase_auth.User) template_data.UserData {
+	return template_data.UserData{
+		Uid:           firebaseAuthUser.Uid,
+		ProviderId:    firebaseAuthUser.ProviderId,
+		CreationTime:  firebaseAuthUser.CreationTime,
+		LastLoginTime: firebaseAuthUser.LastLoginTime,
+	}
+}
 
 func convertReviews(databaseReviews []database.Review, imageBaseUrl string) []template_data.ReviewData {
 	reviewDataList := make([]template_data.ReviewData, 0)

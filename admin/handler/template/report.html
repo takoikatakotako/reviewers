@@ -2,7 +2,7 @@
 <html lang="ja">
 {{template "head"}}
 <body>
-{{template "header"}}
+{{template "header" .Header}}
 
 
 <main class="wrapper">
@@ -64,23 +64,7 @@
     </div>
 </main>
 
-<footer>
-    <div class="copyright">
-        <small>&copy; swiswiswift.com</small>
-    </div>
-</footer>
+{{template "footer"}}
 
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Report</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<p>Report</p>-->
-<!--</body>-->
-<!--</html>-->
