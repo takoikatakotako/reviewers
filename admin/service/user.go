@@ -22,10 +22,32 @@ func (u *User) UserGet() (template_data.User, error) {
 	if err != nil {
 		return template_data.User{}, err
 	}
-	
+
 	users := convertAuthUsers(authUsers)
 	return template_data.User{
 		Header: &template_data.Header{Title: title, User: true},
 		Users:  &users,
+	}, nil
+}
+
+func (u *User) UserDetailGet(userId string) (template_data.UserDetail, error) {
+	// get title
+	title, err := u.Environment.GetTitle()
+	if err != nil {
+		return template_data.UserDetail{}, err
+	}
+
+	// ここでユーザー詳細取得
+
+	//// fetch reviews
+	//authUsers, err := u.FirebaseAuth.FetchUsers()
+	//if err != nil {
+	//	return template_data.UserDetail{}, err
+	//}
+	//
+	//users := convertAuthUsers(authUsers)
+	return template_data.UserDetail{
+		Header: &template_data.Header{Title: title, User: true},
+		User:   nil,
 	}, nil
 }

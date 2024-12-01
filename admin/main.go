@@ -68,12 +68,16 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Assets
-	e.Static("/css", "assets/css")
-	e.Static("/image", "assets/image")
+	e.Static("/css/", "assets/css")
+	e.Static("/image/", "assets/image")
 
 	// Routes
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
+
+	e.GET("/user/", user.UserGet)
+	e.GET("/user/:userId/", user.UserDetailGet)
+
 	e.GET("/merchandise/", merchandise.MerchandiseGet)
 	e.GET("/merchandise/:merchandiseId/review/", merchandise.MerchandiseReviewGet)
 	e.GET("/merchandise/:merchandiseId/review/:reviewId/image/:image/register/", merchandise.MerchandiseReviewImageRegisterGet)
@@ -81,7 +85,6 @@ func main() {
 
 	e.GET("/report/", report.ReportGet)
 	e.GET("/review/", review.ReviewGet)
-	e.GET("/user/", user.UserGet)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8888"))
