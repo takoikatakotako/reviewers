@@ -25,12 +25,13 @@ func (r *Review) ReviewGet(c echo.Context) error {
 		return err
 	}
 
-	tmpl, err := template.ParseFS(f, "template/review.html")
+	tmpl, err := template.ParseFS(f, "template/review.html", "template/header.html", "template/head.html", "template/footer.html")
 	if err != nil {
 		return err
 	}
 
 	reviewTemplateData := template_data.Review{
+		Header:  &template_data.Header{Title: "Reviewers管理画面", Review: true},
 		Reviews: &reviews,
 	}
 	var doc bytes.Buffer

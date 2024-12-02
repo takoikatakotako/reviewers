@@ -1,0 +1,17 @@
+{{define "header"}}
+<div class="sub-cover">
+  <header class="page-header wrapper">
+    <h1 class="align-center">
+      <a href="index.html"><p class="logo">{{ .Title }}</p></a>
+    </h1>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="/user/" class="{{ if .User }}main-nav-active{{ else }}main-nav-inactive{{ end }}">ユーザー</a></li>
+        <li><a href="/review/" class="{{ if .Review }}main-nav-active{{ else }}main-nav-inactive{{ end }}">レビュー</a></li>
+        <li><a href="/merchandise/" class="{{ if .Merchandise }}main-nav-active{{ else }}main-nav-inactive{{ end }}">商品</a></li>
+        <li><a href="/report/" class="{{ if .Report }}main-nav-active{{ else }}main-nav-inactive{{ end }}">報告</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+{{end}}

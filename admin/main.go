@@ -27,8 +27,15 @@ func main() {
 	storageRepository := repository.FirebaseStorage{
 		Credential: credential,
 	}
+	firebaseAuthRepoaitory := repository.FirebaseAuth{
+		Credential: credential,
+	}
 
 	// Service
+	userService := service.User{
+		Environment:  environmentRepository,
+		FirebaseAuth: firebaseAuthRepoaitory,
+	}
 	reviewService := service.Review{
 		Environment: environmentRepository,
 		Firestore:   firestoreRepository,
@@ -49,6 +56,9 @@ func main() {
 		Service: merchandiseService,
 	}
 	report := handler.Report{}
+	user := handler.User{
+		Service: userService,
+	}
 
 	// Echo instance
 	e := echo.New()
@@ -57,9 +67,17 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	// Assets
+	e.Static("/css/", "assets/css")
+	e.Static("/image/", "assets/image")
+
 	// Routes
 	e.GET("/", index.IndexGet)
 	e.GET("/healthcheck/", healthcheck.HealthcheckGet)
+
+	e.GET("/user/", user.UserGet)
+	e.GET("/user/:userId/", user.UserDetailGet)
+
 	e.GET("/merchandise/", merchandise.MerchandiseGet)
 	e.GET("/merchandise/:merchandiseId/review/", merchandise.MerchandiseReviewGet)
 	e.GET("/merchandise/:merchandiseId/review/:reviewId/image/:image/register/", merchandise.MerchandiseReviewImageRegisterGet)

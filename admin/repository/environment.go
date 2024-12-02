@@ -10,6 +10,20 @@ type Environment struct {
 	FileName string
 }
 
+func (e *Environment) GetTitle() (string, error) {
+	data, err := os.ReadFile(e.FileName)
+	if err != nil {
+		return "", err
+	}
+
+	config := environment.Config{}
+	err = json.Unmarshal(data, &config)
+	if err != nil {
+		return "", err
+	}
+	return config.Title, nil
+}
+
 func (e *Environment) GetImageBaseUrlString() (string, error) {
 	data, err := os.ReadFile(e.FileName)
 	if err != nil {
@@ -21,6 +35,6 @@ func (e *Environment) GetImageBaseUrlString() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	
+
 	return config.ImageBaseURL, nil
 }
