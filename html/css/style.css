@@ -191,6 +191,38 @@ img {
 }
 
 
+/* --------------------------------------------------------------
+/* review-detail
+----------------------------------------------------------------- */
+.review-detail-content {
+    margin-top: 0.5rem;
+}
+
+.review-detail-content h2 {
+    color: #df5c43;
+}
+
+.review-detail-content-pair {
+    margin-top: 0.3rem;
+}
+
+.review-detail-content-pair-title {
+    color: #432;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.review-detail-content-pair img {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin: auto 0px;
+    border-radius: 8px;
+}
+
+.review-detail-content-pair-images {
+    margin-top: 0.3rem;
+}
 
 
 /* --------------------------------------------------------------
