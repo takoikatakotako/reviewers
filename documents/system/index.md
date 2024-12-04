@@ -4,4 +4,4 @@
 - [認証](auth.md)
 - [バーコード](barcode.md)
 - [データベース](database.md)
-- [ガイドライン](guideline.md)
+- [Firestoreルール](firestore-rule.md)
