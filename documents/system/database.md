@@ -1,6 +1,7 @@
 # Database
 データベースについてのドキュメントです。
 reviewers のデータベースには Firestore を利用しています。
+Firestoreのルール については [Firestoreルール](firestore-rule.md) にまとめてあります。
 
 
 ## Relation
