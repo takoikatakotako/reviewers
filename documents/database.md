@@ -83,9 +83,9 @@ codeType には以下のいずれかの値が入ります。
 erDiagram
   merchandises {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
+    string name "商品名"
     bool deleted "有効な商品か否か"
     string(enum) status "商品のステータス。特定の値が入る。(WaitingForReview, ReviewCompleted)"
-    string name "商品名"
     string code "商品コード, スキャンしたバーコードの文字列"
     string codeType "スキャンしたバーコードのタイプ。特定の値が入る。(EAN13, EAN8)"
     string image "画像のファイル名。無い場合は空文字となる。"
