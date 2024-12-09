@@ -3,20 +3,20 @@ import FirebaseFirestore
 struct FirestoreMerchandise: Hashable {
     static let collectionName = "merchandises"
 
-    static let enableField = "enable"
+    static let deletedField = "deleted"
     static let statusField = "status"
     static let nameField = "name"
     static let codeField = "code"
     static let codeTypeField = "codeType"
     static let imageField = "image"
-    static let imageRefarenceReviewIdField = "imageRefarenceReviewId"
+    static let imageRefarenceReviewIdField = "imageReferenceReviewId"
     static let createdAtField = "createdAt"
     static let createdUid = "createdUid"
     static let updatedAtField = "updatedAt"
     static let updatedUid = "updatedUid"
 
     let id: String
-    let enable: Bool
+    let deleted: Bool
     let status: FirestoreMerchandiseStatus
     let name: String
     let code: String
@@ -31,7 +31,7 @@ struct FirestoreMerchandise: Hashable {
     init(document: DocumentSnapshot) throws {
         guard
             let data = document.data(),
-            let enable = data[Self.enableField] as? Bool,
+            let deleted = data[Self.deletedField] as? Bool,
             let statusString = data[Self.statusField] as? String,
             let status = FirestoreMerchandiseStatus(rawValue: statusString),
             let name = data[Self.nameField] as? String,
@@ -47,7 +47,7 @@ struct FirestoreMerchandise: Hashable {
             throw ReviewersError.failedToDecode(message: document.documentID)
         }
         self.id = document.documentID
-        self.enable = enable
+        self.deleted = deleted
         self.status = status
         self.name = name
         self.code = code
@@ -74,7 +74,7 @@ struct FirestoreMerchandise: Hashable {
         updatedUid: String?
     ) {
         self.id = id
-        self.enable = enable
+        self.deleted = enable
         self.status = status
         self.name = name
         self.code = code

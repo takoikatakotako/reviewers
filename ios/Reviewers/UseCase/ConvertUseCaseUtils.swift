@@ -44,7 +44,7 @@ struct ConvertUseCaseUtils {
 
         return Merchandise(
             id: firestoreMerchandise.id,
-            enable: firestoreMerchandise.enable,
+            deleted: firestoreMerchandise.deleted,
             status: status,
             name: firestoreMerchandise.name,
             code: firestoreMerchandise.code,

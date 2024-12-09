@@ -290,7 +290,7 @@ struct FirestoreRepository {
         try await db
             .collection(FirestoreMerchandise.collectionName)
             .addDocument(data: [
-                FirestoreMerchandise.enableField: true,
+                FirestoreMerchandise.deletedField: false,
                 FirestoreMerchandise.statusField: FirestoreMerchandiseStatus.waitingForReview.rawValue,
                 FirestoreMerchandise.nameField: name,
                 FirestoreMerchandise.codeField: code,
