@@ -133,10 +133,10 @@ func main() {
 			log.Fatalf("name is not exist")
 		}
 
-		if deleted, ok := data["deleted"].(bool); ok {
-			log.Printf("deleted: %t\n", deleted)
+		if deleted, ok := data["enable"].(bool); ok {
+			log.Printf("enable: %t\n", deleted)
 		} else {
-			log.Fatalf("deleted is not exist")
+			log.Fatalf("enable is not exist")
 		}
 
 		if code, ok := data["code"].(string); ok {
@@ -151,35 +151,22 @@ func main() {
 			log.Fatalf("codeType is not exist")
 		}
 
-		if comment, ok := data["comment"].(string); ok {
-			log.Printf("comment: %s\n", comment)
+		if status, ok := data["status"].(string); ok {
+			log.Printf("status: %s\n", status)
 		} else {
-			log.Fatalf("comment is not exist")
+			log.Fatalf("status is not exist")
 		}
 
-		if interfaceImages, ok := data["images"].([]interface{}); ok {
-			// 文字列の配列に変換
-			var images []string
-			for _, interfaceImage := range interfaceImages {
-				if str, ok := interfaceImage.(string); ok {
-					images = append(images, str)
-				} else {
-					log.Fatalf("image is not string")
-				}
-			}
-			log.Printf("images: %s\n", images)
+		if image, ok := data["image"].(string); ok {
+			log.Printf("image: %s\n", image)
 		} else {
-			log.Fatalf("images is not exist")
+			log.Fatalf("image is not exist")
 		}
 
-		if rate, ok := data["rate"].(int64); ok {
-			if 1 <= rate && rate <= 5 {
-				log.Printf("rate: %d\n", rate)
-			} else {
-				log.Fatalf("rate invalid value")
-			}
+		if imageReferenceReviewId, ok := data["imageReferenceReviewId"].(string); ok {
+			log.Printf("imageReferenceReviewId: %s\n", imageReferenceReviewId)
 		} else {
-			log.Fatalf("rate is not exist")
+			log.Fatalf("imageReferenceReviewId is not exist")
 		}
 
 		if createdAt, ok := data["createdAt"].(time.Time); ok {
@@ -188,11 +175,47 @@ func main() {
 			log.Fatalf("createdAt is not exist")
 		}
 
+		if createdUid, ok := data["createdUid"].(string); ok {
+			log.Printf("createdUid: %s\n", createdUid)
+		} else {
+			log.Fatalf("createdUid is not exist")
+		}
+
 		if updatedAt, ok := data["updatedAt"].(time.Time); ok {
 			log.Printf("updatedAt: %s\n", updatedAt)
 		} else {
 			log.Fatalf("updatedAt is not exist")
 		}
+
+		if updatedUid, ok := data["updatedUid"].(string); ok {
+			log.Printf("updatedUid: %s\n", updatedUid)
+		} else {
+			log.Fatalf("updatedUid is not exist")
+		}
+
+		//update := []firestore.Update{
+		//	{
+		//		Path:  "deleted",
+		//		Value: firestore.Delete,
+		//	},
+		//}
+		//
+		//_, err = client.Collection("merchandises").Doc(merchandise.Ref.ID).Update(context.Background(), update)
+		//if err != nil {
+		//	return
+		//}
+
+		//update := []firestore.Update{
+		//	{
+		//		Path:  "imageRefarenceReviewId",
+		//		Value: firestore.Delete,
+		//	},
+		//}
+		//
+		//_, err = client.Collection("merchandises").Doc(merchandise.Ref.ID).Update(context.Background(), update)
+		//if err != nil {
+		//	return
+		//}
 
 	}
 }
