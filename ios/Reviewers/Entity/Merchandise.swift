@@ -2,7 +2,7 @@ import Foundation
 
 struct Merchandise: Identifiable, Hashable {
     let id: String
-    let enable: Bool
+    let deleted: Bool
     let status: MerchandiseStatus
     let name: String
     let code: String
