@@ -76,7 +76,7 @@ Reviewers運営（以下，「当方」といいます。）は，本ウェブ�
 本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。
 
 Reviewers運営
-Eメールアドレス： reviewers@swiswiswift.com
+Eメールアドレス： reviewers@mail.swiswiswift.com
 
 
 2024年12月1日制定
