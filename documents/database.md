@@ -1,4 +1,5 @@
 # Database
+
 データベースについてのドキュメントです。
 reviewers のデータベースには Firestore を利用しています。
 Firestoreのルール については [Firestoreルール](firestore-rule.md) にまとめてあります。
@@ -9,8 +10,9 @@ Firestoreのルール については [Firestoreルール](firestore-rule.md) �
 ```mermaid
 erDiagram
   merchandises ||--o{ reviews : "merchandisesは0以上のreviewを持つ"
-  reviews ||--o{ reports : "reviewsは0以上のreportを持つ"
+  reviews ||--o{ review_reports : "reviewsは0以上のreportを持つ"
   user ||--o{ reviews : "userは0以上のreviewsを持つ"
+  user ||--o{ contacts : "userは0以上のcontactsを持つ"
 
   reviews {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
@@ -21,6 +23,15 @@ erDiagram
     string comment "レビューコメント"
     list(string) images "添付した画像名の配列"
     int rate "レビューレート, 1-5の値が格納される"
+    timestamp createdAt "ドキュメント生成時間"
+    timestamp updatedAt "ドキュメント更新時間"
+  }
+  review_reports {
+    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
+    string(enum) status "レポートのステータス、特定の値が入る"
+    boolean uid "レポートしたユーザーのID"
+    string reviewId "レポート対象のレビューのID"
+    string message "補足などに用いられるメッセージ"
     timestamp createdAt "ドキュメント生成時間"
     timestamp updatedAt "ドキュメント更新時間"
   }
@@ -38,12 +49,13 @@ erDiagram
     timestamp updatedAt "ドキュメント更新時間"
     string updatedUid "ドキュメントを更新したユーザーのUserID, 管理画面から更新する場合はADMINがはいる。"
   }
-  reports {
+  contacts {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
-    string(enum) status "レポートのステータス、特定の値が入る"
-    boolean uid "レポートしたユーザーのID"
-    string reviewId "レポート対象のレビューのID"
-    string message "補足などに用いられるメッセージ"
+    string uid "お問い合わせしたユーザーのID"
+    string(enum) status "お問い合わせのステータス、特定の値が入る"
+    string email "お問い合わせ内容のメッセージ"
+    string message "お問い合わせ内容メッセージ"
+    string memo "補足などに用いられるメッセージ"
     timestamp createdAt "ドキュメント生成時間"
     timestamp updatedAt "ドキュメント更新時間"
   }
@@ -115,3 +127,11 @@ erDiagram
     timestamp updatedAt "ドキュメント更新時間"
 }
 ```
+
+## Contact
+
+### uid: string
+ドキュメントID, ドキュメント作成時に生成されたID
+
+### status: string(enum)
+`xxx`, `yyy` のいずれかの値を持つ
