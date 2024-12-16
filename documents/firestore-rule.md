@@ -136,7 +136,33 @@ service cloud.firestore {
         && 'createdAt' in report && report.createdAt is timestamp
         && 'updatedAt' in report && report.updatedAt is timestamp;
       }
-    }    
+    }
+    
+    
+    ////////////////////////////////////////
+    // contacts collection
+    ////////////////////////////////////////
+    match /contacts/{reportId} {
+      // read: すべてのユーザーが読み取り不可能、可能なのは管理者のみ
+      allow read: if false;
+
+			// create: 認証済み、バリデーション通過(TODO)
+			allow create: if request.auth != null
+      && isValidCreateContact(request.resource.data)
+      && request.resource.data.uid == request.auth.uid;
+            
+      // createのバリデーション
+      function isValidCreateContact(contact) {
+        return contact.size() == 6
+        && 'uid' in contact && contact.uid is string
+				&& 'status' in contact && contact.status is string
+        && 'email' in contact && contact.email is string
+        && 'message' in contact && contact.message is string
+        && 'memo' in contact && contact.memo is string
+        && 'createdAt' in contact && contact.createdAt is timestamp
+        && 'updatedAt' in contact && contact.updatedAt is timestamp;
+      }
+    }  
   }
 }
 ```

@@ -30,7 +30,7 @@ struct MyAccountView: View {
 
                 Section("お問い合わせ") {
                     NavigationLink {
-
+                        ContactView(viewState: ContactViewState())
                     } label: {
                         Text("お問い合わせ")
                     }

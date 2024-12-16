@@ -320,4 +320,19 @@ struct FirestoreRepository {
             ]
         )
     }
+
+    // MARK: - Contact Collection
+    func createContact(uid: String, email: String, message: String) async throws {
+        let db = Firestore.firestore()
+        try await db
+            .collection(FirestoreContact.collectionName)
+            .addDocument(data: [
+                FirestoreContact.uidField: uid,
+                FirestoreContact.statusField: FirestoreContactStatus.waitingForReview.rawValue,
+                FirestoreContact.messageField: message,
+                FirestoreContact.createdAtField: FieldValue.serverTimestamp(),
+                FirestoreContact.updatedAtField: FieldValue.serverTimestamp()
+            ]
+        )
+    }
 }
