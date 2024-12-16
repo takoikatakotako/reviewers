@@ -1,8 +1,8 @@
 import FirebaseFirestore
 
 struct FirestoreContact: Hashable {
-    static let collectionName = "contact"
-    
+    static let collectionName = "contacts"
+
     static let statusField = "status"
     static let uidField = "uid"
     static let emailField = "email"

@@ -329,7 +329,9 @@ struct FirestoreRepository {
             .addDocument(data: [
                 FirestoreContact.uidField: uid,
                 FirestoreContact.statusField: FirestoreContactStatus.waitingForReview.rawValue,
+                FirestoreContact.emailField: email,
                 FirestoreContact.messageField: message,
+                FirestoreContact.memoField: "",
                 FirestoreContact.createdAtField: FieldValue.serverTimestamp(),
                 FirestoreContact.updatedAtField: FieldValue.serverTimestamp()
             ]

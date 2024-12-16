@@ -5,7 +5,7 @@ import LicenseList
 struct ContactView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: ContactViewState
-    
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -14,11 +14,11 @@ struct ContactView: View {
                         CommonText(text: "ユーザーID", font: Font.mPlus2SemiBold(size: 16), lineHeight: 32, alignment: .leading)
                         CommonText(text: viewState.uid, font: Font.mPlus2Regular(size: 16), lineHeight: 32, alignment: .leading)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 0) {
                         CommonText(text: "メールアドレス", font: Font.mPlus2SemiBold(size: 16), lineHeight: 32, alignment: .leading)
                         CommonText(text: "返信が必要な場合は入力をお願いします。", font: Font.mPlus2Regular(size: 16), lineHeight: 32, alignment: .leading)
-                        
+
                         TextField("", text: $viewState.email)
                             .foregroundStyle(Color.black)
                             .padding(.horizontal, 8)
@@ -30,7 +30,7 @@ struct ContactView: View {
                                     .foregroundStyle(Color(.appSubText))
                             )
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 0) {
                         CommonText(text: "お問い合わせ内容", font: Font.mPlus2SemiBold(size: 16), lineHeight: 32, alignment: .leading)
                         TextField("", text: $viewState.message, axis: .vertical)
@@ -49,7 +49,7 @@ struct ContactView: View {
                 .padding(16)
                 .frame(minWidth: 0, maxWidth: .infinity)
             }
-            
+
             if viewState.indicator {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -100,7 +100,7 @@ struct ContactView: View {
                         .padding(.trailing, 8)
                 }
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     viewState.sendMessage()
