@@ -9,6 +9,7 @@ class MyAccountViewState: ObservableObject {
 //    @Published var navigationDestination: MyAccountNavigationDestination?
 
     @Published var isAnonymousUser = true
+    @Published var versionTapCount = 0
 
     // Fullscreen Cover
     @Published var showingFullscreenCover = false
@@ -56,5 +57,9 @@ class MyAccountViewState: ObservableObject {
                 showingErrorAlertPresenting = error.localizedDescription
             }
         }
+    }
+    
+    func versionTapped() {
+        versionTapCount += 1
     }
 }

@@ -117,7 +117,8 @@ struct AccountView: View {
             switch item {
             case .account(profile: let profile):
                 AccountView(viewState: AccountViewState(profile: profile))
-            case .reviewDetail(review: let review):
+            case .reviewDetail:
+                // case .reviewDetail(review: let review):
                 // ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                 Text("この画面が見えたらおかしいよ")
             }

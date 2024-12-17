@@ -15,18 +15,28 @@ struct MyAccountView: View {
                         Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
                     }
-                }
-
-                if !viewState.isAnonymousUser {
-                    Section("レビュー") {
-                        NavigationLink {
-                            MyReviewListView(viewState: MyReviewListViewState())
+                    
+                    if viewState.isAnonymousUser {
+                        Button {
+                            viewState.signIn()
                         } label: {
-                            Text("マイレビュー")
-                                .foregroundStyle(Color(.appMainText))
+                            Text("サインイン")
+                        }
+                    }
+
+                    
+                    if !viewState.isAnonymousUser {
+                        Section("レビュー") {
+                            NavigationLink {
+                                MyReviewListView(viewState: MyReviewListViewState())
+                            } label: {
+                                Text("マイレビュー")
+                                    .foregroundStyle(Color(.appMainText))
+                            }
                         }
                     }
                 }
+
 
                 Section("お問い合わせ") {
                     NavigationLink {
@@ -37,20 +47,23 @@ struct MyAccountView: View {
                 }
 
                 Section("アプリケーション情報") {
-                    HStack {
-                        Text("バージョン情報")
-                        Spacer()
-                        Text("1.0.0(3)")
+                    Button {
+                        viewState.versionTapped()
+                    } label: {
+                        HStack {
+                            Text("バージョン情報")
+                            Spacer()
+                            Text("1.0.0(3)")
+                        }
                     }
+
                     NavigationLink {
                         LicenseListView()
                     } label: {
                         Text("ライセンス")
                             .foregroundStyle(Color(.appMainText))
                     }
-                }
 
-                Section("利用規約・プライバシーポリシー") {
                     NavigationLink {
                         MyAccountGuidelineView(viewState: MyAccountGuidelineViewState(type: .teams))
                     } label: {
@@ -63,28 +76,22 @@ struct MyAccountView: View {
                         Text("プライバシーポリシー")
                     }
                 }
-
-                Section("アカウント") {
-                    if viewState.isAnonymousUser {
-                        Button {
-                            viewState.signIn()
+                
+                if viewState.versionTapCount > 3 {
+                    Section("Debug") {
+                        NavigationLink {
+                            DebugView(viewState: DebugViewState())
                         } label: {
-                            Text("サインイン")
+                            Text("Debug")
                         }
                     }
-
+                }
+                
+                Section("サインアウト") {
                     Button {
                         viewState.signOut()
                     } label: {
                         Text("サインアウト")
-                    }
-                }
-
-                Section("Debug") {
-                    NavigationLink {
-                        DebugView(viewState: DebugViewState())
-                    } label: {
-                        Text("Debug")
                     }
                 }
             }
