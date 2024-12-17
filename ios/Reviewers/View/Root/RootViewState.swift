@@ -34,7 +34,7 @@ class RootViewState: ObservableObject {
                 }
 
                 // アカウントは存在するかチェック
-                if let user = authUseCase.getUser() {
+                if let _ = authUseCase.getUser() {
                     // ログインしている
                     withAnimation(.linear(duration: 1)) {
                         type = .main
@@ -56,7 +56,7 @@ class RootViewState: ObservableObject {
 
     func doneTutorial() {
         // アカウントは存在するかチェック
-        if let user = authUseCase.getUser() {
+        if let _ = authUseCase.getUser() {
             // ログインしている
             withAnimation(.linear(duration: 1)) {
                 type = .main

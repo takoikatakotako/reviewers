@@ -125,7 +125,7 @@ struct ReviewSearchDetailView: View {
                             CommonSimpleReviewRow(
                                 uid: "",
                                 review: review) { url in
-                                    print(url)
+                                    print(url ?? "nil")
                                 } deleteReviewAction: { review in
                                     print(review)
                                 } reportReviewAction: { review in

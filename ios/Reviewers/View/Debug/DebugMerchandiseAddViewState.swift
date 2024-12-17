@@ -38,7 +38,7 @@ class DebugMerchandiseAddViewState: ObservableObject {
 
             do {
                 // すでに登録されているか調べる
-                if let merchandise = try? await merchandiseUseCase.fetchMerchandise(code: code) {
+                if let _ = try? await merchandiseUseCase.fetchMerchandise(code: code) {
                     // すでに登録されている
                     showingAlreadyRegisterdAlert = true
                     indicator = false
