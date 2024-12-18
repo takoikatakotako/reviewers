@@ -128,7 +128,21 @@ erDiagram
 }
 ```
 
-## Contact
+## contacts
+
+```mermaid
+erDiagram
+  contacts {
+    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
+    string uid "お問い合わせしたユーザーのID"
+    string(enum) status "お問い合わせのステータス、特定の値が入る"
+    string email "お問い合わせ内容のメッセージ"
+    string message "お問い合わせ内容メッセージ"
+    string memo "補足などに用いられるメッセージ"
+    timestamp createdAt "ドキュメント生成時間"
+    timestamp updatedAt "ドキュメント更新時間"
+  }
+```
 
 ### uid: string
 ドキュメントID, ドキュメント作成時に生成されたID

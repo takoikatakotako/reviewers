@@ -15,7 +15,7 @@ struct MyAccountView: View {
                         Text("ユーザー情報変更")
                             .foregroundStyle(Color(.appMainText))
                     }
-                    
+
                     if viewState.isAnonymousUser {
                         Button {
                             viewState.signIn()
@@ -24,7 +24,6 @@ struct MyAccountView: View {
                         }
                     }
 
-                    
                     if !viewState.isAnonymousUser {
                         Section("レビュー") {
                             NavigationLink {
@@ -36,7 +35,6 @@ struct MyAccountView: View {
                         }
                     }
                 }
-
 
                 Section("お問い合わせ") {
                     NavigationLink {
@@ -76,7 +74,7 @@ struct MyAccountView: View {
                         Text("プライバシーポリシー")
                     }
                 }
-                
+
                 if viewState.versionTapCount > 3 {
                     Section("Debug") {
                         NavigationLink {
@@ -86,7 +84,7 @@ struct MyAccountView: View {
                         }
                     }
                 }
-                
+
                 Section("サインアウト") {
                     Button {
                         viewState.signOut()

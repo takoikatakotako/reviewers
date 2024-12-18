@@ -58,7 +58,7 @@ class MyAccountViewState: ObservableObject {
             }
         }
     }
-    
+
     func versionTapped() {
         versionTapCount += 1
     }
