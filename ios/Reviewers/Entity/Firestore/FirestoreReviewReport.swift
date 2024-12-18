@@ -1,7 +1,7 @@
 import FirebaseFirestore
 
-struct FirestoreReport: Hashable {
-    static let collectionName = "reports"
+struct FirestoreReviewReport: Hashable {
+    static let collectionName = "review_reports"
 
     static let statusField = "status"
     static let uidField = "uid"

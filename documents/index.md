@@ -1,10 +1,9 @@
 レビュワーズは商品の口コミを共有することのできるプラットフォームです。
 
-- [管理画面](admin/index.md)
-- [分析](analytics/index.md)
-- [システム](system/index.md)
-- [ガイドライン](guideline/index.md)
-
+- [管理画面](admin.md)
+- [分析](analytics.md)
+- [システム](system.md)
+- [ガイドライン](guideline.md)
 - [アーキテクチャ](architecture.md)
 - [認証](auth.md)
 - [バーコード](barcode.md)
