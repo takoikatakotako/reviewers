@@ -28,8 +28,10 @@ struct BlockedUsersView: View {
         }
         .navigationDestination(item: $viewState.navigationDestination, destination: { item in
             switch item {
-            case .account(let profile):
-                AccountView(viewState: AccountViewState(profile: profile))
+            case .account:
+            // case .account(let profile):
+                Text("この画面が見えたらおかしい")
+                // AccountView(viewState: AccountViewState(profile: profile))
             }
         })
         .onAppear {

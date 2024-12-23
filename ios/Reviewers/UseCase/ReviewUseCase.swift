@@ -7,33 +7,33 @@ struct ReviewUseCase {
 
     func fetchNewReviews(offsetDate: Date = Date.now, limit: Int = 10) async throws -> [Review] {
         let firestoreReviews = try await firestoreRepository.fetchReviews(offsetDate: offsetDate, limit: limit)
-        let baseImageUrlString = environmentRepository.getImageBaseUrlString()
+        let storageEndpoint = environmentRepository.getStorageEndpoint()
         return firestoreReviews.map { firestoreReview in
             return convert.review(
                 firestoreReview: firestoreReview,
-                baseImageUrlString: baseImageUrlString
+                storageEndpoint: storageEndpoint
             )
         }
     }
 
     func fetchNewUserReviews(uid: String) async throws -> [Review] {
         let firestoreReviews = try await firestoreRepository.fetchNewUserReviews(uid: uid, limit: 20)
-        let baseImageUrlString = environmentRepository.getImageBaseUrlString()
+        let storageEndpoint = environmentRepository.getStorageEndpoint()
         return firestoreReviews.map { firestoreReview in
             return convert.review(
                 firestoreReview: firestoreReview,
-                baseImageUrlString: baseImageUrlString
+                storageEndpoint: storageEndpoint
             )
         }
     }
 
     func fetchMerchandiseReviews(merchandiseCode: String) async throws -> [Review] {
         let firestoreReviews = try await firestoreRepository.fetchMerchandiseReviews(merchandiseCode: merchandiseCode)
-        let baseImageUrlString = environmentRepository.getImageBaseUrlString()
+        let storageEndpoint = environmentRepository.getStorageEndpoint()
         return firestoreReviews.map { firestoreReview in
             return convert.review(
                 firestoreReview: firestoreReview,
-                baseImageUrlString: baseImageUrlString
+                storageEndpoint: storageEndpoint
             )
         }
     }

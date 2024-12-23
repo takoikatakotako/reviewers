@@ -57,7 +57,7 @@ class TutorialViewState: ObservableObject {
                 sheet = .teams(teams)
                 didOpenTeams = true
             } catch {
-                showingErrorAlertPresenting = "開けませんでした、時間を空けてお試し食おださい"
+                showingErrorAlertPresenting = "利用規約を開けませんでした。時間を空けてお試しください。"
                 showingErrorAlert = true
             }
         }
@@ -76,7 +76,7 @@ class TutorialViewState: ObservableObject {
                 sheet = .privacy(privacy)
                 didOpenPrivacy = true
             } catch {
-                showingErrorAlertPresenting = "開けませんでした、時間を空けてお試し食おださい"
+                showingErrorAlertPresenting = "プライバシーポリシーを開けませんでした。時間を空けてお試しください。"
                 showingErrorAlert = true
             }
         }
@@ -102,7 +102,7 @@ class TutorialViewState: ObservableObject {
 
                     print(error)
                     // TODO: エラーハンドリング
-                    showingErrorAlertPresenting = "あれが無理だった"
+                    showingErrorAlertPresenting = "新規登録に失敗しました。時間を空けてお試しください。"
                     showingErrorAlert = true
                 }
             }

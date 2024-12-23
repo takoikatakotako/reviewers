@@ -7,7 +7,7 @@ class ReviewSearchDetailViewState: ObservableObject {
     @Published var reviews: [Review] = []
     @Published var loading: Bool = false
 
-    private let profileUseCase = ProfileUseCase()
+//    private let profileUseCase = ProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
 

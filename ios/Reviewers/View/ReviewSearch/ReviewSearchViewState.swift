@@ -19,8 +19,8 @@ class ReviewSearchViewState: ObservableObject {
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
 
-    private let profileUseCase = ProfileUseCase()
-    private let reviewUseCase = ReviewProfileUseCase()
+//    private let profileUseCase = ProfileUseCase()
+//    private let reviewUseCase = ReviewProfileUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
 
     func onAppear() {
@@ -101,12 +101,12 @@ class ReviewSearchViewState: ObservableObject {
         return try await merchandiseUseCase.fetchMerchandise(code: code)
     }
 
-    @MainActor
-    private func updateUserReviews(uid: String) async throws {
-        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
-        let margedReviews: [ReviewProfile] = newReviews + self.reviews
-        let uniqueReviews = Set(margedReviews)
-        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
-        self.reviews = sortedReviews
-    }
+//    @MainActor
+//    private func updateUserReviews(uid: String) async throws {
+//        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
+//        let margedReviews: [ReviewProfile] = newReviews + self.reviews
+//        let uniqueReviews = Set(margedReviews)
+//        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
+//        self.reviews = sortedReviews
+//    }
 }

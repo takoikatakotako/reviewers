@@ -17,10 +17,10 @@ class MyReviewListViewState: ObservableObject {
     // FullScreenCover
     @Published var fullScreenCover: MyReviewListViewFullScreenCover?
 
-    private let profileUseCase = ProfileUseCase()
+//    private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
     private let firestoreRepository = FirestoreRepository()
-    private let reviewProfileUseCase = ReviewProfileUseCase()
+//    private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
 
     func onAppear() {

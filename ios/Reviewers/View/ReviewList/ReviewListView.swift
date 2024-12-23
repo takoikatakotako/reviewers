@@ -74,15 +74,16 @@ struct ReviewListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding(12)
                 }
-
             }
             .onAppear {
                 viewState.onAppear()
             }
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
-                case .account(profile: let profile):
-                    AccountView(viewState: AccountViewState(profile: profile))
+                case .account:
+                // case .account(profile: let profile):
+                    Text("この画面が見えたらおかしいよ")
+                    // AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                         .toolbar(.hidden, for: .tabBar)

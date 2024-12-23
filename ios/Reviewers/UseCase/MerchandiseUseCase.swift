@@ -2,18 +2,21 @@ import Foundation
 
 struct MerchandiseUseCase {
     private let firestoreRepository = FirestoreRepository()
+    private let environmentRepository = EnvironmentRepository()
     private let convertUseCaseUtils = ConvertUseCaseUtils()
 
     func fetchMerchandises() async throws -> [Merchandise] {
         let firestoreMerchandises = try await firestoreRepository.fetchMerchandises()
+        let storageEndpoint = environmentRepository.getStorageEndpoint()
         return firestoreMerchandises.map { firestoreMerchandise in
-            return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise, baseImageUrlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/")
+            return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise, storageEndpoint: storageEndpoint)
         }
     }
 
     func fetchMerchandise(code: String) async throws -> Merchandise {
         let firestoreMerchandise = try await firestoreRepository.fetchMerchandise(code: code)
-        return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise, baseImageUrlString: "https://storage.googleapis.com/reviewers-develop.appspot.com/")
+        let storageEndpoint = environmentRepository.getStorageEndpoint()
+        return convertUseCaseUtils.firestoreMerchandiseToMerchandise(firestoreMerchandise: firestoreMerchandise, storageEndpoint: storageEndpoint)
     }
 
     func createMerchandise(uid: String, code: String, codeType: CodeType, name: String) async throws {

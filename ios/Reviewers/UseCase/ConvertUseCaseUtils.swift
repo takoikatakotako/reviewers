@@ -1,9 +1,7 @@
 import Foundation
 
 struct ConvertUseCaseUtils {
-
-    func review(firestoreReview: FirestoreReview, baseImageUrlString: String) -> Review {
-        let imageUrls = firestoreReview.images.compactMap { URL(string: "\(baseImageUrlString)/image/user/\(firestoreReview.uid)/\($0)") }
+    func review(firestoreReview: FirestoreReview, storageEndpoint: String) -> Review {
         return Review(
             id: firestoreReview.id,
             uid: firestoreReview.uid,
@@ -11,14 +9,15 @@ struct ConvertUseCaseUtils {
             code: firestoreReview.code,
             codeType: .ean13,
             comment: firestoreReview.comment,
-            imageUrls: imageUrls,
+            images: firestoreReview.images,
             rate: firestoreReview.rate,
             createdAt: firestoreReview.createdAt,
-            updatedAt: firestoreReview.updatedAt
+            updatedAt: firestoreReview.updatedAt,
+            storageEndpoint: storageEndpoint
         )
     }
 
-    func firestoreMerchandiseToMerchandise(firestoreMerchandise: FirestoreMerchandise, baseImageUrlString: String) -> Merchandise {
+    func firestoreMerchandiseToMerchandise(firestoreMerchandise: FirestoreMerchandise, storageEndpoint: String) -> Merchandise {
         let status: MerchandiseStatus
         switch firestoreMerchandise.status {
         case .waitingForReview:
@@ -37,7 +36,7 @@ struct ConvertUseCaseUtils {
 
         let imageURL: URL?
         if firestoreMerchandise.image.isNotEmpty {
-            imageURL = URL(string: baseImageUrlString + "image/merchandise/" + firestoreMerchandise.image)
+            imageURL = URL(string: storageEndpoint + "/image/merchandise/" + firestoreMerchandise.image)
         } else {
             imageURL = nil
         }

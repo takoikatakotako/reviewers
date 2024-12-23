@@ -24,6 +24,8 @@
 	<string>17.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>バーコードの読み取りのためカメラを使用します。</string>
+	<key>STORAGE_ENDPOINT</key>
+	<string>${STORAGE_ENDPOINT}</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MPLUS2-VariableFont.ttf</string>

@@ -18,7 +18,7 @@ class ReviewListViewState: ObservableObject {
     // NavigationPath
     @Published var path: [ReviewListViewPath] = []
 
-    private let reviewProfileUseCase = ReviewProfileUseCase()
+//    private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
     private let authUseCase = AuthUseCase()
 
@@ -34,7 +34,7 @@ class ReviewListViewState: ObservableObject {
                 uid = try authUseCase.getUserId()
                 try await updateReviews()
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ1"
+                showingErrorAlertPresenting = "レビューの取得に失敗しました"
                 showingErrorAlert = true
             }
         }
@@ -47,7 +47,7 @@ class ReviewListViewState: ObservableObject {
             try await Task.sleep(nanoseconds: duration)
             try await updateReviews()
         } catch {
-            showingErrorAlertPresenting = "エラーメッセージ2"
+            showingErrorAlertPresenting = "レビューの取得に失敗しました"
             showingErrorAlert = true
         }
     }
@@ -67,7 +67,7 @@ class ReviewListViewState: ObservableObject {
                 isFetching = false
             } catch {
                 isFetching = false
-                showingErrorAlertPresenting = "エラーメッセージ3"
+                showingErrorAlertPresenting = "レビューの取得に失敗しました"
                 showingErrorAlert = true
             }
         }
@@ -78,7 +78,7 @@ class ReviewListViewState: ObservableObject {
             do {
                 try await updateReviews()
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ4"
+                showingErrorAlertPresenting = "レビューの取得に失敗しました"
                 showingErrorAlert = true
             }
         }
@@ -128,7 +128,7 @@ class ReviewListViewState: ObservableObject {
                 }
 
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ6"
+                showingErrorAlertPresenting = "ユーザー情報の取得に失敗しました"
                 showingErrorAlert = true
             }
         }
@@ -152,7 +152,7 @@ class ReviewListViewState: ObservableObject {
                     reviews.remove(at: index)
                 }
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ5"
+                showingErrorAlertPresenting = "レビューの削除に失敗しました"
                 showingErrorAlert = true
             }
         }

@@ -25,7 +25,8 @@ class ReviewDetailViewState: ObservableObject {
     @Published var navigationDestination: ReviewDetailViewDestination?
 
     private let authUseCase = AuthUseCase()
-    private let reviewUseCase = ReviewProfileUseCase()
+    private let reviewUseCase = ReviewUseCase()
+//    private let reviewUseCase = ReviewProfileUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
 
     init(review: Review) {

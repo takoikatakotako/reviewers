@@ -18,7 +18,7 @@ class MyAccountViewState: ObservableObject {
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
 
-    private let profileUseCase = ProfileUseCase()
+//    private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
 
 //    var profileImageUrl: URL? {
