@@ -30,17 +30,16 @@ service cloud.firestore {
     // createのバリデーション
     function isValidCreateReview(review) {
       return review.size() == 9
-      && 'uid' in review && review.uid is string
-      && 'deleted' in review && review.deleted is bool
+			&& 'uid' in review && review.uid is string
+			&& 'deleted' in review && review.deleted is bool
       && 'code' in review && review.code is string
-      && 'codeType' in review && review.codeType is string
-      && 'comment' in review && review.comment is string
+      && 'codeType' in review && review.codeType is string && review.codeType in ['EAN8', 'EAN13']
+      && 'comment' in review && review.comment is string && review.comment.size <= 200
       && 'images' in review && review.images is list
-      && 'rate' in review && review.rate is int
+      && 'rate' in review && review.rate is int && review.rate >= 1 && review.rate <= 5
       && 'createdAt' in review && review.createdAt is timestamp
       && 'updatedAt' in review && review.updatedAt is timestamp;
     }
-
 
 
     ////////////////////////////////////////
@@ -58,10 +57,10 @@ service cloud.firestore {
       // createのバリデーション
       function isValidCreateReport(review_reports) {
         return review_reports.size() == 6
-        && 'status' in review_reports && review_reports.status is string
         && 'uid' in review_reports && review_reports.uid is string
+				&& 'status' in review_reports && review_reports.status is string && review_reports.status in  ['WaitingForReview', 'ReviewCompleted']
         && 'reviewId' in review_reports && review_reports.reviewId is string
-        && 'message' in review_reports && review_reports.message is string
+        && 'message' in review_reports && review_reports.message is string && review_reports.message.size <= 1000
         && 'createdAt' in review_reports && review_reports.createdAt is timestamp
         && 'updatedAt' in review_reports && review_reports.updatedAt is timestamp;
       }
@@ -84,11 +83,11 @@ service cloud.firestore {
       // createのバリデーション
       function isValidCreateMerchandise(merchandise) {
         return merchandise.size() == 11
-        && 'enable' in merchandise && merchandise.enable is bool
-        && 'status' in merchandise && merchandise.status is string
-        && 'name' in merchandise && merchandise.name is string
+        && 'name' in merchandise && merchandise.name is string && merchandise.name.size <= 200
+				&& 'deleted' in merchandise && merchandise.deleted is bool
+        && 'status' in merchandise && merchandise.status is string && merchandise.status in ['WaitingForReview', 'ReviewCompleted']
         && 'code' in merchandise && merchandise.code is string
-        && 'codeType' in merchandise && merchandise.codeType is string
+        && 'codeType' in merchandise && merchandise.codeType is string && merchandise.codeType in ['EAN8', 'EAN13']
         && 'image' in merchandise && merchandise.image is string
         && 'imageRefarenceReviewId' in merchandise && merchandise.imageRefarenceReviewId is string
         && 'createdAt' in merchandise && merchandise.createdAt is timestamp
@@ -115,9 +114,9 @@ service cloud.firestore {
       function isValidCreateContact(contact) {
         return contact.size() == 7
         && 'uid' in contact && contact.uid is string
-				&& 'status' in contact && contact.status is string
+				&& 'status' in contact && contact.status is string && contact.status in ['WaitingForReview', 'ReviewCompleted']
         && 'email' in contact && contact.email is string
-        && 'message' in contact && contact.message is string
+        && 'message' in contact && contact.message is string && contact.name.size <= 1000
         && 'memo' in contact && contact.memo is string
         && 'createdAt' in contact && contact.createdAt is timestamp
         && 'updatedAt' in contact && contact.updatedAt is timestamp;
@@ -125,4 +124,5 @@ service cloud.firestore {
     }  
   }
 }
+
 ```

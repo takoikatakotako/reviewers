@@ -128,7 +128,7 @@ erDiagram
   merchandises {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
     string name "商品名"
-    bool deleted "有効な商品か否か"
+    bool deleted "削除済み判定フラグ"
     string(enum) status "商品のステータス。特定の値が入る。(WaitingForReview, ReviewCompleted)"
     string code "商品コード, スキャンしたバーコードの文字列"
     string codeType "スキャンしたバーコードのタイプ。特定の値が入る。(EAN13, EAN8)"
@@ -141,7 +141,18 @@ erDiagram
   }
 ```
 
+### name
+- 200文字以下
 
+### status
+以下のいずれかの値が入ります。
+- WaitingForReview
+- ReviewCompleted
+
+### codeType
+以下のいずれかの値が入ります。
+- EAN13
+- EAN8
 
 
 ## contacts
@@ -164,4 +175,8 @@ erDiagram
 ドキュメントID, ドキュメント作成時に生成されたID
 
 ### status: string(enum)
-`xxx`, `yyy` のいずれかの値を持つ
+- WaitingForReview
+- ReviewCompleted
+
+### message
+- 1000文字以下
