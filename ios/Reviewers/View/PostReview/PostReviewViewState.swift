@@ -106,8 +106,7 @@ class PostReviewViewState: ObservableObject {
                     showingRegisterMerchandiseAlert = true
                 }
             } catch {
-                print(error, "\(Self.self)")
-                alertMessage = "エラー: \(error.localizedDescription)"
+                alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"
                 showingMessageAlert = true
                 return
             }
@@ -127,7 +126,8 @@ class PostReviewViewState: ObservableObject {
                 try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName)
                 showingRegisterMerchandiseCompleteAlert = true
             } catch {
-                print(error)
+                alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"
+                showingMessageAlert = true
             }
         }
     }

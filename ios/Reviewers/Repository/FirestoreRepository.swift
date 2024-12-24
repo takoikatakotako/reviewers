@@ -296,7 +296,7 @@ struct FirestoreRepository {
                 FirestoreMerchandise.codeField: code,
                 FirestoreMerchandise.codeTypeField: codeType.rawValue,
                 FirestoreMerchandise.imageField: "",
-                FirestoreMerchandise.imageRefarenceReviewIdField: "",
+                FirestoreMerchandise.imageReferenceReviewIdField: "",
                 FirestoreMerchandise.createdAtField: FieldValue.serverTimestamp(),
                 FirestoreMerchandise.createdUid: uid,
                 FirestoreMerchandise.updatedAtField: FieldValue.serverTimestamp(),
