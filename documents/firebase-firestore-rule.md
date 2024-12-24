@@ -25,15 +25,6 @@ service cloud.firestore {
 			// update: 認証済み、uidが一致の場合更新可能
 			allow update: if request.auth != null
       && resource.data.uid == request.auth.uid;
-
-//       // ルールの記述
-//       match /comments/{document=**} {
-//         // ユーザー情報の取得のルール
-//         allow read: if request.auth != null;
-
-//         // ユーザー情報の作成のルール
-//         allow write: if request.auth != null;
-//       }
     }
     
     // createのバリデーション
@@ -51,35 +42,29 @@ service cloud.firestore {
     }
 
 
-    ////////////////////////////////////////
-    // profiles collection
-    ////////////////////////////////////////
-    match /profiles/{userId} {
-      // read: 認証済みのすべてのユーザーが読み取り可能
-      allow read: if request.auth != null;
-
-			// create: 認証済み、バリデーション通過(TODO)、uidが一致の場合作成可能
-			allow create: if request.auth != null
-      && request.auth.uid == userId;
-
-			// update: 認証済み、バリデーション通過、uidが一致の場合作成可能
-			allow update: if request.auth != null
-      && request.auth.uid == userId;
-    }
-    
-    
-
 
     ////////////////////////////////////////
-    // blocked_users collection
+    // review_reports collection
     ////////////////////////////////////////
-    match /blocked_users/{blocked_user_id} {
+    match /review_reports/{reportId} {
       // read: 認証済みのすべてのユーザーが読み取り可能
       allow read: if request.auth != null;
 
 			// create: 認証済み、バリデーション通過(TODO)
 			allow create: if request.auth != null
-      && request.auth.uid == request.resource.data.uid;
+      && isValidCreateReport(request.resource.data)
+      && request.resource.data.uid == request.auth.uid;
+            
+      // createのバリデーション
+      function isValidCreateReport(review_reports) {
+        return review_reports.size() == 6
+        && 'status' in review_reports && review_reports.status is string
+        && 'uid' in review_reports && review_reports.uid is string
+        && 'reviewId' in review_reports && review_reports.reviewId is string
+        && 'message' in review_reports && review_reports.message is string
+        && 'createdAt' in review_reports && review_reports.createdAt is timestamp
+        && 'updatedAt' in review_reports && review_reports.updatedAt is timestamp;
+      }
     }
 
 
@@ -113,36 +98,11 @@ service cloud.firestore {
       }
     }
     
-
-    ////////////////////////////////////////
-    // report collection
-    ////////////////////////////////////////
-    match /reports/{reportId} {
-      // read: 認証済みのすべてのユーザーが読み取り可能
-      allow read: if request.auth != null;
-
-			// create: 認証済み、バリデーション通過(TODO)
-			allow create: if request.auth != null
-      && isValidCreateReport(request.resource.data)
-      && request.resource.data.uid == request.auth.uid;
-            
-      // createのバリデーション
-      function isValidCreateReport(report) {
-        return report.size() == 6
-        && 'status' in report && report.status is string
-        && 'uid' in report && report.uid is string
-        && 'reviewId' in report && report.reviewId is string
-        && 'message' in report && report.message is string
-        && 'createdAt' in report && report.createdAt is timestamp
-        && 'updatedAt' in report && report.updatedAt is timestamp;
-      }
-    }
-    
     
     ////////////////////////////////////////
     // contacts collection
     ////////////////////////////////////////
-    match /contacts/{reportId} {
+    match /contacts/{contactId} {
       // read: すべてのユーザーが読み取り不可能、可能なのは管理者のみ
       allow read: if false;
 
@@ -150,10 +110,10 @@ service cloud.firestore {
 			allow create: if request.auth != null
       && isValidCreateContact(request.resource.data)
       && request.resource.data.uid == request.auth.uid;
-            
+
       // createのバリデーション
       function isValidCreateContact(contact) {
-        return contact.size() == 6
+        return contact.size() == 7
         && 'uid' in contact && contact.uid is string
 				&& 'status' in contact && contact.status is string
         && 'email' in contact && contact.email is string

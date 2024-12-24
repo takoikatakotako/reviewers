@@ -28,8 +28,8 @@ erDiagram
   }
   review_reports {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
-    string(enum) status "レポートのステータス、特定の値が入る"
-    boolean uid "レポートしたユーザーのID"
+    string uid "レポートしたユーザーのID"
+    string(enum) status "レポートのステータス、特定の値が入る。(WaitingForReview, ReviewCompleted)"
     string reviewId "レポート対象のレビューのID"
     string message "補足などに用いられるメッセージ"
     timestamp createdAt "ドキュメント生成時間"
@@ -117,7 +117,7 @@ erDiagram
 
 ```mermaid
 erDiagram
-  reports {
+  review_reports {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
     string(enum) status "レポートのステータス、特定の値が入る"
     boolean uid "レポートしたユーザーのID"

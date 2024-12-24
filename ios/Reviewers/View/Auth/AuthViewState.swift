@@ -67,15 +67,14 @@ class AuthViewState: ObservableObject {
                 // すでに認証されているか確認する
                 if try authUseCase.isEmailVerified() {
                     // すでに登録されているユーザー
-                    errorAlertMessage = "すでにアカウントがありました。「アカウントをお持ちの方」からログインしてみてください。"
+                    errorAlertMessage = "アカウントの確認できました。「アカウントをお持ちの方」からログインをお願いします。"
                     showingErrorAlert = true
                     return
                 }
 
                 // メール認証を行う
                 try await authUseCase.sendEmailVerification()
-                errorAlertMessage = "メール認証おなしゃす。認証がおわりましたら「アカウントをお持ちの方」からログインしてみてください。"
-                showingErrorAlert = true
+                showingRegistrationCompleteAlert = true
 
                 // SignInひとまず完了
                 inprogress = false

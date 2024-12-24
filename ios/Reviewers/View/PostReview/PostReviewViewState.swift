@@ -18,7 +18,11 @@ class PostReviewViewState: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showingRegisterMerchandiseAlert: Bool = false
     @Published var showingRegisterMerchandiseCompleteAlert: Bool = false
-
+    
+    // エラーアラート
+    @Published var showingErrorAlert = false
+    @Published var errorAlertMessage = ""
+    
     // Sheet
     @Published var sheet: PostViewSheetItem?
 
