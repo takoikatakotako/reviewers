@@ -82,9 +82,41 @@ erDiagram
   }
 ```
 
-codeType には以下のいずれかの値が入ります。
+### codeType
+以下のいずれかの値が入ります。
 - EAN13
 - EAN8
+
+### comment
+- 200文字以下
+
+### rate
+- 1-5の値が入る
+
+
+## review_reports
+報告が格納されるコレクション
+
+```mermaid
+erDiagram
+  review_reports {
+    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
+    string uid "レポートしたユーザーのID"
+    string(enum) status "レポートのステータス、特定の値が入る。(WaitingForReview, ReviewCompleted)"
+    string reviewId "レポート対象のレビューのID"
+    string message "補足などに用いられるメッセージ"
+    timestamp createdAt "ドキュメント生成時間"
+    timestamp updatedAt "ドキュメント更新時間"
+}
+```
+
+### status
+以下のいずれかの値が入ります。
+- WaitingForReview
+- ReviewCompleted
+
+### message
+- 1000文字以下
 
 
 ## merchandises
@@ -111,22 +143,6 @@ erDiagram
 
 
 
-## reports
-報告が格納されるコレクション
-
-
-```mermaid
-erDiagram
-  review_reports {
-    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
-    string(enum) status "レポートのステータス、特定の値が入る"
-    boolean uid "レポートしたユーザーのID"
-    string reviewId "レポート対象のレビューのID"
-    string message "補足などに用いられるメッセージ"
-    timestamp createdAt "ドキュメント生成時間"
-    timestamp updatedAt "ドキュメント更新時間"
-}
-```
 
 ## contacts
 
