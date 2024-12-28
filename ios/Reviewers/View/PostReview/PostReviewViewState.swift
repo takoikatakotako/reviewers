@@ -66,7 +66,7 @@ class PostReviewViewState: ObservableObject {
 
         // レートを検証
         guard 1 <= rate && rate <= 5 else {
-            alertMessage = "バーコードをスキャンしてください"
+            alertMessage = "レビューを入力してください"
             showingMessageAlert = true
             return
         }
@@ -106,6 +106,7 @@ class PostReviewViewState: ObservableObject {
                     showingRegisterMerchandiseAlert = true
                 }
             } catch {
+                indicator = false
                 alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"
                 showingMessageAlert = true
                 return
