@@ -69,7 +69,7 @@ targets:
       path: Reviewers/Info/Info-Develop.plist
       properties:
         UIUserInterfaceStyle: Light
-        CFBundleDisplayName: Reviewers
+        CFBundleDisplayName: レビュアーズ
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleShortVersionString: $(MARKETING_VERSION)
         NSCameraUsageDescription: バーコードの読み取りのためカメラを使用します。
@@ -125,7 +125,7 @@ targets:
       path: Reviewers/Info/Info-Production.plist
       properties:
         UIUserInterfaceStyle: Light
-        CFBundleDisplayName: Reviewers
+        CFBundleDisplayName: レビュアーズ
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleShortVersionString: $(MARKETING_VERSION)
         NSCameraUsageDescription: バーコードの読み取りのためカメラを使用します。
