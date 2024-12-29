@@ -249,6 +249,8 @@ struct FirestoreRepository {
         let db = Firestore.firestore()
         let querySnapshot = try await db
             .collection(FirestoreMerchandise.collectionName)
+            .whereField(FirestoreMerchandise.deletedField, isEqualTo: false)
+            .order(by: FirestoreMerchandise.createdAtField, descending: true)
             .limit(to: limit)
             .getDocuments()
 
@@ -259,6 +261,25 @@ struct FirestoreRepository {
         }
         return firestoreMerchandises
     }
+    
+    func fetchMerchandisesWithImage(limit: Int = 20) async throws -> [FirestoreMerchandise] {
+        let db = Firestore.firestore()
+        let querySnapshot = try await db
+            .collection(FirestoreMerchandise.collectionName)
+            .whereField(FirestoreMerchandise.deletedField, isEqualTo: false)
+            .whereField(FirestoreMerchandise.imageField, isNotEqualTo: "")
+            .order(by: FirestoreMerchandise.createdAtField, descending: true)
+            .limit(to: limit)
+            .getDocuments()
+
+        var firestoreMerchandises: [FirestoreMerchandise] = []
+        for document in querySnapshot.documents {
+            let firestoreMerchandise = try FirestoreMerchandise(document: document)
+            firestoreMerchandises.append(firestoreMerchandise)
+        }
+        return firestoreMerchandises
+    }
+
 
     func fetchMerchandise(id: String) async throws -> FirestoreMerchandise {
         let db = Firestore.firestore()

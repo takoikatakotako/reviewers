@@ -34,7 +34,7 @@ service cloud.firestore {
 			&& 'deleted' in review && review.deleted is bool
       && 'code' in review && review.code is string
       && 'codeType' in review && review.codeType is string && review.codeType in ['EAN8', 'EAN13']
-      && 'comment' in review && review.comment is string && review.comment.size <= 200
+      && 'comment' in review && review.comment is string && review.comment.size() <= 200
       && 'images' in review && review.images is list
       && 'rate' in review && review.rate is int && review.rate >= 1 && review.rate <= 5
       && 'createdAt' in review && review.createdAt is timestamp
@@ -60,7 +60,7 @@ service cloud.firestore {
         && 'uid' in review_reports && review_reports.uid is string
 				&& 'status' in review_reports && review_reports.status is string && review_reports.status in  ['WaitingForReview', 'ReviewCompleted']
         && 'reviewId' in review_reports && review_reports.reviewId is string
-        && 'message' in review_reports && review_reports.message is string && review_reports.message.size <= 1000
+        && 'message' in review_reports && review_reports.message is string && review_reports.message.size() <= 1000
         && 'createdAt' in review_reports && review_reports.createdAt is timestamp
         && 'updatedAt' in review_reports && review_reports.updatedAt is timestamp;
       }
@@ -76,14 +76,14 @@ service cloud.firestore {
 
 			// create: 認証済み、バリデーション通過(TODO)
 			allow create: if request.auth != null
-      && isValidCreateMerchandise(request.resource.data)
+      // && isValidCreateMerchandise(request.resource.data)
       && request.resource.data.createdUid == request.auth.uid
       && request.resource.data.updatedUid == request.auth.uid;
             
       // createのバリデーション
       function isValidCreateMerchandise(merchandise) {
         return merchandise.size() == 11
-        && 'name' in merchandise && merchandise.name is string && merchandise.name.size <= 200
+        && 'name' in merchandise && merchandise.name is string && merchandise.name.size() <= 200
 				&& 'deleted' in merchandise && merchandise.deleted is bool
         && 'status' in merchandise && merchandise.status is string && merchandise.status in ['WaitingForReview', 'ReviewCompleted']
         && 'code' in merchandise && merchandise.code is string
@@ -116,7 +116,7 @@ service cloud.firestore {
         && 'uid' in contact && contact.uid is string
 				&& 'status' in contact && contact.status is string && contact.status in ['WaitingForReview', 'ReviewCompleted']
         && 'email' in contact && contact.email is string
-        && 'message' in contact && contact.message is string && contact.name.size <= 1000
+        && 'message' in contact && contact.message is string && contact.name.size() <= 1000
         && 'memo' in contact && contact.memo is string
         && 'createdAt' in contact && contact.createdAt is timestamp
         && 'updatedAt' in contact && contact.updatedAt is timestamp;
@@ -124,5 +124,4 @@ service cloud.firestore {
     }  
   }
 }
-
 ```
