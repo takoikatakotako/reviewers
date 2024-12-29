@@ -15,6 +15,7 @@ struct SignUpView: View {
                     .disabled(disabled)
 
                 TextField("", text: $mail)
+                    .keyboardType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                     .font(.mPlus2Regular(size: 16))
             }

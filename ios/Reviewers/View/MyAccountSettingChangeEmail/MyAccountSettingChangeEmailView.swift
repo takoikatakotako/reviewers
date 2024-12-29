@@ -15,6 +15,7 @@ struct MyAccountSettingChangeEmailView: View {
                         .disabled(viewState.indicator)
 
                     TextField("", text: $viewState.email)
+                        .keyboardType(.emailAddress)
                         .textFieldStyle(.roundedBorder)
                         .font(.mPlus2Regular(size: 16))
                 }
@@ -36,6 +37,7 @@ struct MyAccountSettingChangeEmailView: View {
                         .disabled(viewState.indicator)
 
                     TextField("", text: $viewState.newEmail)
+                        .keyboardType(.emailAddress)
                         .textFieldStyle(.roundedBorder)
                         .font(.mPlus2Regular(size: 16))
                 }
@@ -106,7 +108,7 @@ struct MyAccountSettingChangeEmailView: View {
             }
 
             ToolbarItem(placement: .principal) {
-                Text("パスワード変更")
+                Text("メールアドレス変更")
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
