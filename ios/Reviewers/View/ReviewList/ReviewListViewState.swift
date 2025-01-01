@@ -157,6 +157,12 @@ class ReviewListViewState: ObservableObject {
             }
         }
     }
+    
+    func recieveDeleteReview(reviewId: String) {
+        if let index = reviews.firstIndex(where: { $0.id == reviewId }) {
+            reviews.remove(at: index)
+        }
+    }
 
     // MARK: - ReportReview
     func reportReview(review: Review) {

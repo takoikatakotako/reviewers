@@ -46,6 +46,9 @@ struct MyReviewListView: View {
             }
         }
         .tint(Color(.appMainText))
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.reviewDeleted)) { xxx in
+           
+        }
         .onAppear {
             viewState.onAppear()
         }

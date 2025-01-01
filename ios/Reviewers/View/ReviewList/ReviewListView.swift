@@ -78,6 +78,12 @@ struct ReviewListView: View {
             .onAppear {
                 viewState.onAppear()
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.reviewDeleted)) { output in
+                guard let reviewId = output.userInfo?["reviewId"] as? String else {
+                    return
+                }
+                viewState.recieveDeleteReview(reviewId: reviewId)
+            }
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
                 case .account:
@@ -117,7 +123,7 @@ struct ReviewListView: View {
                 }
                 Button("キャンセル", role: .cancel) {}
             }, message: { review in
-                Text("投稿「\(review.comment)」を削除してもよろしいですか？")
+                Text("「\(review.comment)」を削除してもよろしいですか？")
             })
             .alert(
                 "",
