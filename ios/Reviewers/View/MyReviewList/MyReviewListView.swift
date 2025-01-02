@@ -15,15 +15,14 @@ struct MyReviewListView: View {
                     CommonSimpleReviewRow(
                         uid: viewState.uid,
                         review: review,
+                        enableReportReview: false,
                         imageTapAction: { imageUrl in
                             viewState.imageTapped(imageURL: imageUrl)
                         },
-                        deleteReviewAction: { _ in
-
+                        deleteReviewAction: { review in
+                            viewState.deleteReview(review: review)
                         },
-                        reportReviewAction: { _ in
-
-                        }
+                        reportReviewAction: { _ in }
                     )
                 }
                 .listRowInsets(EdgeInsets())

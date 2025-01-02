@@ -15,6 +15,7 @@ struct ReviewListView: View {
                                 CommonSimpleReviewRow(
                                     uid: viewState.uid,
                                     review: review,
+                                    enableReportReview: true,
                                     imageTapAction: { imageUrl in
                                         viewState.imageTapped(imageURL: imageUrl)
                                     },

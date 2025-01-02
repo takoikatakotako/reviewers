@@ -4,6 +4,7 @@ import SDWebImageSwiftUI
 struct CommonSimpleReviewRow: View {
     let uid: String
     let review: Review
+    let enableReportReview: Bool
     let imageTapAction: (_ url: URL?) -> Void
     let deleteReviewAction: (_ review: Review) -> Void
     let reportReviewAction: (_ review: Review) -> Void
@@ -67,18 +68,21 @@ struct CommonSimpleReviewRow: View {
                                 }
                             }
                         }
-                        Button(role: .none) {
-                            reportReviewAction(review)
-                        } label: {
-                            HStack {
-                                Text("投稿を報告")
-                                    .foregroundStyle(Color(.appMainText))
+                               
+                        if enableReportReview {
+                            Button(role: .none) {
+                                reportReviewAction(review)
+                            } label: {
+                                HStack {
+                                    Text("投稿を報告")
+                                        .foregroundStyle(Color(.appMainText))
 
-                                Spacer()
-                                Image(systemName: "flag")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
+                                    Spacer()
+                                    Image(systemName: "flag")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                }
                             }
                         }
                     } label: {

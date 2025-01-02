@@ -11,16 +11,24 @@ class MyReviewListViewState: ObservableObject {
     //    // Navigation Destination
     //    @Published var navigationDestination: MyAccountNavigationDestination?
 
-    // Fullscreen Cover
-    @Published var showingFullscreenCover = false
+    
+    
+    // Alert Delete Confirm
+    @Published var showingReviewDeleteConfirmAlert = false
+    @Published var showingReviewDeleteConfirmAlertPresenting: Review?
+    
+    // Alert Delete Complete
+    @Published var showingReviewDeleteCompleteAlert = false
+    
+    // Alert Error
+    @Published var showingErrorAlert = false
+    @Published var showingErrorAlertPresenting: String?
 
     // FullScreenCover
     @Published var fullScreenCover: MyReviewListViewFullScreenCover?
 
-//    private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
     private let firestoreRepository = FirestoreRepository()
-//    private let reviewProfileUseCase = ReviewProfileUseCase()
     private let reviewUseCase = ReviewUseCase()
 
     func onAppear() {
@@ -53,38 +61,31 @@ class MyReviewListViewState: ObservableObject {
         fullScreenCover = .image(imageURL: imageURL)
     }
 
-    //    func accountTapped() {
-    //        guard let profile = profile else {
-    //            return
-    //        }
-    //        navigationDestination = .account(profile: profile)
-    //    }
-
-    func menuTapped(review: Review) {
-//        guard let user = authRepository.getUser() else {
-//            // TODO: 未ログイン時の処理
-//            return
-//        }
-//        let myUid = authRepository.getUser()?.uid ?? ""
-//
-//        showingReviewAlertPresenting = (review: review, review.uid == myUid)
-//        showingReviewAlert = true
+    // MARK: - DeleteReview
+    func deleteReviewTapped(review: Review) {
+        showingReviewDeleteConfirmAlertPresenting = review
+        showingReviewDeleteConfirmAlert = true
     }
 
-    func signIn() {
+    func deleteReview(review: Review) {
         Task { @MainActor in
             do {
-                if try authUseCase.isAnonymousUser() {
-                    showingFullscreenCover = true
-                } else {
-                    print("error")
-                }
+                try await reviewUseCase.deleteReview(reviewId: review.id)
+
+                // 削除完了
+                NotificationCenter.default.post(
+                    name: NSNotification.reviewDeleted,
+                    object: self,
+                    userInfo: ["reviewId": review.id]
+                )
+                showingReviewDeleteCompleteAlert = true
             } catch {
-                print(error)
+                showingErrorAlertPresenting = "レビューの削除に失敗しました"
+                showingErrorAlert = true
             }
         }
     }
-
+    
     @MainActor
     private func updateReviews(uid: String) async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
