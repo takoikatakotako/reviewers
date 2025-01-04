@@ -86,6 +86,12 @@ class MyReviewListViewState: ObservableObject {
         }
     }
     
+    func recieveDeleteReview(reviewId: String) {
+        if let index = reviews.firstIndex(where: { $0.id == reviewId }) {
+            reviews.remove(at: index)
+        }
+    }
+    
     @MainActor
     private func updateReviews(uid: String) async throws {
         let newReviews: [Review] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
