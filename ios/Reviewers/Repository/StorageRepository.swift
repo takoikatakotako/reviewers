@@ -13,6 +13,17 @@ struct StorageRepository {
         let imageRef = storageRef.child("image/user/\(uid)/\(fileName)")
         _ = try await imageRef.putDataAsync(resizedImageData)
     }
+    
+    func uploadImageForMerchandise(image: UIImage, fileName: String) async throws {
+        // リサイズ
+        let resizedImageData = try resizeImage(image: image)
+
+        // アップロード
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child("image/merchandise/\(fileName)")
+        _ = try await imageRef.putDataAsync(resizedImageData)
+    }
 
     func fetchImage(uid: String, fileName: String) async throws -> UIImage? {
         // アップロード

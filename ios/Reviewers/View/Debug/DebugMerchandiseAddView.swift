@@ -3,7 +3,7 @@ import SwiftUI
 struct DebugMerchandiseAddView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewState: DebugMerchandiseAddViewState
-
+    
     var body: some View {
         ZStack {
             List {
@@ -15,7 +15,7 @@ struct DebugMerchandiseAddView: View {
                         CommonText(text: viewState.name, font: .mPlus2Regular(size: 16), lineHeight: 18)
                     }
                 }
-
+                
                 Button {
                     viewState.codeTapped()
                 } label: {
@@ -24,10 +24,63 @@ struct DebugMerchandiseAddView: View {
                         CommonText(text: viewState.code ?? "", font: .mPlus2Regular(size: 16), lineHeight: 18)
                     }
                 }
+                
+                
+                // MARK: - 写真
+                VStack(alignment: .leading) {
+                    CommonText(text: "写真", font: .mPlus2SemiBold(size: 16), lineHeight: 18)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            if let image = viewState.image {
+                                Button {
+                                    viewState.imageTapped()
+                                } label: {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 80, height: 56)
+                                        .clipped()
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                            } else {
+                                Button {
+                                    viewState.addImageByPhoto()
+                                } label: {
+                                    VStack(spacing: 0) {
+                                        Image(systemName: "photo")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 36, height: 36)
+                                            .foregroundStyle(Color.white)
+                                    }
+                                    .frame(width: 80, height: 56)
+                                    .background(Color(.appGreenBackground))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                
+//                                Button {
+//                                    // viewState.addImageByCamera()
+//                                } label: {
+//                                    VStack(spacing: 0) {
+//                                        Image(systemName: "camera")
+//                                            .resizable()
+//                                            .scaledToFit()
+//                                            .frame(width: 36, height: 36)
+//                                            .foregroundStyle(Color.white)
+//                                    }
+//                                    .frame(width: 80, height: 56)
+//                                    .background(Color(.appGreenBackground))
+//                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+//                                }
+                            }
+                        }
+                    }
+                }
             }
             .listStyle(.inset)
             .scrollIndicators(.hidden)
-
+            
             if viewState.indicator {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -48,7 +101,7 @@ struct DebugMerchandiseAddView: View {
         }
         .alert("商品名入力", isPresented: $viewState.showingNameAlert) {
             TextField("商品名", text: $viewState.name)
-
+            
             Button {
             } label: {
                 Text("とじる")
@@ -72,6 +125,16 @@ struct DebugMerchandiseAddView: View {
                 Text("とじる")
             }
         }
+        .sheet(item: $viewState.sheet, onDismiss: {
+
+        }, content: { item in
+            switch item {
+            case .showImagePickerSheet:
+                DebugImagePicker(image: $viewState.image)
+            case .showImageViewerSheet:
+                DebugImageViewer(image: $viewState.image)
+            }
+        })
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -83,13 +146,13 @@ struct DebugMerchandiseAddView: View {
                         .padding(.trailing, 8)
                 }
             }
-
+            
             ToolbarItem(placement: .principal) {
                 Text("商品登録")
                     .font(.system(size: 16).bold())
                     .foregroundStyle(Color.white)
             }
-
+            
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
                     viewState.register()

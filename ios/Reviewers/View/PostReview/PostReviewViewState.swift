@@ -124,7 +124,7 @@ class PostReviewViewState: ObservableObject {
         Task { @MainActor in
             do {
                 let uid = try authUseCase.getUserId()
-                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName)
+                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName, image: "")
                 showingRegisterMerchandiseCompleteAlert = true
             } catch {
                 alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"

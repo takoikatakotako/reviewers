@@ -1,9 +1,10 @@
-import Foundation
+import UIKit
 
 class DebugMerchandiseAddViewState: ObservableObject {
     @Published var name: String = ""
     @Published var code: String?
     @Published var codeType: CodeType?
+    @Published var image: UIImage?
 
     @Published var indicator = false
 
@@ -16,8 +17,12 @@ class DebugMerchandiseAddViewState: ObservableObject {
     // Navigation Destination
     @Published var showingSheet = false
 
+    // Sheet
+    @Published var sheet: DebugMerchandiseAddSheet?
+    
     private let authUseCase = AuthUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
+    private let storageRepository = StorageRepository()
 
     func nameTapped() {
         showingNameAlert = true
@@ -25,6 +30,14 @@ class DebugMerchandiseAddViewState: ObservableObject {
 
     func codeTapped() {
         showingSheet = true
+    }
+    
+    func addImageByPhoto() {
+        sheet = .showImagePickerSheet
+    }
+    
+    func imageTapped() {
+        sheet = .showImageViewerSheet
     }
 
     func register() {
@@ -50,9 +63,17 @@ class DebugMerchandiseAddViewState: ObservableObject {
                 }
 
                 let uid = try authUseCase.getUserId()
+                
+                if let image = image {
+                    // 画像がある場合
+                    let fileName = "\(UUID().uuidString).png"
+                    try await storageRepository.uploadImageForMerchandise(image: image, fileName: fileName)
+                    try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: name, image: fileName)
+                } else {
+                    // 画像がない場合
+                    try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: name, image: "")
+                }
 
-                // 登録する
-                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: name)
                 showingSuccessAlert = true
             } catch {
                 print(error)
