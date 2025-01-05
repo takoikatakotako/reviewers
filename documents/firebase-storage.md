@@ -33,7 +33,17 @@ service firebase.storage {
       && request.resource.size < 2 * 1024 * 1024; 
     }
     
-    // /guideline/
+    // /image/merchandise/
+    match /image/merchandise/{allPaths=**} {
+      // 認証済みのすべてのユーザーはアクセス可能
+      allow read: if request.auth != null;
+
+      // 自分自身のディレクトリのみ書き込み可能、画像サイズは 2MB以下であること
+      allow write: if request.auth != null
+      && request.resource.size < 2 * 1024 * 1024; 
+    }
+    
+    // /guideline
     match /guideline/{allPaths=**} {
       // 全ての読み取りが可能
       allow read: if true;

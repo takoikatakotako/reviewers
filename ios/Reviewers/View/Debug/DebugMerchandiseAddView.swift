@@ -109,6 +109,7 @@ struct DebugMerchandiseAddView: View {
         }
         .alert("登録完了", isPresented: $viewState.showingSuccessAlert) {
             Button {
+                dismiss()
             } label: {
                 Text("とじる")
             }
