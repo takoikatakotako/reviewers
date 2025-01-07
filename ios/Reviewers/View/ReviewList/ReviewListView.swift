@@ -15,6 +15,7 @@ struct ReviewListView: View {
                                 CommonSimpleReviewRow(
                                     uid: viewState.uid,
                                     review: review,
+                                    enableReportReview: true,
                                     imageTapAction: { imageUrl in
                                         viewState.imageTapped(imageURL: imageUrl)
                                     },
@@ -74,15 +75,22 @@ struct ReviewListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding(12)
                 }
-
             }
             .onAppear {
                 viewState.onAppear()
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.reviewDeleted)) { output in
+                guard let reviewId = output.userInfo?["reviewId"] as? String else {
+                    return
+                }
+                viewState.recieveDeleteReview(reviewId: reviewId)
+            }
             .navigationDestination(for: ReviewListViewPath.self) { pathValue in
                 switch pathValue {
-                case .account(profile: let profile):
-                    AccountView(viewState: AccountViewState(profile: profile))
+                case .account:
+                // case .account(profile: let profile):
+                    Text("この画面が見えたらおかしいよ")
+                    // AccountView(viewState: AccountViewState(profile: profile))
                 case .reviewDetail(review: let review):
                     ReviewDetailView(viewState: ReviewDetailViewState(review: review))
                         .toolbar(.hidden, for: .tabBar)
@@ -116,7 +124,7 @@ struct ReviewListView: View {
                 }
                 Button("キャンセル", role: .cancel) {}
             }, message: { review in
-                Text("投稿「\(review.comment)」を削除してもよろしいですか？")
+                Text("「\(review.comment)」を削除してもよろしいですか？")
             })
             .alert(
                 "",

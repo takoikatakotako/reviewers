@@ -3,13 +3,13 @@ import FirebaseFirestore
 struct FirestoreMerchandise: Hashable {
     static let collectionName = "merchandises"
 
+    static let nameField = "name"
     static let deletedField = "deleted"
     static let statusField = "status"
-    static let nameField = "name"
     static let codeField = "code"
     static let codeTypeField = "codeType"
     static let imageField = "image"
-    static let imageRefarenceReviewIdField = "imageReferenceReviewId"
+    static let imageReferenceReviewIdField = "imageReferenceReviewId"
     static let createdAtField = "createdAt"
     static let createdUid = "createdUid"
     static let updatedAtField = "updatedAt"
@@ -39,7 +39,7 @@ struct FirestoreMerchandise: Hashable {
             let codeTypeString = data[Self.codeTypeField] as? String,
             let codeType = FirestoreCodeType(rawValue: codeTypeString),
             let image = data[Self.imageField] as? String,
-            let imageReferenceReviewId = data[Self.imageRefarenceReviewIdField] as? String,
+            let imageReferenceReviewId = data[Self.imageReferenceReviewIdField] as? String,
             let createdAt = (data[Self.createdAtField] as? Timestamp)?.dateValue(),
             let createdUid = data[Self.createdUid] as? String?,
             let updatedAt = (data[Self.updatedAtField] as? Timestamp)?.dateValue(),

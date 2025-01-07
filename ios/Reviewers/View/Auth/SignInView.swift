@@ -14,6 +14,7 @@ struct SignInView: View {
                     .foregroundStyle(Color(.appMainText))
 
                 TextField("", text: $mail)
+                    .keyboardType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                     .font(.mPlus2Regular(size: 16))
             }

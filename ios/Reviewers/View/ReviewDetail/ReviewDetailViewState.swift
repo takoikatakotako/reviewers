@@ -10,11 +10,15 @@ class ReviewDetailViewState: ObservableObject {
     @Published var comments: [Comment] = []
     @Published var comment = ""
     @Published var loading = true
-    @Published var showingSignInAlert = false
 
-    // Alert
+    // Alert Delete Confirm
     @Published var showingReviewDeleteConfirmAlert = false
     @Published var showingReviewDeleteConfirmAlertPresenting: Review?
+    
+    // Alert Delete Complete
+    @Published var showingReviewDeleteCompleteAlert = false
+    
+    // Alert Error
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting: String?
 
@@ -25,9 +29,13 @@ class ReviewDetailViewState: ObservableObject {
     @Published var navigationDestination: ReviewDetailViewDestination?
 
     private let authUseCase = AuthUseCase()
-    private let reviewUseCase = ReviewProfileUseCase()
+    private let reviewUseCase = ReviewUseCase()
     private let merchandiseUseCase = MerchandiseUseCase()
 
+    var isMyReview: Bool {
+        return review.uid == uid
+    }
+    
     init(review: Review) {
         self.review = review
     }
@@ -35,33 +43,14 @@ class ReviewDetailViewState: ObservableObject {
     func onAppear() {
         Task { @MainActor in
             self.merchandise = try? await merchandiseUseCase.fetchMerchandise(code: review.code)
-        }
-    }
-
-    func postComment() {
-        // 匿名ユーザーの場合はログインアラートを表示
-        do {
-            let isAnonymous = try authUseCase.isAnonymousUser()
-            if isAnonymous {
-                // ログインアラートを表示
-                self.showingSignInAlert = true
-                return
+            
+            do {
+                self.uid = try authUseCase.getUserId()
+            } catch {
+                showingErrorAlertPresenting = "ユーザーIDの取得に失敗しました"
+                showingErrorAlert = true
             }
-        } catch {
-            print(error)
-            return
         }
-
-//        Task { @MainActor in
-//            do {
-//                guard let uid = Auth.auth().currentUser?.uid else {
-//                    throw ReviewersError.temp
-//                }
-//                try await repository.addReviewComments(reviewId: reviewProfile.id, uid: uid, comment: comment)
-//            } catch {
-//                print(error)
-//            }
-//        }
     }
 
     func accounTapped(profile: Profile) {
@@ -82,7 +71,7 @@ class ReviewDetailViewState: ObservableObject {
     }
 
     // MARK: - DeleteReview
-    func deleteReviewTapped(review: Review) {
+    func deleteReviewTapped() {
         showingReviewDeleteConfirmAlertPresenting = review
         showingReviewDeleteConfirmAlert = true
     }
@@ -93,9 +82,14 @@ class ReviewDetailViewState: ObservableObject {
                 try await reviewUseCase.deleteReview(reviewId: review.id)
 
                 // 削除完了
-
+                NotificationCenter.default.post(
+                    name: NSNotification.reviewDeleted,
+                    object: self,
+                    userInfo: ["reviewId": review.id]
+                )
+                showingReviewDeleteCompleteAlert = true
             } catch {
-                showingErrorAlertPresenting = "エラーメッセージ5"
+                showingErrorAlertPresenting = "レビューの削除に失敗しました"
                 showingErrorAlert = true
             }
         }
@@ -105,5 +99,4 @@ class ReviewDetailViewState: ObservableObject {
     func reportReview() {
         fullScreenCover = .report(review: review)
     }
-
 }

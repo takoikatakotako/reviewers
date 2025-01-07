@@ -7,10 +7,11 @@ struct Review: Identifiable, Hashable {
     let code: String
     let codeType: CodeType
     let comment: String
-    let imageUrls: [URL]
+    let images: [String]
     let rate: Int
     let createdAt: Date
     let updatedAt: Date
+    let storageEndpoint: String
 
     var createdAtString: String {
         let formatter = DateFormatter()
@@ -19,7 +20,11 @@ struct Review: Identifiable, Hashable {
         return formatter.string(from: createdAt)
     }
 
+    var imageUrls: [URL] {
+        return images.compactMap { URL(string: "\(storageEndpoint)/image/user/\(uid)/\($0)") }
+    }
+
     var profileImageUrlString: String {
-        return "https://storage.googleapis.com/reviewers-develop.appspot.com/image/user/\(uid)/profile.png"
+        return "\(storageEndpoint)/image/user/\(uid)/profile.png"
     }
 }

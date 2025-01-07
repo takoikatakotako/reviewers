@@ -18,7 +18,11 @@ class PostReviewViewState: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showingRegisterMerchandiseAlert: Bool = false
     @Published var showingRegisterMerchandiseCompleteAlert: Bool = false
-
+    
+    // エラーアラート
+    @Published var showingErrorAlert = false
+    @Published var errorAlertMessage = ""
+    
     // Sheet
     @Published var sheet: PostViewSheetItem?
 
@@ -62,7 +66,7 @@ class PostReviewViewState: ObservableObject {
 
         // レートを検証
         guard 1 <= rate && rate <= 5 else {
-            alertMessage = "バーコードをスキャンしてください"
+            alertMessage = "レビューを入力してください"
             showingMessageAlert = true
             return
         }
@@ -102,8 +106,8 @@ class PostReviewViewState: ObservableObject {
                     showingRegisterMerchandiseAlert = true
                 }
             } catch {
-                print(error, "\(Self.self)")
-                alertMessage = "エラー: \(error.localizedDescription)"
+                indicator = false
+                alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"
                 showingMessageAlert = true
                 return
             }
@@ -120,10 +124,11 @@ class PostReviewViewState: ObservableObject {
         Task { @MainActor in
             do {
                 let uid = try authUseCase.getUserId()
-                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName)
+                try await merchandiseUseCase.createMerchandise(uid: uid, code: code, codeType: codeType, name: merchandiseName, image: "")
                 showingRegisterMerchandiseCompleteAlert = true
             } catch {
-                print(error)
+                alertMessage = "不明なエラーが発生しました。時間を空けてお試しください。"
+                showingMessageAlert = true
             }
         }
     }

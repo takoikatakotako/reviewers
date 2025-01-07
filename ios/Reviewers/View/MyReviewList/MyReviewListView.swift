@@ -15,15 +15,14 @@ struct MyReviewListView: View {
                     CommonSimpleReviewRow(
                         uid: viewState.uid,
                         review: review,
+                        enableReportReview: false,
                         imageTapAction: { imageUrl in
                             viewState.imageTapped(imageURL: imageUrl)
                         },
-                        deleteReviewAction: { _ in
-
+                        deleteReviewAction: { review in
+                            viewState.deleteReviewTapped(review: review)
                         },
-                        reportReviewAction: { _ in
-
-                        }
+                        reportReviewAction: { _ in }
                     )
                 }
                 .listRowInsets(EdgeInsets())
@@ -46,6 +45,29 @@ struct MyReviewListView: View {
             }
         }
         .tint(Color(.appMainText))
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.reviewDeleted)) { output in
+            guard let reviewId = output.userInfo?["reviewId"] as? String else {
+                return
+            }
+            viewState.recieveDeleteReview(reviewId: reviewId)
+        }
+        .alert(
+            "",
+               isPresented: $viewState.showingReviewDeleteConfirmAlert,
+            presenting: viewState.showingReviewDeleteConfirmAlertPresenting,
+            actions: { review in
+            Button("投稿を削除", role: .destructive) {
+                viewState.deleteReview(review: review)
+            }
+            Button("キャンセル", role: .cancel) {}
+        }, message: { review in
+            Text("「\(review.comment)」を削除してもよろしいですか？")
+        })
+        .alert("", isPresented: $viewState.showingReviewDeleteCompleteAlert, actions: {
+            Button("とじる") {}
+        }, message: {
+            Text("レビューの削除が完了しました。")
+        })
         .onAppear {
             viewState.onAppear()
         }

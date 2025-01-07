@@ -50,9 +50,9 @@ struct ReviewDetailView: View {
                         Spacer()
 
                         Menu {
-                            if viewState.uid == viewState.review.uid {
+                            if viewState.isMyReview {
                                 Button(role: .destructive) {
-                                    viewState.deleteReview()
+                                    viewState.deleteReviewTapped()
                                 } label: {
                                     HStack {
                                         Text("投稿を削除")
@@ -312,13 +312,24 @@ struct ReviewDetailView: View {
         .onAppear {
             viewState.onAppear()
         }
-        .alert("", isPresented: $viewState.showingSignInAlert, actions: {
-            Button("とじる") {}
-            Button("ログイン") {
-                viewState.signInTapped()
+        .alert(
+            "",
+               isPresented: $viewState.showingReviewDeleteConfirmAlert,
+            presenting: viewState.showingReviewDeleteConfirmAlertPresenting,
+            actions: { review in
+            Button("投稿を削除", role: .destructive) {
+                viewState.deleteReview()
+            }
+            Button("キャンセル", role: .cancel) {}
+        }, message: { review in
+            Text("「\(review.comment)」を削除してもよろしいですか？")
+        })
+        .alert("", isPresented: $viewState.showingReviewDeleteCompleteAlert, actions: {
+            Button("とじる") {
+                dismiss()
             }
         }, message: {
-            Text("コメントを投稿するにはログイン、アカウント作成が必要です。")
+            Text("レビューの削除が完了しました。")
         })
         .navigationDestination(item: $viewState.navigationDestination) { item in
             switch item {

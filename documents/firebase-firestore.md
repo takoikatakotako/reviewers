@@ -28,8 +28,8 @@ erDiagram
   }
   review_reports {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
-    string(enum) status "レポートのステータス、特定の値が入る"
-    boolean uid "レポートしたユーザーのID"
+    string uid "レポートしたユーザーのID"
+    string(enum) status "レポートのステータス、特定の値が入る。(WaitingForReview, ReviewCompleted)"
     string reviewId "レポート対象のレビューのID"
     string message "補足などに用いられるメッセージ"
     timestamp createdAt "ドキュメント生成時間"
@@ -82,9 +82,41 @@ erDiagram
   }
 ```
 
-codeType には以下のいずれかの値が入ります。
+### codeType
+以下のいずれかの値が入ります。
 - EAN13
 - EAN8
+
+### comment
+- 200文字以下
+
+### rate
+- 1-5の値が入る
+
+
+## review_reports
+報告が格納されるコレクション
+
+```mermaid
+erDiagram
+  review_reports {
+    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
+    string uid "レポートしたユーザーのID"
+    string(enum) status "レポートのステータス、特定の値が入る。(WaitingForReview, ReviewCompleted)"
+    string reviewId "レポート対象のレビューのID"
+    string message "補足などに用いられるメッセージ"
+    timestamp createdAt "ドキュメント生成時間"
+    timestamp updatedAt "ドキュメント更新時間"
+}
+```
+
+### status
+以下のいずれかの値が入ります。
+- WaitingForReview
+- ReviewCompleted
+
+### message
+- 1000文字以下
 
 
 ## merchandises
@@ -96,7 +128,7 @@ erDiagram
   merchandises {
     string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
     string name "商品名"
-    bool deleted "有効な商品か否か"
+    bool deleted "削除済み判定フラグ"
     string(enum) status "商品のステータス。特定の値が入る。(WaitingForReview, ReviewCompleted)"
     string code "商品コード, スキャンしたバーコードの文字列"
     string codeType "スキャンしたバーコードのタイプ。特定の値が入る。(EAN13, EAN8)"
@@ -109,24 +141,19 @@ erDiagram
   }
 ```
 
+### name
+- 200文字以下
 
+### status
+以下のいずれかの値が入ります。
+- WaitingForReview
+- ReviewCompleted
 
-## reports
-報告が格納されるコレクション
+### codeType
+以下のいずれかの値が入ります。
+- EAN13
+- EAN8
 
-
-```mermaid
-erDiagram
-  reports {
-    string id PK "ドキュメントID, ドキュメント作成時に生成されたID"
-    string(enum) status "レポートのステータス、特定の値が入る"
-    boolean uid "レポートしたユーザーのID"
-    string reviewId "レポート対象のレビューのID"
-    string message "補足などに用いられるメッセージ"
-    timestamp createdAt "ドキュメント生成時間"
-    timestamp updatedAt "ドキュメント更新時間"
-}
-```
 
 ## contacts
 
@@ -148,4 +175,8 @@ erDiagram
 ドキュメントID, ドキュメント作成時に生成されたID
 
 ### status: string(enum)
-`xxx`, `yyy` のいずれかの値を持つ
+- WaitingForReview
+- ReviewCompleted
+
+### message
+- 1000文字以下

@@ -29,7 +29,7 @@ class MyAccountSettingViewState: ObservableObject {
     @Published var imagePickerSheet = false
 
     private let storageRepository = StorageRepository()
-    private let profileUseCase = ProfileUseCase()
+//    private let profileUseCase = ProfileUseCase()
     private let authUseCase = AuthUseCase()
 
     func onAppear() {
@@ -114,26 +114,26 @@ class MyAccountSettingViewState: ObservableObject {
 
     // MARK: - XXX
     func update() {
-        Task { @MainActor in
-            showingIndicator = true
-
-            do {
-                let uid = try authUseCase.getUserId()
-                try await profileUseCase.setProfile(uid: uid, nickname: nickname, profile: profile)
-
-                if let image = profileImage {
-                    try await storageRepository.uploadProfileImage(uid: uid, image: image)
-
-                    // キャッシュ削除
-                    let key = Profile.profileImageURL(uid: uid).description
-                    SDImageCache.shared.removeImageFromDisk(forKey: key)
-                    SDImageCache.shared.removeImageFromMemory(forKey: key)
-                }
-            } catch {
-                print(error)
-            }
-
-            showingIndicator = false
-        }
+//        Task { @MainActor in
+//            showingIndicator = true
+//
+//            do {
+//                let uid = try authUseCase.getUserId()
+//                try await profileUseCase.setProfile(uid: uid, nickname: nickname, profile: profile)
+//
+//                if let image = profileImage {
+//                    try await storageRepository.uploadProfileImage(uid: uid, image: image)
+//
+//                    // キャッシュ削除
+////                    let key = Profile.profileImageURL(uid: uid).description
+////                    SDImageCache.shared.removeImageFromDisk(forKey: key)
+////                    SDImageCache.shared.removeImageFromMemory(forKey: key)
+//                }
+//            } catch {
+//                print(error)
+//            }
+//
+//            showingIndicator = false
+//        }
     }
 }

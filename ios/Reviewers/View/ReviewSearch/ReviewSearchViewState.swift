@@ -19,8 +19,7 @@ class ReviewSearchViewState: ObservableObject {
     @Published var showingErrorAlert = false
     @Published var showingErrorAlertPresenting = ""
 
-    private let profileUseCase = ProfileUseCase()
-    private let reviewUseCase = ReviewProfileUseCase()
+
     private let merchandiseUseCase = MerchandiseUseCase()
 
     func onAppear() {
@@ -31,32 +30,23 @@ class ReviewSearchViewState: ObservableObject {
                 self.merchandise = merchandises
             } catch {
                 // 商品が見つかりませんでした
-                print(error)
+                showingErrorAlertPresenting = "商品の取得に失敗しました"
+                showingErrorAlert = true
             }
         }
     }
 
-    //    func xxxxx() {
-    ////        Task { @MainActor in
-    ////            do {
-    ////                self.reviews = try await reviewUseCase.fetchNewReviews()
-    ////            } catch {
-    ////                print(error)
-    ////            }
-    //////            loading = false
-    ////        }
-    //    }
 
-    func onEditingChanged(isEditing: Bool) {
-        if isEditing {
-            // 開始の場合
-        } else {
-            // 終了の場合
-        }
-
-        // 更新
-        self.isEditing = isEditing
-    }
+//    func onEditingChanged(isEditing: Bool) {
+//        if isEditing {
+//            // 開始の場合
+//        } else {
+//            // 終了の場合
+//        }
+//
+//        // 更新
+//        self.isEditing = isEditing
+//    }
 
     func barcodeButtonTapped() {
         withAnimation {
@@ -101,12 +91,12 @@ class ReviewSearchViewState: ObservableObject {
         return try await merchandiseUseCase.fetchMerchandise(code: code)
     }
 
-    @MainActor
-    private func updateUserReviews(uid: String) async throws {
-        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
-        let margedReviews: [ReviewProfile] = newReviews + self.reviews
-        let uniqueReviews = Set(margedReviews)
-        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
-        self.reviews = sortedReviews
-    }
+//    @MainActor
+//    private func updateUserReviews(uid: String) async throws {
+//        let newReviews: [ReviewProfile] = try await reviewUseCase.fetchNewUserReviews(uid: uid)
+//        let margedReviews: [ReviewProfile] = newReviews + self.reviews
+//        let uniqueReviews = Set(margedReviews)
+//        let sortedReviews = Array(uniqueReviews).sorted(by: { $0.createdAt > $1.createdAt })
+//        self.reviews = sortedReviews
+//    }
 }

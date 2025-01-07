@@ -124,7 +124,8 @@ struct ReviewSearchDetailView: View {
                         } label: {
                             CommonSimpleReviewRow(
                                 uid: "",
-                                review: review) { url in
+                                review: review,
+                                enableReportReview: true) { url in
                                     print(url ?? "nil")
                                 } deleteReviewAction: { review in
                                     print(review)
